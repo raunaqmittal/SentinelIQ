@@ -1,0 +1,504 @@
+{
+  "_meta": {
+    "evidence_spans": "Character offsets into the text produced by the project loader (load_pdf for .pdf, load_txt for .txt). Chunk IDs are derived at evaluation time so re-chunking never invalidates this file.",
+    "label_sources": {
+      "cuad_annotation": "CUAD expert clause spans \u2014 independent human labels",
+      "by_construction": "Synthetic documents written for this project; the answer location is known exactly",
+      "manual": "Hand-picked passage; no expert annotation exists",
+      "structured": "Answer is a value from the XBRL facts table"
+    },
+    "metric_reporting": "Report cuad_annotation questions separately from the rest. Only those carry independent expert labels; the others are authored alongside the system and are for regression tracking."
+  },
+  "entries": [
+    {
+      "question_id": "Q001",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "by_construction",
+      "evidence": [
+        {
+          "document_name": "meridian_security_policy.txt",
+          "char_start": 1201,
+          "char_end": 1247,
+          "role": "claim"
+        },
+        {
+          "document_name": "meridian_soc2_summary.txt",
+          "char_start": 896,
+          "char_end": 921,
+          "role": "counter_evidence"
+        }
+      ],
+      "expected_contradiction": true
+    },
+    {
+      "question_id": "Q002",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "by_construction",
+      "evidence": [
+        {
+          "document_name": "castleridge_security_policy.txt",
+          "char_start": 1418,
+          "char_end": 1491,
+          "role": "supporting"
+        },
+        {
+          "document_name": "castleridge_incident_report.txt",
+          "char_start": 2023,
+          "char_end": 2079,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "Q003",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "by_construction",
+      "evidence": [
+        {
+          "document_name": "northgate_security_policy.txt",
+          "char_start": 639,
+          "char_end": 721,
+          "role": "supporting"
+        },
+        {
+          "document_name": "northgate_soc2_summary.txt",
+          "char_start": 568,
+          "char_end": 629,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "Q004",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "by_construction",
+      "evidence": [
+        {
+          "document_name": "falconhurst_security_policy.txt",
+          "char_start": 1213,
+          "char_end": 1268,
+          "role": "supporting"
+        },
+        {
+          "document_name": "falconhurst_soc2_summary.txt",
+          "char_start": 735,
+          "char_end": 765,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "Q005",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "by_construction",
+      "evidence": [
+        {
+          "document_name": "falconhurst_security_policy.txt",
+          "char_start": 761,
+          "char_end": 849,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "Q006",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "by_construction",
+      "evidence": [
+        {
+          "document_name": "bellhaven_security_policy.txt",
+          "char_start": 796,
+          "char_end": 865,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "Q007",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "by_construction",
+      "evidence": [
+        {
+          "document_name": "meridian_security_policy.txt",
+          "char_start": 730,
+          "char_end": 850,
+          "role": "claim"
+        },
+        {
+          "document_name": "meridian_incident_report.txt",
+          "char_start": 1303,
+          "char_end": 1389,
+          "role": "counter_evidence"
+        }
+      ],
+      "expected_contradiction": true
+    },
+    {
+      "question_id": "Q008",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "by_construction",
+      "evidence": [
+        {
+          "document_name": "castleridge_security_policy.txt",
+          "char_start": 962,
+          "char_end": 1037,
+          "role": "claim"
+        },
+        {
+          "document_name": "castleridge_incident_report.txt",
+          "char_start": 618,
+          "char_end": 736,
+          "role": "counter_evidence"
+        }
+      ],
+      "expected_contradiction": true
+    },
+    {
+      "question_id": "Q009",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "by_construction",
+      "evidence": [
+        {
+          "document_name": "ferrow_security_policy.txt",
+          "char_start": 760,
+          "char_end": 860,
+          "role": "claim"
+        },
+        {
+          "document_name": "ferrow_incident_report.txt",
+          "char_start": 607,
+          "char_end": 678,
+          "role": "counter_evidence"
+        }
+      ],
+      "expected_contradiction": true
+    },
+    {
+      "question_id": "Q010",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "by_construction",
+      "evidence": [
+        {
+          "document_name": "amberlane_security_policy.txt",
+          "char_start": 722,
+          "char_end": 787,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "Q011",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "by_construction",
+      "evidence": [
+        {
+          "document_name": "bellhaven_incident_report.txt",
+          "char_start": 682,
+          "char_end": 748,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "Q012",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "by_construction",
+      "evidence": [
+        {
+          "document_name": "portside_incident_report.txt",
+          "char_start": 1239,
+          "char_end": 1324,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "Q013",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "manual",
+      "evidence": [
+        {
+          "document_name": "MSFT_item_1a.txt",
+          "char_start": 23,
+          "char_end": 106,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "Q014",
+      "evaluation_type": "structured_query",
+      "label_source": "structured",
+      "expected": {
+        "document_name": "V_financial_facts.json",
+        "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "unit": "USD",
+        "values_by_fiscal_year": {
+          "2021": 24105000000.0,
+          "2022": 29310000000.0,
+          "2023": 32653000000.0,
+          "2024": 35926000000.0,
+          "2025": 40000000000.0
+        }
+      }
+    },
+    {
+      "question_id": "Q015",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "manual",
+      "evidence": [
+        {
+          "document_name": "COP_item_7.txt",
+          "char_start": 59027,
+          "char_end": 59132,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "Q016",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "manual",
+      "evidence": [
+        {
+          "document_name": "JNJ_item_1a.txt",
+          "char_start": 686,
+          "char_end": 838,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "Q017",
+      "evaluation_type": "structured_query",
+      "label_source": "structured",
+      "expected": {
+        "document_name": "BA_financial_facts.json",
+        "concept": "CashAndCashEquivalentsAtCarryingValue",
+        "unit": "USD",
+        "values_by_fiscal_year": {
+          "2021": 8052000000.0,
+          "2022": 14614000000.0,
+          "2023": 12691000000.0,
+          "2024": 13801000000.0,
+          "2025": 10921000000.0
+        }
+      }
+    },
+    {
+      "question_id": "Q018",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "manual",
+      "evidence": [
+        {
+          "document_name": "UPS_item_7.txt",
+          "char_start": 17218,
+          "char_end": 17281,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "Q019",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "evidence": [
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 88510,
+          "char_end": 88661,
+          "role": "supporting",
+          "cuad_categories": [
+            "Exclusivity"
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "Q020",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "evidence": [
+        {
+          "document_name": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+          "char_start": 1003,
+          "char_end": 1092,
+          "role": "supporting",
+          "cuad_categories": [
+            "Termination For Convenience"
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "Q021",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "evidence": [
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 38867,
+          "char_end": 39228,
+          "role": "supporting",
+          "cuad_categories": [
+            "Cap On Liability",
+            "Uncapped Liability"
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "Q022",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "evidence": [
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 6442,
+          "char_end": 6951,
+          "role": "supporting",
+          "cuad_categories": [
+            "Ip Ownership Assignment"
+          ]
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 10950,
+          "char_end": 11465,
+          "role": "supporting",
+          "cuad_categories": [
+            "Ip Ownership Assignment"
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "Q023",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "manual",
+      "evidence": [
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 13948,
+          "char_end": 14042,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "Q024",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "evidence": [
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 49165,
+          "char_end": 49608,
+          "role": "supporting",
+          "cuad_categories": [
+            "Exclusivity"
+          ]
+        },
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 63970,
+          "char_end": 64657,
+          "role": "supporting",
+          "cuad_categories": [
+            "Exclusivity"
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "Q025",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "by_construction",
+      "evidence": [
+        {
+          "document_name": "portside_security_policy.txt",
+          "char_start": 788,
+          "char_end": 855,
+          "role": "claim"
+        },
+        {
+          "document_name": "portside_incident_report.txt",
+          "char_start": 1456,
+          "char_end": 1522,
+          "role": "counter_evidence"
+        },
+        {
+          "document_name": "portside_sla.txt",
+          "char_start": 863,
+          "char_end": 927,
+          "role": "counter_evidence"
+        }
+      ],
+      "expected_contradiction": true
+    },
+    {
+      "question_id": "T001",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "manual",
+      "probe": "table_flattening",
+      "self_authored": true,
+      "answer": "$41,494 million",
+      "evidence": [
+        {
+          "document_name": "BA_item_7.txt",
+          "char_start": 9678,
+          "char_end": 10011,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "T002",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "manual",
+      "probe": "table_flattening",
+      "self_authored": true,
+      "answer": "713,163 million",
+      "evidence": [
+        {
+          "document_name": "WMT_item_7.txt",
+          "char_start": 20716,
+          "char_end": 20810,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "T003",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "manual",
+      "probe": "table_flattening",
+      "self_authored": true,
+      "answer": "$9.95",
+      "evidence": [
+        {
+          "document_name": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+          "char_start": 33675,
+          "char_end": 33847,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "T004",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "manual",
+      "probe": "table_flattening",
+      "self_authored": true,
+      "answer": "2.75",
+      "evidence": [
+        {
+          "document_name": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+          "char_start": 55559,
+          "char_end": 55653,
+          "role": "supporting"
+        }
+      ]
+    }
+  ]
+}

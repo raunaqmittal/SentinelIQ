@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.venv/Scripts/python.exe -X utf8 notebooks/cuad_ingestion_spike/spike_05_chunking.py)"
+    ]
+  }
+}

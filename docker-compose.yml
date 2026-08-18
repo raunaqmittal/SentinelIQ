@@ -1,0 +1,65 @@
+# Local production-like stack: Postgres + FastAPI + Streamlit.
+#
+# Verified locally on 2026-08-16 — `docker compose up` runs all three services
+# healthy and the API serves the full flow on PostgreSQL (ADR-023). This is a
+# LOCAL container run; nothing here has been deployed to a cloud provider.
+#
+#   docker compose up -d --build
+#   API http://localhost:8000/docs   UI http://localhost:8501
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: sentineliq
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: sentineliq
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      # Exposed so the test suite on the host can run against this database.
+      # 5433, not 5432: a PostgreSQL installed natively on the developer's
+      # machine holds 5432, and the host would silently reach that one instead.
+      # The api and ui containers use db:5432 on the compose network regardless.
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sentineliq -d sentineliq"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  api:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://sentineliq:${POSTGRES_PASSWORD:-changeme}@db:5432/sentineliq
+      SECRET_KEY: ${SECRET_KEY:?SECRET_KEY must be set}
+      GROQ_API_KEY: ${GROQ_API_KEY:?GROQ_API_KEY must be set}
+      SEC_USER_AGENT: ${SEC_USER_AGENT:-SentinelIQ contact@example.com}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      # JSON log lines carrying the NFR-006 metadata fields. On by default in
+      # a container, where something is collecting the logs.
+      LOG_STRUCTURED: ${LOG_STRUCTURED:-true}
+    ports:
+      - "8000:8000"
+    volumes:
+      # Model cache, so a restart does not re-download the embedder+reranker.
+      - hfcache:/cache/huggingface
+
+  ui:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      SENTINELIQ_API_URL: http://api:8000
+    ports:
+      - "8501:8501"
+
+volumes:
+  pgdata:
+  hfcache:

@@ -1,0 +1,44 @@
+app:
+  name: SentinelIQ
+  version: "0.1.0"
+  environment: development  # development | production
+
+logging:
+  level: INFO  # DEBUG | INFO | WARNING | ERROR
+
+ingestion:
+  # Checked before a file is read (NFR-003, Context.md 26.H). No limit is
+  # specified in the documentation; 25 MB is a working default — the largest
+  # document in the current corpus is 1.4 MB.
+  max_file_bytes: 26214400
+
+retention:
+  # How long an uploaded document is kept (NFR-003d). The requirement lists
+  # immediate / 7 / 30 / 90 / custom, so this is a plain number of days:
+  #   0    delete as soon as the purge runs ("immediate")
+  #   7 / 30 / 90 / any other whole number of days
+  #   null keep for ever — the current default, because no retention period is
+  #        specified anywhere in the requirements and picking one would be a
+  #        policy decision, not an implementation one
+  # Purging is NOT automatic: run `python scripts/purge_expired.py`.
+  document_days: null
+
+llm:
+  provider: groq          # groq | openai | anthropic | gemini
+  # Open-weight model HOSTED BY GROQ — not the OpenAI API. No OpenAI key is
+  # used and no data reaches OpenAI (ADR-018).
+  model: "openai/gpt-oss-120b"
+  # Groq's OpenAI-compatible endpoint. CrewAI talks to it through its
+  # NATIVE openai provider: the LiteLLM fallback leaks a `cache_breakpoint`
+  # field that Groq rejects.
+  base_url: "https://api.groq.com/openai/v1"
+  # Evaluation judge — MUST differ from `model`, and from a different model
+  # family, so nothing grades its own output (ADR-019). llama-3.1-8b-instant
+  # was tried and REJECTED for degenerate scoring (ADR-020).
+  judge_model: "llama-3.3-70b-versatile"
+  temperature: 0.0        # 0.0 = deterministic decisions
+  max_tokens: 2048
+
+agents:
+  max_iter: 5             # hard cap — never allow infinite loops
+  verbose: false

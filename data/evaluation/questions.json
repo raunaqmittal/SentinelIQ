@@ -1,0 +1,217 @@
+[
+  {
+    "question_id": "Q001",
+    "vendor": "Meridian CloudWorks",
+    "category": "compliance",
+    "question": "Does Meridian CloudWorks currently hold a valid SOC 2 Type II certification?",
+    "targets_contradiction": true
+  },
+  {
+    "question_id": "Q002",
+    "vendor": "Castleridge Trust Data Services",
+    "category": "compliance",
+    "question": "What is Castleridge Trust Data Services' committed data breach notification timeframe, and was it met for the November 2025 incident?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q003",
+    "vendor": "Northgate Retail Solutions",
+    "category": "compliance",
+    "question": "Does Northgate Retail Solutions' security policy commit to encrypting customer data at rest, and is this consistent with the scope of its SOC 2 report?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q004",
+    "vendor": "Falconhurst Avionics Systems",
+    "category": "compliance",
+    "question": "What compliance certifications does Falconhurst Avionics Systems hold, and are they currently valid?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q005",
+    "vendor": "Falconhurst Avionics Systems",
+    "category": "compliance",
+    "question": "Does Falconhurst Avionics Systems' stated US-only data residency policy align with any data-handling obligations in its contracts?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q006",
+    "vendor": "Bellhaven Health Analytics",
+    "category": "compliance",
+    "question": "How frequently does Bellhaven Health Analytics review employee access to production systems?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q007",
+    "vendor": "Meridian CloudWorks",
+    "category": "security",
+    "question": "Does Meridian CloudWorks encrypt all customer data at rest, and is this claim consistent with what its own incident report describes?",
+    "targets_contradiction": true
+  },
+  {
+    "question_id": "Q008",
+    "vendor": "Castleridge Trust Data Services",
+    "category": "security",
+    "question": "What caused the November 2025 Castleridge incident, and did it involve one client's credentials accessing another client's data?",
+    "targets_contradiction": true
+  },
+  {
+    "question_id": "Q009",
+    "vendor": "Ferrow Energy Systems",
+    "category": "security",
+    "question": "How long did it take Ferrow Energy Systems to detect the unauthorized access described in its incident report, and is this consistent with its claimed 24/7 monitoring?",
+    "targets_contradiction": true
+  },
+  {
+    "question_id": "Q010",
+    "vendor": "Amberlane Consumer Insights",
+    "category": "security",
+    "question": "What access control requirements does Amberlane Consumer Insights enforce for its production systems?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q011",
+    "vendor": "Bellhaven Health Analytics",
+    "category": "security",
+    "question": "Summarize the security incident reported by Bellhaven Health Analytics in 2025 and its impact on customer data.",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q012",
+    "vendor": "Portside Logistics Systems",
+    "category": "security",
+    "question": "Did Portside Logistics Systems' September 2025 outage involve unauthorized access, or was it an operational failure?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q013",
+    "vendor": "Meridian CloudWorks",
+    "category": "financial",
+    "question": "What financial risk factors does Microsoft disclose in the Item 1A section of its most recent 10-K?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q014",
+    "vendor": "Castleridge Trust Data Services",
+    "category": "financial",
+    "question": "According to Visa's XBRL company facts, what is the trend in reported revenue over the last several fiscal years?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q015",
+    "vendor": "Ferrow Energy Systems",
+    "category": "financial",
+    "question": "Does ConocoPhillips' Item 7 MD&A disclose any unusual liabilities or contingencies relevant to its financial stability as a vendor?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q016",
+    "vendor": "Bellhaven Health Analytics",
+    "category": "financial",
+    "question": "What financial risk factors does Johnson & Johnson disclose that could affect its ability to fulfill long-term commitments?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q017",
+    "vendor": "Falconhurst Avionics Systems",
+    "category": "financial",
+    "question": "Summarize Boeing's key liquidity and cash position figures from its most recent financial facts.",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q018",
+    "vendor": "Portside Logistics Systems",
+    "category": "financial",
+    "question": "Does UPS's 10-K disclose any recent material changes in liabilities or off-balance-sheet obligations?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q019",
+    "vendor": "Bellhaven Health Analytics",
+    "category": "contract",
+    "question": "Does the collaboration agreement with MacroGenics include an exclusivity clause, and what are its terms?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q020",
+    "vendor": "Meridian CloudWorks",
+    "category": "contract",
+    "question": "What termination rights does each party have under the reseller agreement with Bravatek Solutions?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q021",
+    "vendor": "Ferrow Energy Systems",
+    "category": "contract",
+    "question": "Does the transportation services agreement with MPLX cap either party's liability, and if so, at what amount or formula?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q022",
+    "vendor": "Castleridge Trust Data Services",
+    "category": "contract",
+    "question": "Does the license agreement with GPAQ Acquisition Holdings assign intellectual property rights exclusively to one party?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q023",
+    "vendor": "Northgate Retail Solutions",
+    "category": "contract",
+    "question": "What data-handling or confidentiality obligations, if any, appear in the outsourcing agreement with CCA Industries?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q024",
+    "vendor": "Falconhurst Avionics Systems",
+    "category": "contract",
+    "question": "Does the promotion agreement with Exact Sciences include a non-compete or exclusivity restriction on either party?",
+    "targets_contradiction": false
+  },
+  {
+    "question_id": "Q025",
+    "vendor": "Portside Logistics Systems",
+    "category": "security",
+    "question": "Does Portside Logistics Systems' claimed 24/7 real-time visibility guarantee hold up against its September 2025 incident and the SLA's exclusion clause?",
+    "targets_contradiction": true
+  },
+  {
+    "question_id": "T001",
+    "vendor": "Falconhurst Avionics Systems",
+    "category": "financial",
+    "question": "What were Boeing's Commercial Airplanes segment revenues in 2025?",
+    "targets_contradiction": false,
+    "probe": "table_flattening",
+    "self_authored": true,
+    "_note": "Answer ($41,494 million) sits in a narrow 4-column EDGAR HTML table. Readable after flattening: the row label stays next to its numbers and the year headers sit above the block."
+  },
+  {
+    "question_id": "T002",
+    "vendor": "Northgate Retail Solutions",
+    "category": "financial",
+    "question": "What were Walmart's total revenues in the most recent fiscal year reported in its 10-K?",
+    "targets_contradiction": false,
+    "probe": "table_flattening",
+    "self_authored": true,
+    "_note": "Answer (713,163 million) sits in a dense multi-metric EDGAR HTML table where consecutive rows are unlabelled percentage changes, so the correct number is identifiable only by position."
+  },
+  {
+    "question_id": "T003",
+    "vendor": "Amberlane Consumer Insights",
+    "category": "contract",
+    "question": "What is the one-time fee for VoIP Connectivity per port charge in the Galaxy Telnet business partner pricing schedule?",
+    "targets_contradiction": false,
+    "probe": "table_flattening",
+    "self_authored": true,
+    "_note": "Answer ($9.95) sits in a 3-column CUAD PDF fee schedule. After flattening, the one-time fee and the monthly fee ($5.95) are two adjacent bare numbers, distinguishable only by column order."
+  },
+  {
+    "question_id": "T004",
+    "vendor": "Ferrow Energy Systems",
+    "category": "contract",
+    "question": "In the crude petroleum gravity adjustment table, what is the differential per barrel for an API gravity of 20.0?",
+    "targets_contradiction": false,
+    "probe": "table_flattening",
+    "self_authored": true,
+    "_note": "Answer (2.75) sits in a 943-cell, 12-column CUAD PDF reference table — the worst case found in the corpus. After flattening the column structure is unrecoverable."
+  }
+]

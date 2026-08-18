@@ -1,0 +1,2090 @@
+[
+  {
+    "question_id": "C0001",
+    "contract": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+    "clause_type": "Anti-Assignment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the reseller agreement with 695014 B.C. Ltd. dba Galaxy Telecom, can either party assign the agreement, and is consent required?"
+  },
+  {
+    "question_id": "C0002",
+    "contract": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+    "clause_type": "Cap On Liability",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the reseller agreement with 695014 B.C. Ltd. dba Galaxy Telecom, is either party's liability capped, and at what amount or formula?"
+  },
+  {
+    "question_id": "C0003",
+    "contract": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+    "clause_type": "Covenant Not To Sue",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the reseller agreement with 695014 B.C. Ltd. dba Galaxy Telecom, does either party covenant not to sue or assert claims?"
+  },
+  {
+    "question_id": "C0004",
+    "contract": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+    "clause_type": "Notice Period To Terminate Renewal",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the reseller agreement with 695014 B.C. Ltd. dba Galaxy Telecom, how much notice is required to stop the agreement renewing?"
+  },
+  {
+    "question_id": "C0005",
+    "contract": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+    "clause_type": "Post-Termination Services",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the reseller agreement with 695014 B.C. Ltd. dba Galaxy Telecom, what obligations survive termination or apply during wind-down?"
+  },
+  {
+    "question_id": "C0006",
+    "contract": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+    "clause_type": "Renewal Term",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the reseller agreement with 695014 B.C. Ltd. dba Galaxy Telecom, how does the agreement renew, and for how long?"
+  },
+  {
+    "question_id": "C0007",
+    "contract": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+    "clause_type": "Unlimited/All-You-Can-Eat-License",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the reseller agreement with 695014 B.C. Ltd. dba Galaxy Telecom, does the agreement grant an unlimited or all-you-can-eat licence?"
+  },
+  {
+    "question_id": "C0008",
+    "contract": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+    "clause_type": "Anti-Assignment",
+    "split": "test",
+    "category": "contract",
+    "question": "In the odm supply agreement with AGAPE ATP INTERNATIONAL HOLDING LIMITED, can either party assign the agreement, and is consent required?"
+  },
+  {
+    "question_id": "C0009",
+    "contract": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+    "clause_type": "Change Of Control",
+    "split": "test",
+    "category": "contract",
+    "question": "In the odm supply agreement with AGAPE ATP INTERNATIONAL HOLDING LIMITED, what happens on a change of control of either party?"
+  },
+  {
+    "question_id": "C0010",
+    "contract": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+    "clause_type": "Competitive Restriction Exception",
+    "split": "test",
+    "category": "contract",
+    "question": "In the odm supply agreement with AGAPE ATP INTERNATIONAL HOLDING LIMITED, what exceptions apply to the competitive or exclusivity restrictions?"
+  },
+  {
+    "question_id": "C0011",
+    "contract": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+    "clause_type": "Exclusivity",
+    "split": "test",
+    "category": "contract",
+    "question": "In the odm supply agreement with AGAPE ATP INTERNATIONAL HOLDING LIMITED, does the agreement grant exclusivity, and on what terms?"
+  },
+  {
+    "question_id": "C0012",
+    "contract": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+    "clause_type": "Insurance",
+    "split": "test",
+    "category": "contract",
+    "question": "In the odm supply agreement with AGAPE ATP INTERNATIONAL HOLDING LIMITED, what insurance is either party required to maintain?"
+  },
+  {
+    "question_id": "C0013",
+    "contract": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+    "clause_type": "Ip Ownership Assignment",
+    "split": "test",
+    "category": "contract",
+    "question": "In the odm supply agreement with AGAPE ATP INTERNATIONAL HOLDING LIMITED, how is ownership of intellectual property assigned between the parties?"
+  },
+  {
+    "question_id": "C0014",
+    "contract": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+    "clause_type": "Irrevocable Or Perpetual License",
+    "split": "test",
+    "category": "contract",
+    "question": "In the odm supply agreement with AGAPE ATP INTERNATIONAL HOLDING LIMITED, is any licence granted on an irrevocable or perpetual basis?"
+  },
+  {
+    "question_id": "C0015",
+    "contract": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+    "clause_type": "Minimum Commitment",
+    "split": "test",
+    "category": "contract",
+    "question": "In the odm supply agreement with AGAPE ATP INTERNATIONAL HOLDING LIMITED, is there a minimum purchase, volume or payment commitment?"
+  },
+  {
+    "question_id": "C0016",
+    "contract": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+    "clause_type": "Non-Compete",
+    "split": "test",
+    "category": "contract",
+    "question": "In the odm supply agreement with AGAPE ATP INTERNATIONAL HOLDING LIMITED, does the agreement impose a non-compete restriction on either party?"
+  },
+  {
+    "question_id": "C0017",
+    "contract": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+    "clause_type": "Notice Period To Terminate Renewal",
+    "split": "test",
+    "category": "contract",
+    "question": "In the odm supply agreement with AGAPE ATP INTERNATIONAL HOLDING LIMITED, how much notice is required to stop the agreement renewing?"
+  },
+  {
+    "question_id": "C0018",
+    "contract": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+    "clause_type": "Renewal Term",
+    "split": "test",
+    "category": "contract",
+    "question": "In the odm supply agreement with AGAPE ATP INTERNATIONAL HOLDING LIMITED, how does the agreement renew, and for how long?"
+  },
+  {
+    "question_id": "C0019",
+    "contract": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+    "clause_type": "Rofr/Rofo/Rofn",
+    "split": "test",
+    "category": "contract",
+    "question": "In the odm supply agreement with AGAPE ATP INTERNATIONAL HOLDING LIMITED, does either party hold a right of first refusal, offer or negotiation?"
+  },
+  {
+    "question_id": "C0020",
+    "contract": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+    "clause_type": "Warranty Duration",
+    "split": "test",
+    "category": "contract",
+    "question": "In the odm supply agreement with AGAPE ATP INTERNATIONAL HOLDING LIMITED, how long do the warranties last?"
+  },
+  {
+    "question_id": "C0021",
+    "contract": "ArcGroupInc_20171211_8-K_EX-10.1_10976103_EX-10.1_Sponsorship Agreement.pdf",
+    "clause_type": "Expiration Date",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the jacksonville jaguars sponsorship agreement with Jacksonville Jaguars, LLC, when does the agreement expire or what is its initial term?"
+  },
+  {
+    "question_id": "C0022",
+    "contract": "ArcGroupInc_20171211_8-K_EX-10.1_10976103_EX-10.1_Sponsorship Agreement.pdf",
+    "clause_type": "License Grant",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the jacksonville jaguars sponsorship agreement with Jacksonville Jaguars, LLC, what licence rights are granted, and what is their scope?"
+  },
+  {
+    "question_id": "C0023",
+    "contract": "BANGIINC_05_25_2005-EX-10-Premium Managed Hosting Agreement.pdf",
+    "clause_type": "Expiration Date",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the premium managed hosting agreement with AstroNutrition.com, when does the agreement expire or what is its initial term?"
+  },
+  {
+    "question_id": "C0024",
+    "contract": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+    "clause_type": "Competitive Restriction Exception",
+    "split": "test",
+    "category": "contract",
+    "question": "In the service agreement with BICYCLETX LIMITED, what exceptions apply to the competitive or exclusivity restrictions?"
+  },
+  {
+    "question_id": "C0025",
+    "contract": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+    "clause_type": "Covenant Not To Sue",
+    "split": "test",
+    "category": "contract",
+    "question": "In the service agreement with BICYCLETX LIMITED, does either party covenant not to sue or assert claims?"
+  },
+  {
+    "question_id": "C0026",
+    "contract": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+    "clause_type": "Expiration Date",
+    "split": "test",
+    "category": "contract",
+    "question": "In the service agreement with BICYCLETX LIMITED, when does the agreement expire or what is its initial term?"
+  },
+  {
+    "question_id": "C0027",
+    "contract": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+    "clause_type": "Governing Law",
+    "split": "test",
+    "category": "contract",
+    "question": "In the service agreement with BICYCLETX LIMITED, which jurisdiction's law governs the agreement?"
+  },
+  {
+    "question_id": "C0028",
+    "contract": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+    "clause_type": "Ip Ownership Assignment",
+    "split": "test",
+    "category": "contract",
+    "question": "In the service agreement with BICYCLETX LIMITED, how is ownership of intellectual property assigned between the parties?"
+  },
+  {
+    "question_id": "C0029",
+    "contract": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+    "clause_type": "No-Solicit Of Employees",
+    "split": "test",
+    "category": "contract",
+    "question": "In the service agreement with BICYCLETX LIMITED, does the agreement restrict soliciting or hiring the other party's employees?"
+  },
+  {
+    "question_id": "C0030",
+    "contract": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+    "clause_type": "Non-Compete",
+    "split": "test",
+    "category": "contract",
+    "question": "In the service agreement with BICYCLETX LIMITED, does the agreement impose a non-compete restriction on either party?"
+  },
+  {
+    "question_id": "C0031",
+    "contract": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+    "clause_type": "Post-Termination Services",
+    "split": "test",
+    "category": "contract",
+    "question": "In the service agreement with BICYCLETX LIMITED, what obligations survive termination or apply during wind-down?"
+  },
+  {
+    "question_id": "C0032",
+    "contract": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+    "clause_type": "Rofr/Rofo/Rofn",
+    "split": "test",
+    "category": "contract",
+    "question": "In the service agreement with BICYCLETX LIMITED, does either party hold a right of first refusal, offer or negotiation?"
+  },
+  {
+    "question_id": "C0033",
+    "contract": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+    "clause_type": "Termination For Convenience",
+    "split": "test",
+    "category": "contract",
+    "question": "In the service agreement with BICYCLETX LIMITED, can either party terminate for convenience, and on what notice?"
+  },
+  {
+    "question_id": "C0034",
+    "contract": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+    "clause_type": "Affiliate License-Licensee",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the celebrity endorsement agreement with Joseph Theismann, does the licensee's affiliates receive rights under the licence granted?"
+  },
+  {
+    "question_id": "C0035",
+    "contract": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+    "clause_type": "Anti-Assignment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the celebrity endorsement agreement with Joseph Theismann, can either party assign the agreement, and is consent required?"
+  },
+  {
+    "question_id": "C0036",
+    "contract": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+    "clause_type": "Audit Rights",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the celebrity endorsement agreement with Joseph Theismann, what audit or inspection rights does either party have?"
+  },
+  {
+    "question_id": "C0037",
+    "contract": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+    "clause_type": "Exclusivity",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the celebrity endorsement agreement with Joseph Theismann, does the agreement grant exclusivity, and on what terms?"
+  },
+  {
+    "question_id": "C0038",
+    "contract": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+    "clause_type": "Insurance",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the celebrity endorsement agreement with Joseph Theismann, what insurance is either party required to maintain?"
+  },
+  {
+    "question_id": "C0039",
+    "contract": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+    "clause_type": "License Grant",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the celebrity endorsement agreement with Joseph Theismann, what licence rights are granted, and what is their scope?"
+  },
+  {
+    "question_id": "C0040",
+    "contract": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+    "clause_type": "Renewal Term",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the celebrity endorsement agreement with Joseph Theismann, how does the agreement renew, and for how long?"
+  },
+  {
+    "question_id": "C0041",
+    "contract": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+    "clause_type": "Revenue/Profit Sharing",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the celebrity endorsement agreement with Joseph Theismann, how is revenue or profit shared between the parties?"
+  },
+  {
+    "question_id": "C0042",
+    "contract": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+    "clause_type": "Termination For Convenience",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the celebrity endorsement agreement with Joseph Theismann, can either party terminate for convenience, and on what notice?"
+  },
+  {
+    "question_id": "C0043",
+    "contract": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+    "clause_type": "Unlimited/All-You-Can-Eat-License",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the celebrity endorsement agreement with Joseph Theismann, does the agreement grant an unlimited or all-you-can-eat licence?"
+  },
+  {
+    "question_id": "C0044",
+    "contract": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+    "clause_type": "Volume Restriction",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the celebrity endorsement agreement with Joseph Theismann, are there restrictions on volume or quantity?"
+  },
+  {
+    "question_id": "C0045",
+    "contract": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+    "clause_type": "Cap On Liability",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the reseller agreement with the company set forth below (\"Company\") (each, individually, a \"party\" and collectively, \"parties\"):, is either party's liability capped, and at what amount or formula?"
+  },
+  {
+    "question_id": "C0046",
+    "contract": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+    "clause_type": "Exclusivity",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the reseller agreement with the company set forth below (\"Company\") (each, individually, a \"party\" and collectively, \"parties\"):, does the agreement grant exclusivity, and on what terms?"
+  },
+  {
+    "question_id": "C0047",
+    "contract": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+    "clause_type": "License Grant",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the reseller agreement with the company set forth below (\"Company\") (each, individually, a \"party\" and collectively, \"parties\"):, what licence rights are granted, and what is their scope?"
+  },
+  {
+    "question_id": "C0048",
+    "contract": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+    "clause_type": "Post-Termination Services",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the reseller agreement with the company set forth below (\"Company\") (each, individually, a \"party\" and collectively, \"parties\"):, what obligations survive termination or apply during wind-down?"
+  },
+  {
+    "question_id": "C0049",
+    "contract": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+    "clause_type": "Renewal Term",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the reseller agreement with the company set forth below (\"Company\") (each, individually, a \"party\" and collectively, \"parties\"):, how does the agreement renew, and for how long?"
+  },
+  {
+    "question_id": "C0050",
+    "contract": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+    "clause_type": "Revenue/Profit Sharing",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the reseller agreement with the company set forth below (\"Company\") (each, individually, a \"party\" and collectively, \"parties\"):, how is revenue or profit shared between the parties?"
+  },
+  {
+    "question_id": "C0051",
+    "contract": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+    "clause_type": "Termination For Convenience",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the reseller agreement with the company set forth below (\"Company\") (each, individually, a \"party\" and collectively, \"parties\"):, can either party terminate for convenience, and on what notice?"
+  },
+  {
+    "question_id": "C0052",
+    "contract": "CANOPETROLEUM,INC_12_13_2007-EX-10.1-Sponsorship Agreement.pdf",
+    "clause_type": "Anti-Assignment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the sponsorship agreement with R. C. Boyd Enterprises, LLC, can either party assign the agreement, and is consent required?"
+  },
+  {
+    "question_id": "C0053",
+    "contract": "CANOPETROLEUM,INC_12_13_2007-EX-10.1-Sponsorship Agreement.pdf",
+    "clause_type": "Expiration Date",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the sponsorship agreement with R. C. Boyd Enterprises, LLC, when does the agreement expire or what is its initial term?"
+  },
+  {
+    "question_id": "C0054",
+    "contract": "CANOPETROLEUM,INC_12_13_2007-EX-10.1-Sponsorship Agreement.pdf",
+    "clause_type": "Governing Law",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the sponsorship agreement with R. C. Boyd Enterprises, LLC, which jurisdiction's law governs the agreement?"
+  },
+  {
+    "question_id": "C0055",
+    "contract": "CANOPETROLEUM,INC_12_13_2007-EX-10.1-Sponsorship Agreement.pdf",
+    "clause_type": "Minimum Commitment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the sponsorship agreement with R. C. Boyd Enterprises, LLC, is there a minimum purchase, volume or payment commitment?"
+  },
+  {
+    "question_id": "C0056",
+    "contract": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+    "clause_type": "Affiliate License-Licensor",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the services outsourcing agreement with Emerson HealthCare, LLC, are the licensor's affiliates covered by the licence it grants?"
+  },
+  {
+    "question_id": "C0057",
+    "contract": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+    "clause_type": "Audit Rights",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the services outsourcing agreement with Emerson HealthCare, LLC, what audit or inspection rights does either party have?"
+  },
+  {
+    "question_id": "C0058",
+    "contract": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+    "clause_type": "Insurance",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the services outsourcing agreement with Emerson HealthCare, LLC, what insurance is either party required to maintain?"
+  },
+  {
+    "question_id": "C0059",
+    "contract": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+    "clause_type": "License Grant",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the services outsourcing agreement with Emerson HealthCare, LLC, what licence rights are granted, and what is their scope?"
+  },
+  {
+    "question_id": "C0060",
+    "contract": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+    "clause_type": "Liquidated Damages",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the services outsourcing agreement with Emerson HealthCare, LLC, does the agreement provide for liquidated damages or a penalty?"
+  },
+  {
+    "question_id": "C0061",
+    "contract": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+    "clause_type": "Non-Transferable License",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the services outsourcing agreement with Emerson HealthCare, LLC, is the licence granted non-transferable or non-sublicensable?"
+  },
+  {
+    "question_id": "C0062",
+    "contract": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+    "clause_type": "Notice Period To Terminate Renewal",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the services outsourcing agreement with Emerson HealthCare, LLC, how much notice is required to stop the agreement renewing?"
+  },
+  {
+    "question_id": "C0063",
+    "contract": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+    "clause_type": "Post-Termination Services",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the services outsourcing agreement with Emerson HealthCare, LLC, what obligations survive termination or apply during wind-down?"
+  },
+  {
+    "question_id": "C0064",
+    "contract": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+    "clause_type": "Renewal Term",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the services outsourcing agreement with Emerson HealthCare, LLC, how does the agreement renew, and for how long?"
+  },
+  {
+    "question_id": "C0065",
+    "contract": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+    "clause_type": "Revenue/Profit Sharing",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the services outsourcing agreement with Emerson HealthCare, LLC, how is revenue or profit shared between the parties?"
+  },
+  {
+    "question_id": "C0066",
+    "contract": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+    "clause_type": "Termination For Convenience",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the services outsourcing agreement with Emerson HealthCare, LLC, can either party terminate for convenience, and on what notice?"
+  },
+  {
+    "question_id": "C0067",
+    "contract": "CHIPMOSTECHNOLOGIESBERMUDALTD_04_18_2016-EX-4.72-Strategic Alliance Agreement.pdf",
+    "clause_type": "Anti-Assignment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the strategic alliance agreement with ChipMOS and Tsinghua Unigroup shall collectively be referred to as the \"Parties.\", can either party assign the agreement, and is consent required?"
+  },
+  {
+    "question_id": "C0068",
+    "contract": "CHIPMOSTECHNOLOGIESBERMUDALTD_04_18_2016-EX-4.72-Strategic Alliance Agreement.pdf",
+    "clause_type": "Expiration Date",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the strategic alliance agreement with ChipMOS and Tsinghua Unigroup shall collectively be referred to as the \"Parties.\", when does the agreement expire or what is its initial term?"
+  },
+  {
+    "question_id": "C0069",
+    "contract": "CHIPMOSTECHNOLOGIESBERMUDALTD_04_18_2016-EX-4.72-Strategic Alliance Agreement.pdf",
+    "clause_type": "Governing Law",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the strategic alliance agreement with ChipMOS and Tsinghua Unigroup shall collectively be referred to as the \"Parties.\", which jurisdiction's law governs the agreement?"
+  },
+  {
+    "question_id": "C0070",
+    "contract": "CHIPMOSTECHNOLOGIESBERMUDALTD_04_18_2016-EX-4.72-Strategic Alliance Agreement.pdf",
+    "clause_type": "Renewal Term",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the strategic alliance agreement with ChipMOS and Tsinghua Unigroup shall collectively be referred to as the \"Parties.\", how does the agreement renew, and for how long?"
+  },
+  {
+    "question_id": "C0071",
+    "contract": "CUROGROUPHOLDINGSCORP_05_04_2020-EX-10.3-SERVICING AGREEMENT.pdf",
+    "clause_type": "Audit Rights",
+    "split": "test",
+    "category": "contract",
+    "question": "In the servicing agreement with CURO RECEIVABLES FINANCE II, LLC, what audit or inspection rights does either party have?"
+  },
+  {
+    "question_id": "C0072",
+    "contract": "CUROGROUPHOLDINGSCORP_05_04_2020-EX-10.3-SERVICING AGREEMENT.pdf",
+    "clause_type": "Covenant Not To Sue",
+    "split": "test",
+    "category": "contract",
+    "question": "In the servicing agreement with CURO RECEIVABLES FINANCE II, LLC, does either party covenant not to sue or assert claims?"
+  },
+  {
+    "question_id": "C0073",
+    "contract": "CUROGROUPHOLDINGSCORP_05_04_2020-EX-10.3-SERVICING AGREEMENT.pdf",
+    "clause_type": "Expiration Date",
+    "split": "test",
+    "category": "contract",
+    "question": "In the servicing agreement with CURO RECEIVABLES FINANCE II, LLC, when does the agreement expire or what is its initial term?"
+  },
+  {
+    "question_id": "C0074",
+    "contract": "CUROGROUPHOLDINGSCORP_05_04_2020-EX-10.3-SERVICING AGREEMENT.pdf",
+    "clause_type": "Governing Law",
+    "split": "test",
+    "category": "contract",
+    "question": "In the servicing agreement with CURO RECEIVABLES FINANCE II, LLC, which jurisdiction's law governs the agreement?"
+  },
+  {
+    "question_id": "C0075",
+    "contract": "CUROGROUPHOLDINGSCORP_05_04_2020-EX-10.3-SERVICING AGREEMENT.pdf",
+    "clause_type": "Post-Termination Services",
+    "split": "test",
+    "category": "contract",
+    "question": "In the servicing agreement with CURO RECEIVABLES FINANCE II, LLC, what obligations survive termination or apply during wind-down?"
+  },
+  {
+    "question_id": "C0076",
+    "contract": "CUROGROUPHOLDINGSCORP_05_04_2020-EX-10.3-SERVICING AGREEMENT.pdf",
+    "clause_type": "Third Party Beneficiary",
+    "split": "test",
+    "category": "contract",
+    "question": "In the servicing agreement with CURO RECEIVABLES FINANCE II, LLC, does the agreement create any third-party beneficiary rights?"
+  },
+  {
+    "question_id": "C0077",
+    "contract": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+    "clause_type": "Anti-Assignment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation agreement with Shipper and Transporter may be referred to herein individually as a \"Party\" or collectively as the \"Parties\"., can either party assign the agreement, and is consent required?"
+  },
+  {
+    "question_id": "C0078",
+    "contract": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+    "clause_type": "Cap On Liability",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation agreement with Shipper and Transporter may be referred to herein individually as a \"Party\" or collectively as the \"Parties\"., is either party's liability capped, and at what amount or formula?"
+  },
+  {
+    "question_id": "C0079",
+    "contract": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+    "clause_type": "Minimum Commitment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation agreement with Shipper and Transporter may be referred to herein individually as a \"Party\" or collectively as the \"Parties\"., is there a minimum purchase, volume or payment commitment?"
+  },
+  {
+    "question_id": "C0080",
+    "contract": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+    "clause_type": "Notice Period To Terminate Renewal",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation agreement with Shipper and Transporter may be referred to herein individually as a \"Party\" or collectively as the \"Parties\"., how much notice is required to stop the agreement renewing?"
+  },
+  {
+    "question_id": "C0081",
+    "contract": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+    "clause_type": "Renewal Term",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation agreement with Shipper and Transporter may be referred to herein individually as a \"Party\" or collectively as the \"Parties\"., how does the agreement renew, and for how long?"
+  },
+  {
+    "question_id": "C0082",
+    "contract": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+    "clause_type": "Termination For Convenience",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation agreement with Shipper and Transporter may be referred to herein individually as a \"Party\" or collectively as the \"Parties\"., can either party terminate for convenience, and on what notice?"
+  },
+  {
+    "question_id": "C0083",
+    "contract": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+    "clause_type": "Uncapped Liability",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation agreement with Shipper and Transporter may be referred to herein individually as a \"Party\" or collectively as the \"Parties\"., which liabilities are excluded from any cap on liability?"
+  },
+  {
+    "question_id": "C0084",
+    "contract": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+    "clause_type": "Volume Restriction",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation agreement with Shipper and Transporter may be referred to herein individually as a \"Party\" or collectively as the \"Parties\"., are there restrictions on volume or quantity?"
+  },
+  {
+    "question_id": "C0085",
+    "contract": "EmmisCommunicationsCorp_20191125_8-K_EX-10.6_11906433_EX-10.6_Marketing Agreement.pdf",
+    "clause_type": "Anti-Assignment",
+    "split": "test",
+    "category": "contract",
+    "question": "In the local programming and marketing agreement (wqht hd2) with MediaCo Holding Inc., can either party assign the agreement, and is consent required?"
+  },
+  {
+    "question_id": "C0086",
+    "contract": "EmmisCommunicationsCorp_20191125_8-K_EX-10.6_11906433_EX-10.6_Marketing Agreement.pdf",
+    "clause_type": "Expiration Date",
+    "split": "test",
+    "category": "contract",
+    "question": "In the local programming and marketing agreement (wqht hd2) with MediaCo Holding Inc., when does the agreement expire or what is its initial term?"
+  },
+  {
+    "question_id": "C0087",
+    "contract": "EmmisCommunicationsCorp_20191125_8-K_EX-10.6_11906433_EX-10.6_Marketing Agreement.pdf",
+    "clause_type": "Governing Law",
+    "split": "test",
+    "category": "contract",
+    "question": "In the local programming and marketing agreement (wqht hd2) with MediaCo Holding Inc., which jurisdiction's law governs the agreement?"
+  },
+  {
+    "question_id": "C0088",
+    "contract": "EmmisCommunicationsCorp_20191125_8-K_EX-10.6_11906433_EX-10.6_Marketing Agreement.pdf",
+    "clause_type": "License Grant",
+    "split": "test",
+    "category": "contract",
+    "question": "In the local programming and marketing agreement (wqht hd2) with MediaCo Holding Inc., what licence rights are granted, and what is their scope?"
+  },
+  {
+    "question_id": "C0089",
+    "contract": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+    "clause_type": "Affiliate License-Licensee",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the cologuard\u00ae promotion agreement with Pfizer and Exact may each be referred to herein individually as a \"Party\" and collectively as the \"Parties\"., does the licensee's affiliates receive rights under the licence granted?"
+  },
+  {
+    "question_id": "C0090",
+    "contract": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+    "clause_type": "Affiliate License-Licensor",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the cologuard\u00ae promotion agreement with Pfizer and Exact may each be referred to herein individually as a \"Party\" and collectively as the \"Parties\"., are the licensor's affiliates covered by the licence it grants?"
+  },
+  {
+    "question_id": "C0091",
+    "contract": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+    "clause_type": "Change Of Control",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the cologuard\u00ae promotion agreement with Pfizer and Exact may each be referred to herein individually as a \"Party\" and collectively as the \"Parties\"., what happens on a change of control of either party?"
+  },
+  {
+    "question_id": "C0092",
+    "contract": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+    "clause_type": "Exclusivity",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the cologuard\u00ae promotion agreement with Pfizer and Exact may each be referred to herein individually as a \"Party\" and collectively as the \"Parties\"., does the agreement grant exclusivity, and on what terms?"
+  },
+  {
+    "question_id": "C0093",
+    "contract": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+    "clause_type": "Insurance",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the cologuard\u00ae promotion agreement with Pfizer and Exact may each be referred to herein individually as a \"Party\" and collectively as the \"Parties\"., what insurance is either party required to maintain?"
+  },
+  {
+    "question_id": "C0094",
+    "contract": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+    "clause_type": "Non-Transferable License",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the cologuard\u00ae promotion agreement with Pfizer and Exact may each be referred to herein individually as a \"Party\" and collectively as the \"Parties\"., is the licence granted non-transferable or non-sublicensable?"
+  },
+  {
+    "question_id": "C0095",
+    "contract": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+    "clause_type": "Rofr/Rofo/Rofn",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the cologuard\u00ae promotion agreement with Pfizer and Exact may each be referred to herein individually as a \"Party\" and collectively as the \"Parties\"., does either party hold a right of first refusal, offer or negotiation?"
+  },
+  {
+    "question_id": "C0096",
+    "contract": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+    "clause_type": "Termination For Convenience",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the cologuard\u00ae promotion agreement with Pfizer and Exact may each be referred to herein individually as a \"Party\" and collectively as the \"Parties\"., can either party terminate for convenience, and on what notice?"
+  },
+  {
+    "question_id": "C0097",
+    "contract": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+    "clause_type": "Uncapped Liability",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the cologuard\u00ae promotion agreement with Pfizer and Exact may each be referred to herein individually as a \"Party\" and collectively as the \"Parties\"., which liabilities are excluded from any cap on liability?"
+  },
+  {
+    "question_id": "C0098",
+    "contract": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.pdf",
+    "clause_type": "Governing Law",
+    "split": "test",
+    "category": "contract",
+    "question": "In the affiliate agreement with Gulf South Medical Supply, Inc., which jurisdiction's law governs the agreement?"
+  },
+  {
+    "question_id": "C0099",
+    "contract": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+    "clause_type": "Affiliate License-Licensee",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the media license agreement with doing business as Pro Football Hall of Fame, does the licensee's affiliates receive rights under the licence granted?"
+  },
+  {
+    "question_id": "C0100",
+    "contract": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+    "clause_type": "Change Of Control",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the media license agreement with doing business as Pro Football Hall of Fame, what happens on a change of control of either party?"
+  },
+  {
+    "question_id": "C0101",
+    "contract": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+    "clause_type": "Covenant Not To Sue",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the media license agreement with doing business as Pro Football Hall of Fame, does either party covenant not to sue or assert claims?"
+  },
+  {
+    "question_id": "C0102",
+    "contract": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+    "clause_type": "Exclusivity",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the media license agreement with doing business as Pro Football Hall of Fame, does the agreement grant exclusivity, and on what terms?"
+  },
+  {
+    "question_id": "C0103",
+    "contract": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+    "clause_type": "Ip Ownership Assignment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the media license agreement with doing business as Pro Football Hall of Fame, how is ownership of intellectual property assigned between the parties?"
+  },
+  {
+    "question_id": "C0104",
+    "contract": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+    "clause_type": "Minimum Commitment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the media license agreement with doing business as Pro Football Hall of Fame, is there a minimum purchase, volume or payment commitment?"
+  },
+  {
+    "question_id": "C0105",
+    "contract": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+    "clause_type": "Non-Transferable License",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the media license agreement with doing business as Pro Football Hall of Fame, is the licence granted non-transferable or non-sublicensable?"
+  },
+  {
+    "question_id": "C0106",
+    "contract": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+    "clause_type": "Notice Period To Terminate Renewal",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the media license agreement with doing business as Pro Football Hall of Fame, how much notice is required to stop the agreement renewing?"
+  },
+  {
+    "question_id": "C0107",
+    "contract": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+    "clause_type": "Post-Termination Services",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the media license agreement with doing business as Pro Football Hall of Fame, what obligations survive termination or apply during wind-down?"
+  },
+  {
+    "question_id": "C0108",
+    "contract": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+    "clause_type": "Price Restrictions",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the media license agreement with doing business as Pro Football Hall of Fame, are there restrictions on pricing or price increases?"
+  },
+  {
+    "question_id": "C0109",
+    "contract": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+    "clause_type": "Rofr/Rofo/Rofn",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the media license agreement with doing business as Pro Football Hall of Fame, does either party hold a right of first refusal, offer or negotiation?"
+  },
+  {
+    "question_id": "C0110",
+    "contract": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+    "clause_type": "Audit Rights",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the sales, marketing, distribution, and supply agreement with Scientific Products Pharmaceutical Co. LTD., what audit or inspection rights does either party have?"
+  },
+  {
+    "question_id": "C0111",
+    "contract": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+    "clause_type": "Cap On Liability",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the sales, marketing, distribution, and supply agreement with Scientific Products Pharmaceutical Co. LTD., is either party's liability capped, and at what amount or formula?"
+  },
+  {
+    "question_id": "C0112",
+    "contract": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+    "clause_type": "Covenant Not To Sue",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the sales, marketing, distribution, and supply agreement with Scientific Products Pharmaceutical Co. LTD., does either party covenant not to sue or assert claims?"
+  },
+  {
+    "question_id": "C0113",
+    "contract": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+    "clause_type": "Exclusivity",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the sales, marketing, distribution, and supply agreement with Scientific Products Pharmaceutical Co. LTD., does the agreement grant exclusivity, and on what terms?"
+  },
+  {
+    "question_id": "C0114",
+    "contract": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+    "clause_type": "License Grant",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the sales, marketing, distribution, and supply agreement with Scientific Products Pharmaceutical Co. LTD., what licence rights are granted, and what is their scope?"
+  },
+  {
+    "question_id": "C0115",
+    "contract": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+    "clause_type": "Liquidated Damages",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the sales, marketing, distribution, and supply agreement with Scientific Products Pharmaceutical Co. LTD., does the agreement provide for liquidated damages or a penalty?"
+  },
+  {
+    "question_id": "C0116",
+    "contract": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+    "clause_type": "Minimum Commitment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the sales, marketing, distribution, and supply agreement with Scientific Products Pharmaceutical Co. LTD., is there a minimum purchase, volume or payment commitment?"
+  },
+  {
+    "question_id": "C0117",
+    "contract": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+    "clause_type": "Notice Period To Terminate Renewal",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the sales, marketing, distribution, and supply agreement with Scientific Products Pharmaceutical Co. LTD., how much notice is required to stop the agreement renewing?"
+  },
+  {
+    "question_id": "C0118",
+    "contract": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+    "clause_type": "Post-Termination Services",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the sales, marketing, distribution, and supply agreement with Scientific Products Pharmaceutical Co. LTD., what obligations survive termination or apply during wind-down?"
+  },
+  {
+    "question_id": "C0119",
+    "contract": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+    "clause_type": "Warranty Duration",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the sales, marketing, distribution, and supply agreement with Scientific Products Pharmaceutical Co. LTD., how long do the warranties last?"
+  },
+  {
+    "question_id": "C0120",
+    "contract": "HOLIDAYRVSUPERSTORESINC_04_15_2002-EX-10.13-ENDORSEMENT AGREEMENT.pdf",
+    "clause_type": "Affiliate License-Licensee",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the endorsement agreement with (each a \"Party\" and collectively the \"Parties\")., does the licensee's affiliates receive rights under the licence granted?"
+  },
+  {
+    "question_id": "C0121",
+    "contract": "HOLIDAYRVSUPERSTORESINC_04_15_2002-EX-10.13-ENDORSEMENT AGREEMENT.pdf",
+    "clause_type": "Anti-Assignment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the endorsement agreement with (each a \"Party\" and collectively the \"Parties\")., can either party assign the agreement, and is consent required?"
+  },
+  {
+    "question_id": "C0122",
+    "contract": "HOLIDAYRVSUPERSTORESINC_04_15_2002-EX-10.13-ENDORSEMENT AGREEMENT.pdf",
+    "clause_type": "License Grant",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the endorsement agreement with (each a \"Party\" and collectively the \"Parties\")., what licence rights are granted, and what is their scope?"
+  },
+  {
+    "question_id": "C0123",
+    "contract": "HOLIDAYRVSUPERSTORESINC_04_15_2002-EX-10.13-ENDORSEMENT AGREEMENT.pdf",
+    "clause_type": "Post-Termination Services",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the endorsement agreement with (each a \"Party\" and collectively the \"Parties\")., what obligations survive termination or apply during wind-down?"
+  },
+  {
+    "question_id": "C0124",
+    "contract": "HOLIDAYRVSUPERSTORESINC_04_15_2002-EX-10.13-ENDORSEMENT AGREEMENT.pdf",
+    "clause_type": "Termination For Convenience",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the endorsement agreement with (each a \"Party\" and collectively the \"Parties\")., can either party terminate for convenience, and on what notice?"
+  },
+  {
+    "question_id": "C0125",
+    "contract": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+    "clause_type": "Audit Rights",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the franchise agreement with We and you may collectively be referred to as the \"Parties.\", what audit or inspection rights does either party have?"
+  },
+  {
+    "question_id": "C0126",
+    "contract": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+    "clause_type": "Cap On Liability",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the franchise agreement with We and you may collectively be referred to as the \"Parties.\", is either party's liability capped, and at what amount or formula?"
+  },
+  {
+    "question_id": "C0127",
+    "contract": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+    "clause_type": "Change Of Control",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the franchise agreement with We and you may collectively be referred to as the \"Parties.\", what happens on a change of control of either party?"
+  },
+  {
+    "question_id": "C0128",
+    "contract": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+    "clause_type": "Covenant Not To Sue",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the franchise agreement with We and you may collectively be referred to as the \"Parties.\", does either party covenant not to sue or assert claims?"
+  },
+  {
+    "question_id": "C0129",
+    "contract": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+    "clause_type": "Exclusivity",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the franchise agreement with We and you may collectively be referred to as the \"Parties.\", does the agreement grant exclusivity, and on what terms?"
+  },
+  {
+    "question_id": "C0130",
+    "contract": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+    "clause_type": "Insurance",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the franchise agreement with We and you may collectively be referred to as the \"Parties.\", what insurance is either party required to maintain?"
+  },
+  {
+    "question_id": "C0131",
+    "contract": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+    "clause_type": "Ip Ownership Assignment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the franchise agreement with We and you may collectively be referred to as the \"Parties.\", how is ownership of intellectual property assigned between the parties?"
+  },
+  {
+    "question_id": "C0132",
+    "contract": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+    "clause_type": "License Grant",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the franchise agreement with We and you may collectively be referred to as the \"Parties.\", what licence rights are granted, and what is their scope?"
+  },
+  {
+    "question_id": "C0133",
+    "contract": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+    "clause_type": "Liquidated Damages",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the franchise agreement with We and you may collectively be referred to as the \"Parties.\", does the agreement provide for liquidated damages or a penalty?"
+  },
+  {
+    "question_id": "C0134",
+    "contract": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+    "clause_type": "Non-Compete",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the franchise agreement with We and you may collectively be referred to as the \"Parties.\", does the agreement impose a non-compete restriction on either party?"
+  },
+  {
+    "question_id": "C0135",
+    "contract": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+    "clause_type": "Revenue/Profit Sharing",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the franchise agreement with We and you may collectively be referred to as the \"Parties.\", how is revenue or profit shared between the parties?"
+  },
+  {
+    "question_id": "C0136",
+    "contract": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+    "clause_type": "Change Of Control",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the promotion agreement with Janssen Biotech, Inc., what happens on a change of control of either party?"
+  },
+  {
+    "question_id": "C0137",
+    "contract": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+    "clause_type": "Covenant Not To Sue",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the promotion agreement with Janssen Biotech, Inc., does either party covenant not to sue or assert claims?"
+  },
+  {
+    "question_id": "C0138",
+    "contract": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+    "clause_type": "Insurance",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the promotion agreement with Janssen Biotech, Inc., what insurance is either party required to maintain?"
+  },
+  {
+    "question_id": "C0139",
+    "contract": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+    "clause_type": "Ip Ownership Assignment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the promotion agreement with Janssen Biotech, Inc., how is ownership of intellectual property assigned between the parties?"
+  },
+  {
+    "question_id": "C0140",
+    "contract": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+    "clause_type": "Minimum Commitment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the promotion agreement with Janssen Biotech, Inc., is there a minimum purchase, volume or payment commitment?"
+  },
+  {
+    "question_id": "C0141",
+    "contract": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+    "clause_type": "No-Solicit Of Employees",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the promotion agreement with Janssen Biotech, Inc., does the agreement restrict soliciting or hiring the other party's employees?"
+  },
+  {
+    "question_id": "C0142",
+    "contract": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+    "clause_type": "Non-Compete",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the promotion agreement with Janssen Biotech, Inc., does the agreement impose a non-compete restriction on either party?"
+  },
+  {
+    "question_id": "C0143",
+    "contract": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+    "clause_type": "Revenue/Profit Sharing",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the promotion agreement with Janssen Biotech, Inc., how is revenue or profit shared between the parties?"
+  },
+  {
+    "question_id": "C0144",
+    "contract": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+    "clause_type": "Rofr/Rofo/Rofn",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the promotion agreement with Janssen Biotech, Inc., does either party hold a right of first refusal, offer or negotiation?"
+  },
+  {
+    "question_id": "C0145",
+    "contract": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+    "clause_type": "Uncapped Liability",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the promotion agreement with Janssen Biotech, Inc., which liabilities are excluded from any cap on liability?"
+  },
+  {
+    "question_id": "C0146",
+    "contract": "ImperialGardenResortInc_20161028_DRS (on F-1)_EX-10.13_9963189_EX-10.13_Outsourcing Agreement.pdf",
+    "clause_type": "Governing Law",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the outsourcing contract on development of miaoli royal resort hotel with The HUANG JIA Country CLUB and Recreation Inc., which jurisdiction's law governs the agreement?"
+  },
+  {
+    "question_id": "C0147",
+    "contract": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+    "clause_type": "Audit Rights",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the collaboration agreement with MacroGenics and Green Cross may be referred to herein individually as a \"Party\" or collectively as the \"Parties., what audit or inspection rights does either party have?"
+  },
+  {
+    "question_id": "C0148",
+    "contract": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+    "clause_type": "Change Of Control",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the collaboration agreement with MacroGenics and Green Cross may be referred to herein individually as a \"Party\" or collectively as the \"Parties., what happens on a change of control of either party?"
+  },
+  {
+    "question_id": "C0149",
+    "contract": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+    "clause_type": "Covenant Not To Sue",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the collaboration agreement with MacroGenics and Green Cross may be referred to herein individually as a \"Party\" or collectively as the \"Parties., does either party covenant not to sue or assert claims?"
+  },
+  {
+    "question_id": "C0150",
+    "contract": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+    "clause_type": "Exclusivity",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the collaboration agreement with MacroGenics and Green Cross may be referred to herein individually as a \"Party\" or collectively as the \"Parties., does the agreement grant exclusivity, and on what terms?"
+  },
+  {
+    "question_id": "C0151",
+    "contract": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+    "clause_type": "Ip Ownership Assignment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the collaboration agreement with MacroGenics and Green Cross may be referred to herein individually as a \"Party\" or collectively as the \"Parties., how is ownership of intellectual property assigned between the parties?"
+  },
+  {
+    "question_id": "C0152",
+    "contract": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+    "clause_type": "Irrevocable Or Perpetual License",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the collaboration agreement with MacroGenics and Green Cross may be referred to herein individually as a \"Party\" or collectively as the \"Parties., is any licence granted on an irrevocable or perpetual basis?"
+  },
+  {
+    "question_id": "C0153",
+    "contract": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+    "clause_type": "Joint Ip Ownership",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the collaboration agreement with MacroGenics and Green Cross may be referred to herein individually as a \"Party\" or collectively as the \"Parties., is any intellectual property jointly owned by the parties?"
+  },
+  {
+    "question_id": "C0154",
+    "contract": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+    "clause_type": "Non-Compete",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the collaboration agreement with MacroGenics and Green Cross may be referred to herein individually as a \"Party\" or collectively as the \"Parties., does the agreement impose a non-compete restriction on either party?"
+  },
+  {
+    "question_id": "C0155",
+    "contract": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+    "clause_type": "Post-Termination Services",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the collaboration agreement with MacroGenics and Green Cross may be referred to herein individually as a \"Party\" or collectively as the \"Parties., what obligations survive termination or apply during wind-down?"
+  },
+  {
+    "question_id": "C0156",
+    "contract": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+    "clause_type": "Revenue/Profit Sharing",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the collaboration agreement with MacroGenics and Green Cross may be referred to herein individually as a \"Party\" or collectively as the \"Parties., how is revenue or profit shared between the parties?"
+  },
+  {
+    "question_id": "C0157",
+    "contract": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+    "clause_type": "Uncapped Liability",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the collaboration agreement with MacroGenics and Green Cross may be referred to herein individually as a \"Party\" or collectively as the \"Parties., which liabilities are excluded from any cap on liability?"
+  },
+  {
+    "question_id": "C0158",
+    "contract": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+    "clause_type": "Cap On Liability",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with both referred to jointly as the \"Parties\" and each individually as a \"Party\"., is either party's liability capped, and at what amount or formula?"
+  },
+  {
+    "question_id": "C0159",
+    "contract": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+    "clause_type": "Liquidated Damages",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with both referred to jointly as the \"Parties\" and each individually as a \"Party\"., does the agreement provide for liquidated damages or a penalty?"
+  },
+  {
+    "question_id": "C0160",
+    "contract": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+    "clause_type": "Minimum Commitment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with both referred to jointly as the \"Parties\" and each individually as a \"Party\"., is there a minimum purchase, volume or payment commitment?"
+  },
+  {
+    "question_id": "C0161",
+    "contract": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+    "clause_type": "Most Favored Nation",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with both referred to jointly as the \"Parties\" and each individually as a \"Party\"., does either party receive most-favoured-nation pricing or terms?"
+  },
+  {
+    "question_id": "C0162",
+    "contract": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+    "clause_type": "Notice Period To Terminate Renewal",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with both referred to jointly as the \"Parties\" and each individually as a \"Party\"., how much notice is required to stop the agreement renewing?"
+  },
+  {
+    "question_id": "C0163",
+    "contract": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+    "clause_type": "Renewal Term",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with both referred to jointly as the \"Parties\" and each individually as a \"Party\"., how does the agreement renew, and for how long?"
+  },
+  {
+    "question_id": "C0164",
+    "contract": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+    "clause_type": "Rofr/Rofo/Rofn",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with both referred to jointly as the \"Parties\" and each individually as a \"Party\"., does either party hold a right of first refusal, offer or negotiation?"
+  },
+  {
+    "question_id": "C0165",
+    "contract": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+    "clause_type": "Termination For Convenience",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with both referred to jointly as the \"Parties\" and each individually as a \"Party\"., can either party terminate for convenience, and on what notice?"
+  },
+  {
+    "question_id": "C0166",
+    "contract": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+    "clause_type": "Uncapped Liability",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with both referred to jointly as the \"Parties\" and each individually as a \"Party\"., which liabilities are excluded from any cap on liability?"
+  },
+  {
+    "question_id": "C0167",
+    "contract": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+    "clause_type": "Volume Restriction",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with both referred to jointly as the \"Parties\" and each individually as a \"Party\"., are there restrictions on volume or quantity?"
+  },
+  {
+    "question_id": "C0168",
+    "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+    "clause_type": "Anti-Assignment",
+    "split": "test",
+    "category": "contract",
+    "question": "In the master development and manufacturing agreement with Magenta and Bachem may be referred to individually as a \"Party\" or collectively as the \"Parties.\", can either party assign the agreement, and is consent required?"
+  },
+  {
+    "question_id": "C0169",
+    "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+    "clause_type": "Audit Rights",
+    "split": "test",
+    "category": "contract",
+    "question": "In the master development and manufacturing agreement with Magenta and Bachem may be referred to individually as a \"Party\" or collectively as the \"Parties.\", what audit or inspection rights does either party have?"
+  },
+  {
+    "question_id": "C0170",
+    "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+    "clause_type": "Cap On Liability",
+    "split": "test",
+    "category": "contract",
+    "question": "In the master development and manufacturing agreement with Magenta and Bachem may be referred to individually as a \"Party\" or collectively as the \"Parties.\", is either party's liability capped, and at what amount or formula?"
+  },
+  {
+    "question_id": "C0171",
+    "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+    "clause_type": "Expiration Date",
+    "split": "test",
+    "category": "contract",
+    "question": "In the master development and manufacturing agreement with Magenta and Bachem may be referred to individually as a \"Party\" or collectively as the \"Parties.\", when does the agreement expire or what is its initial term?"
+  },
+  {
+    "question_id": "C0172",
+    "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+    "clause_type": "Insurance",
+    "split": "test",
+    "category": "contract",
+    "question": "In the master development and manufacturing agreement with Magenta and Bachem may be referred to individually as a \"Party\" or collectively as the \"Parties.\", what insurance is either party required to maintain?"
+  },
+  {
+    "question_id": "C0173",
+    "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+    "clause_type": "Ip Ownership Assignment",
+    "split": "test",
+    "category": "contract",
+    "question": "In the master development and manufacturing agreement with Magenta and Bachem may be referred to individually as a \"Party\" or collectively as the \"Parties.\", how is ownership of intellectual property assigned between the parties?"
+  },
+  {
+    "question_id": "C0174",
+    "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+    "clause_type": "Irrevocable Or Perpetual License",
+    "split": "test",
+    "category": "contract",
+    "question": "In the master development and manufacturing agreement with Magenta and Bachem may be referred to individually as a \"Party\" or collectively as the \"Parties.\", is any licence granted on an irrevocable or perpetual basis?"
+  },
+  {
+    "question_id": "C0175",
+    "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+    "clause_type": "License Grant",
+    "split": "test",
+    "category": "contract",
+    "question": "In the master development and manufacturing agreement with Magenta and Bachem may be referred to individually as a \"Party\" or collectively as the \"Parties.\", what licence rights are granted, and what is their scope?"
+  },
+  {
+    "question_id": "C0176",
+    "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+    "clause_type": "Notice Period To Terminate Renewal",
+    "split": "test",
+    "category": "contract",
+    "question": "In the master development and manufacturing agreement with Magenta and Bachem may be referred to individually as a \"Party\" or collectively as the \"Parties.\", how much notice is required to stop the agreement renewing?"
+  },
+  {
+    "question_id": "C0177",
+    "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+    "clause_type": "Renewal Term",
+    "split": "test",
+    "category": "contract",
+    "question": "In the master development and manufacturing agreement with Magenta and Bachem may be referred to individually as a \"Party\" or collectively as the \"Parties.\", how does the agreement renew, and for how long?"
+  },
+  {
+    "question_id": "C0178",
+    "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+    "clause_type": "Termination For Convenience",
+    "split": "test",
+    "category": "contract",
+    "question": "In the master development and manufacturing agreement with Magenta and Bachem may be referred to individually as a \"Party\" or collectively as the \"Parties.\", can either party terminate for convenience, and on what notice?"
+  },
+  {
+    "question_id": "C0179",
+    "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+    "clause_type": "Uncapped Liability",
+    "split": "test",
+    "category": "contract",
+    "question": "In the master development and manufacturing agreement with Magenta and Bachem may be referred to individually as a \"Party\" or collectively as the \"Parties.\", which liabilities are excluded from any cap on liability?"
+  },
+  {
+    "question_id": "C0180",
+    "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+    "clause_type": "Warranty Duration",
+    "split": "test",
+    "category": "contract",
+    "question": "In the master development and manufacturing agreement with Magenta and Bachem may be referred to individually as a \"Party\" or collectively as the \"Parties.\", how long do the warranties last?"
+  },
+  {
+    "question_id": "C0181",
+    "contract": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+    "clause_type": "Affiliate License-Licensee",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the intellectual property agreement with Each shall be referred to as a \"Party\" and collectively as the \"Parties.\", does the licensee's affiliates receive rights under the licence granted?"
+  },
+  {
+    "question_id": "C0182",
+    "contract": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+    "clause_type": "Exclusivity",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the intellectual property agreement with Each shall be referred to as a \"Party\" and collectively as the \"Parties.\", does the agreement grant exclusivity, and on what terms?"
+  },
+  {
+    "question_id": "C0183",
+    "contract": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+    "clause_type": "Governing Law",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the intellectual property agreement with Each shall be referred to as a \"Party\" and collectively as the \"Parties.\", which jurisdiction's law governs the agreement?"
+  },
+  {
+    "question_id": "C0184",
+    "contract": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+    "clause_type": "License Grant",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the intellectual property agreement with Each shall be referred to as a \"Party\" and collectively as the \"Parties.\", what licence rights are granted, and what is their scope?"
+  },
+  {
+    "question_id": "C0185",
+    "contract": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+    "clause_type": "Revenue/Profit Sharing",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the intellectual property agreement with Each shall be referred to as a \"Party\" and collectively as the \"Parties.\", how is revenue or profit shared between the parties?"
+  },
+  {
+    "question_id": "C0186",
+    "contract": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+    "clause_type": "Anti-Assignment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with Shipper and Carrier may be referred to individually as a \"Party,\" or collectively as the \"Parties.\", can either party assign the agreement, and is consent required?"
+  },
+  {
+    "question_id": "C0187",
+    "contract": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+    "clause_type": "Audit Rights",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with Shipper and Carrier may be referred to individually as a \"Party,\" or collectively as the \"Parties.\", what audit or inspection rights does either party have?"
+  },
+  {
+    "question_id": "C0188",
+    "contract": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+    "clause_type": "Cap On Liability",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with Shipper and Carrier may be referred to individually as a \"Party,\" or collectively as the \"Parties.\", is either party's liability capped, and at what amount or formula?"
+  },
+  {
+    "question_id": "C0189",
+    "contract": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+    "clause_type": "Minimum Commitment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with Shipper and Carrier may be referred to individually as a \"Party,\" or collectively as the \"Parties.\", is there a minimum purchase, volume or payment commitment?"
+  },
+  {
+    "question_id": "C0190",
+    "contract": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+    "clause_type": "Notice Period To Terminate Renewal",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with Shipper and Carrier may be referred to individually as a \"Party,\" or collectively as the \"Parties.\", how much notice is required to stop the agreement renewing?"
+  },
+  {
+    "question_id": "C0191",
+    "contract": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+    "clause_type": "Renewal Term",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with Shipper and Carrier may be referred to individually as a \"Party,\" or collectively as the \"Parties.\", how does the agreement renew, and for how long?"
+  },
+  {
+    "question_id": "C0192",
+    "contract": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+    "clause_type": "Uncapped Liability",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with Shipper and Carrier may be referred to individually as a \"Party,\" or collectively as the \"Parties.\", which liabilities are excluded from any cap on liability?"
+  },
+  {
+    "question_id": "C0193",
+    "contract": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+    "clause_type": "Volume Restriction",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the transportation services agreement with Shipper and Carrier may be referred to individually as a \"Party,\" or collectively as the \"Parties.\", are there restrictions on volume or quantity?"
+  },
+  {
+    "question_id": "C0194",
+    "contract": "ScansourceInc_20190509_10-Q_EX-10.2_11661422_EX-10.2_Distributor Agreement.pdf",
+    "clause_type": "Governing Law",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the addendum to\n\nzebra\u00ae partnerconnect distributor agreement with \"Zebra\" and the \"Distributor\" are referred to collectively as 'Parties\" and individually as a \"Party\"., which jurisdiction's law governs the agreement?"
+  },
+  {
+    "question_id": "C0195",
+    "contract": "TALCOTTRESOLUTIONLIFEINSURANCECO-SEPARATEACCOUNTTWELVE_04_30_2020-EX-99.8(L)-SERVICE AGREEMENT.pdf",
+    "clause_type": "Anti-Assignment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the service agreement with Hartford Life Insurance Co., Inc., can either party assign the agreement, and is consent required?"
+  },
+  {
+    "question_id": "C0196",
+    "contract": "TALCOTTRESOLUTIONLIFEINSURANCECO-SEPARATEACCOUNTTWELVE_04_30_2020-EX-99.8(L)-SERVICE AGREEMENT.pdf",
+    "clause_type": "Audit Rights",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the service agreement with Hartford Life Insurance Co., Inc., what audit or inspection rights does either party have?"
+  },
+  {
+    "question_id": "C0197",
+    "contract": "TALCOTTRESOLUTIONLIFEINSURANCECO-SEPARATEACCOUNTTWELVE_04_30_2020-EX-99.8(L)-SERVICE AGREEMENT.pdf",
+    "clause_type": "Cap On Liability",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the service agreement with Hartford Life Insurance Co., Inc., is either party's liability capped, and at what amount or formula?"
+  },
+  {
+    "question_id": "C0198",
+    "contract": "TALCOTTRESOLUTIONLIFEINSURANCECO-SEPARATEACCOUNTTWELVE_04_30_2020-EX-99.8(L)-SERVICE AGREEMENT.pdf",
+    "clause_type": "Expiration Date",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the service agreement with Hartford Life Insurance Co., Inc., when does the agreement expire or what is its initial term?"
+  },
+  {
+    "question_id": "C0199",
+    "contract": "TALCOTTRESOLUTIONLIFEINSURANCECO-SEPARATEACCOUNTTWELVE_04_30_2020-EX-99.8(L)-SERVICE AGREEMENT.pdf",
+    "clause_type": "Termination For Convenience",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the service agreement with Hartford Life Insurance Co., Inc., can either party terminate for convenience, and on what notice?"
+  },
+  {
+    "question_id": "C0200",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Affiliate License-Licensee",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., does the licensee's affiliates receive rights under the licence granted?"
+  },
+  {
+    "question_id": "C0201",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Anti-Assignment",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., can either party assign the agreement, and is consent required?"
+  },
+  {
+    "question_id": "C0202",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Audit Rights",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., what audit or inspection rights does either party have?"
+  },
+  {
+    "question_id": "C0203",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Cap On Liability",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., is either party's liability capped, and at what amount or formula?"
+  },
+  {
+    "question_id": "C0204",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Covenant Not To Sue",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., does either party covenant not to sue or assert claims?"
+  },
+  {
+    "question_id": "C0205",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Exclusivity",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., does the agreement grant exclusivity, and on what terms?"
+  },
+  {
+    "question_id": "C0206",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Insurance",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., what insurance is either party required to maintain?"
+  },
+  {
+    "question_id": "C0207",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "License Grant",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., what licence rights are granted, and what is their scope?"
+  },
+  {
+    "question_id": "C0208",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Minimum Commitment",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., is there a minimum purchase, volume or payment commitment?"
+  },
+  {
+    "question_id": "C0209",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Non-Compete",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., does the agreement impose a non-compete restriction on either party?"
+  },
+  {
+    "question_id": "C0210",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Non-Transferable License",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., is the licence granted non-transferable or non-sublicensable?"
+  },
+  {
+    "question_id": "C0211",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Notice Period To Terminate Renewal",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., how much notice is required to stop the agreement renewing?"
+  },
+  {
+    "question_id": "C0212",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Post-Termination Services",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., what obligations survive termination or apply during wind-down?"
+  },
+  {
+    "question_id": "C0213",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Renewal Term",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., how does the agreement renew, and for how long?"
+  },
+  {
+    "question_id": "C0214",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Revenue/Profit Sharing",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., how is revenue or profit shared between the parties?"
+  },
+  {
+    "question_id": "C0215",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Rofr/Rofo/Rofn",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., does either party hold a right of first refusal, offer or negotiation?"
+  },
+  {
+    "question_id": "C0216",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Termination For Convenience",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., can either party terminate for convenience, and on what notice?"
+  },
+  {
+    "question_id": "C0217",
+    "contract": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+    "clause_type": "Volume Restriction",
+    "split": "test",
+    "category": "contract",
+    "question": "In the charter affiliate affiliation agreement with The TUBE Music Network, Inc., are there restrictions on volume or quantity?"
+  },
+  {
+    "question_id": "C0218",
+    "contract": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+    "clause_type": "Audit Rights",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the distributor agreement with Jaguar Investments, Inc. and its affiliates,, what audit or inspection rights does either party have?"
+  },
+  {
+    "question_id": "C0219",
+    "contract": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+    "clause_type": "Covenant Not To Sue",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the distributor agreement with Jaguar Investments, Inc. and its affiliates,, does either party covenant not to sue or assert claims?"
+  },
+  {
+    "question_id": "C0220",
+    "contract": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+    "clause_type": "Insurance",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the distributor agreement with Jaguar Investments, Inc. and its affiliates,, what insurance is either party required to maintain?"
+  },
+  {
+    "question_id": "C0221",
+    "contract": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+    "clause_type": "Minimum Commitment",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the distributor agreement with Jaguar Investments, Inc. and its affiliates,, is there a minimum purchase, volume or payment commitment?"
+  },
+  {
+    "question_id": "C0222",
+    "contract": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+    "clause_type": "Notice Period To Terminate Renewal",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the distributor agreement with Jaguar Investments, Inc. and its affiliates,, how much notice is required to stop the agreement renewing?"
+  },
+  {
+    "question_id": "C0223",
+    "contract": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+    "clause_type": "Post-Termination Services",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the distributor agreement with Jaguar Investments, Inc. and its affiliates,, what obligations survive termination or apply during wind-down?"
+  },
+  {
+    "question_id": "C0224",
+    "contract": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+    "clause_type": "Revenue/Profit Sharing",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the distributor agreement with Jaguar Investments, Inc. and its affiliates,, how is revenue or profit shared between the parties?"
+  },
+  {
+    "question_id": "C0225",
+    "contract": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+    "clause_type": "Warranty Duration",
+    "split": "dev",
+    "category": "contract",
+    "question": "In the distributor agreement with Jaguar Investments, Inc. and its affiliates,, how long do the warranties last?"
+  },
+  {
+    "question_id": "C0226",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "Anti-Assignment",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, can either party assign the agreement, and is consent required?"
+  },
+  {
+    "question_id": "C0227",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "Cap On Liability",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, is either party's liability capped, and at what amount or formula?"
+  },
+  {
+    "question_id": "C0228",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "Competitive Restriction Exception",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, what exceptions apply to the competitive or exclusivity restrictions?"
+  },
+  {
+    "question_id": "C0229",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "Covenant Not To Sue",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, does either party covenant not to sue or assert claims?"
+  },
+  {
+    "question_id": "C0230",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "Exclusivity",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, does the agreement grant exclusivity, and on what terms?"
+  },
+  {
+    "question_id": "C0231",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "Insurance",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, what insurance is either party required to maintain?"
+  },
+  {
+    "question_id": "C0232",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "Ip Ownership Assignment",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, how is ownership of intellectual property assigned between the parties?"
+  },
+  {
+    "question_id": "C0233",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "Irrevocable Or Perpetual License",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, is any licence granted on an irrevocable or perpetual basis?"
+  },
+  {
+    "question_id": "C0234",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "License Grant",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, what licence rights are granted, and what is their scope?"
+  },
+  {
+    "question_id": "C0235",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "Minimum Commitment",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, is there a minimum purchase, volume or payment commitment?"
+  },
+  {
+    "question_id": "C0236",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "No-Solicit Of Employees",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, does the agreement restrict soliciting or hiring the other party's employees?"
+  },
+  {
+    "question_id": "C0237",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "Non-Compete",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, does the agreement impose a non-compete restriction on either party?"
+  },
+  {
+    "question_id": "C0238",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "Non-Transferable License",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, is the licence granted non-transferable or non-sublicensable?"
+  },
+  {
+    "question_id": "C0239",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "Post-Termination Services",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, what obligations survive termination or apply during wind-down?"
+  },
+  {
+    "question_id": "C0240",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "Termination For Convenience",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, can either party terminate for convenience, and on what notice?"
+  },
+  {
+    "question_id": "C0241",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "Volume Restriction",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, are there restrictions on volume or quantity?"
+  },
+  {
+    "question_id": "C0242",
+    "contract": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+    "clause_type": "Warranty Duration",
+    "split": "test",
+    "category": "contract",
+    "question": "In the reseller agreement with TOUCHSTAR SOFTWARE CORPORATION, how long do the warranties last?"
+  },
+  {
+    "question_id": "C0243",
+    "contract": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.pdf",
+    "clause_type": "Cap On Liability",
+    "split": "test",
+    "category": "contract",
+    "question": "In the support and maintenance agreement with _______________________________, is either party's liability capped, and at what amount or formula?"
+  },
+  {
+    "question_id": "C0244",
+    "contract": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.pdf",
+    "clause_type": "Expiration Date",
+    "split": "test",
+    "category": "contract",
+    "question": "In the support and maintenance agreement with _______________________________, when does the agreement expire or what is its initial term?"
+  },
+  {
+    "question_id": "C0245",
+    "contract": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.pdf",
+    "clause_type": "Governing Law",
+    "split": "test",
+    "category": "contract",
+    "question": "In the support and maintenance agreement with _______________________________, which jurisdiction's law governs the agreement?"
+  },
+  {
+    "question_id": "C0246",
+    "contract": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.pdf",
+    "clause_type": "Notice Period To Terminate Renewal",
+    "split": "test",
+    "category": "contract",
+    "question": "In the support and maintenance agreement with _______________________________, how much notice is required to stop the agreement renewing?"
+  },
+  {
+    "question_id": "C0247",
+    "contract": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.pdf",
+    "clause_type": "Renewal Term",
+    "split": "test",
+    "category": "contract",
+    "question": "In the support and maintenance agreement with _______________________________, how does the agreement renew, and for how long?"
+  },
+  {
+    "question_id": "C0248",
+    "contract": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+    "clause_type": "Affiliate License-Licensee",
+    "split": "test",
+    "category": "contract",
+    "question": "In the collaboration agreement with hereinafter BII an XENCOR each shall also be called \"Party\" and collectively \"Parties\" as the case may be)., does the licensee's affiliates receive rights under the licence granted?"
+  },
+  {
+    "question_id": "C0249",
+    "contract": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+    "clause_type": "Anti-Assignment",
+    "split": "test",
+    "category": "contract",
+    "question": "In the collaboration agreement with hereinafter BII an XENCOR each shall also be called \"Party\" and collectively \"Parties\" as the case may be)., can either party assign the agreement, and is consent required?"
+  },
+  {
+    "question_id": "C0250",
+    "contract": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+    "clause_type": "Cap On Liability",
+    "split": "test",
+    "category": "contract",
+    "question": "In the collaboration agreement with hereinafter BII an XENCOR each shall also be called \"Party\" and collectively \"Parties\" as the case may be)., is either party's liability capped, and at what amount or formula?"
+  },
+  {
+    "question_id": "C0251",
+    "contract": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+    "clause_type": "Competitive Restriction Exception",
+    "split": "test",
+    "category": "contract",
+    "question": "In the collaboration agreement with hereinafter BII an XENCOR each shall also be called \"Party\" and collectively \"Parties\" as the case may be)., what exceptions apply to the competitive or exclusivity restrictions?"
+  },
+  {
+    "question_id": "C0252",
+    "contract": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+    "clause_type": "Exclusivity",
+    "split": "test",
+    "category": "contract",
+    "question": "In the collaboration agreement with hereinafter BII an XENCOR each shall also be called \"Party\" and collectively \"Parties\" as the case may be)., does the agreement grant exclusivity, and on what terms?"
+  },
+  {
+    "question_id": "C0253",
+    "contract": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+    "clause_type": "Insurance",
+    "split": "test",
+    "category": "contract",
+    "question": "In the collaboration agreement with hereinafter BII an XENCOR each shall also be called \"Party\" and collectively \"Parties\" as the case may be)., what insurance is either party required to maintain?"
+  },
+  {
+    "question_id": "C0254",
+    "contract": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+    "clause_type": "Ip Ownership Assignment",
+    "split": "test",
+    "category": "contract",
+    "question": "In the collaboration agreement with hereinafter BII an XENCOR each shall also be called \"Party\" and collectively \"Parties\" as the case may be)., how is ownership of intellectual property assigned between the parties?"
+  },
+  {
+    "question_id": "C0255",
+    "contract": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+    "clause_type": "Irrevocable Or Perpetual License",
+    "split": "test",
+    "category": "contract",
+    "question": "In the collaboration agreement with hereinafter BII an XENCOR each shall also be called \"Party\" and collectively \"Parties\" as the case may be)., is any licence granted on an irrevocable or perpetual basis?"
+  },
+  {
+    "question_id": "C0256",
+    "contract": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+    "clause_type": "Joint Ip Ownership",
+    "split": "test",
+    "category": "contract",
+    "question": "In the collaboration agreement with hereinafter BII an XENCOR each shall also be called \"Party\" and collectively \"Parties\" as the case may be)., is any intellectual property jointly owned by the parties?"
+  },
+  {
+    "question_id": "C0257",
+    "contract": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+    "clause_type": "License Grant",
+    "split": "test",
+    "category": "contract",
+    "question": "In the collaboration agreement with hereinafter BII an XENCOR each shall also be called \"Party\" and collectively \"Parties\" as the case may be)., what licence rights are granted, and what is their scope?"
+  },
+  {
+    "question_id": "C0258",
+    "contract": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+    "clause_type": "Non-Transferable License",
+    "split": "test",
+    "category": "contract",
+    "question": "In the collaboration agreement with hereinafter BII an XENCOR each shall also be called \"Party\" and collectively \"Parties\" as the case may be)., is the licence granted non-transferable or non-sublicensable?"
+  },
+  {
+    "question_id": "C0259",
+    "contract": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+    "clause_type": "Rofr/Rofo/Rofn",
+    "split": "test",
+    "category": "contract",
+    "question": "In the collaboration agreement with hereinafter BII an XENCOR each shall also be called \"Party\" and collectively \"Parties\" as the case may be)., does either party hold a right of first refusal, offer or negotiation?"
+  },
+  {
+    "question_id": "C0260",
+    "contract": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+    "clause_type": "Uncapped Liability",
+    "split": "test",
+    "category": "contract",
+    "question": "In the collaboration agreement with hereinafter BII an XENCOR each shall also be called \"Party\" and collectively \"Parties\" as the case may be)., which liabilities are excluded from any cap on liability?"
+  },
+  {
+    "question_id": "C0261",
+    "contract": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+    "clause_type": "Warranty Duration",
+    "split": "test",
+    "category": "contract",
+    "question": "In the collaboration agreement with hereinafter BII an XENCOR each shall also be called \"Party\" and collectively \"Parties\" as the case may be)., how long do the warranties last?"
+  }
+]

@@ -1,0 +1,29 @@
+chunking:
+  chunk_size: 512        # tokens per chunk
+  chunk_overlap: 64      # overlap between adjacent chunks
+
+dense:
+  model: "BAAI/bge-base-en-v1.5"   # chosen by measurement, ADR-015
+  top_k: 50              # deep pool: candidates survive RRF dilution, reranker filters
+
+sparse:
+  top_k: 50              # deep pool: see dense.top_k
+
+rrf:
+  k: 60                  # RRF constant (default from original paper)
+  rerank_depth: 20       # fused candidates sent to the reranker; 20 matched
+                         # depth 50's quality at 42% of the latency (DEV n=160)
+
+reranker:
+  # Chosen by measurement on CUAD DEV n=160. ms-marco-MiniLM-L-6-v2 and
+  # bge-reranker-base were both significantly WORSE than no reranker at all —
+  # see PROGRESS.md "Rejected alternatives". Do not swap this without re-running
+  # the DEV ablation.
+  model: "BAAI/bge-reranker-v2-m3"
+  fp16: true             # ~1.1GB VRAM instead of ~2.2GB; fits beside bge-base
+  top_n: 5               # evidence chunks passed to the LLM (also bounds
+                         # confidential exposure per request — Context.md 26.B)
+
+query_router:
+  enable_web_search: false   # disabled by default
+  enable_database: false     # disabled until structured DB is set up

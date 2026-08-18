@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment / secrets
+.env
+*.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data (raw data and large files are not committed)
+data/raw/
+data/processed/
+
+# Downloaded source datasets (CUAD, EDGAR pulls) — reproduce via scripts
+data/evaluation/datasets/
+
+# Keep the curated evaluation set — it IS committed
+!data/evaluation/questions.json
+!data/evaluation/ground_truth.json
+
+# Artifacts (generated — rebuild from scripts)
+artifacts/indexes/
+artifacts/embeddings/
+artifacts/reranker/
+artifacts/reports/
+
+# Evaluation reports (generated)
+artifacts/evaluation/reports/
+artifacts/evaluation/metrics/
+
+# Keep error_analysis examples (they are curated)
+!artifacts/evaluation/error_analysis/
+
+# Logs
+*.log
+logs/
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# mypy
+.mypy_cache/
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Local prototype runtime state
+.venv-ui/
+sentineliq.db
+smoke.db
+data/uploads/

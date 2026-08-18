@@ -1,0 +1,5 @@
+# Streamlit UI only. It talks to the API over HTTP and must NOT depend on
+# torch, transformers or faiss — pandas and torch conflict in one environment
+# (see PROGRESS.md, 2026-08-16).
+streamlit>=1.40
+requests>=2.32

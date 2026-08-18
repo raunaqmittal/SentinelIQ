@@ -1,0 +1,1473 @@
+{
+  "summary": {
+    "stage": "8 \u2014 single-agent grounded generation baseline",
+    "generator_model": "openai/gpt-oss-120b (open-weight, hosted by Groq)",
+    "judge_model": "llama-3.1-8b-instant",
+    "retrieval": "frozen: dense@50 + BM25@50 -> RRF k=60 -> top20 -> bge-reranker-v2-m3 -> top5",
+    "split": "CUAD DEV only \u2014 frozen TEST never loaded",
+    "n_total": 35,
+    "n_answerable": 30,
+    "n_controls": 5,
+    "deterministic": {
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.20588235294117646,
+      "numeric_grounding": 0.5529411764705883,
+      "retrieval_hit_rate": 0.43333333333333335,
+      "abstention_rate_controls": 0.6,
+      "false_abstention_rate": 0.43333333333333335,
+      "abstention_accuracy_overall": 0.5714285714285714
+    },
+    "judge_INVALID": {
+      "faithfulness": 0.0,
+      "relevance": 0.0,
+      "completeness": 0.0,
+      "status": "INVALID \u2014 DO NOT QUOTE AS MODEL PERFORMANCE",
+      "reason": "llama-3.1-8b-instant collapsed all three scores to 0.0 on every answer while writing reasons that contradict those scores (e.g. 'the answer is partially correct' scored 0.0 relevance). This measures judge failure, not generator quality. Re-judging with a stronger model is required."
+    },
+    "cost_tokens": {
+      "generator_input": 138546,
+      "generator_output": 8639,
+      "note": "generator calls only \u2014 judge tokens were not recorded per-record"
+    },
+    "latency_ms": {
+      "retrieval_mean": 802.7542857142857,
+      "generation_mean": 1444.54
+    },
+    "corrections_applied": [
+      "numeric_grounding recomputed after stripping [chunk-id] citations; the original counted digits inside citation ids as factual claims"
+    ]
+  },
+  "records": [
+    {
+      "question_id": "C0225",
+      "question": "In the distributor agreement with Jaguar Investments, Inc. and its affiliates,, how long do the warranties last?",
+      "clause_type": "Warranty Duration",
+      "contract": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+      "family": "governance & admin",
+      "answerable": true,
+      "relevant": [
+        "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT_0018",
+        "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT_0019",
+        "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT_0023",
+        "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT_0009",
+        "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT_0017",
+        "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT_0020"
+      ],
+      "supplied": [
+        "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT_0017",
+        "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT_0000",
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0045",
+        "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT_0009",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0052"
+      ],
+      "answer": "The agreement provides a one\u2011year limited warranty on WLI\u2019s hardware products\u202f\u2014\u202fWLI will supply a one\u2011year limited warranty for its hardware under the \u201cProduct Warranty Information\u201d section\u202f[VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT_0017].",
+      "citations": [
+        "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT_0017"
+      ],
+      "abstained": false,
+      "retrieval_ms": 1327.6,
+      "generation_ms": 1281.0,
+      "input_tokens": 4164,
+      "output_tokens": 230,
+      "citation_validity": 1.0,
+      "citation_accuracy": 1.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": true,
+      "retrieval_hit": true,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The answer does not mention the duration of the warranties in the distributor agreement, but rather a one-year limited warranty for WLI\u2019s hardware products in a separate section."
+      },
+      "numeric_grounding_original": 0.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 1.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0187",
+      "question": "In the transportation services agreement with Shipper and Carrier may be referred to individually as a \"Party,\" or collectively as the \"Parties.\", what audit or inspection rights does either party have?",
+      "clause_type": "Audit Rights",
+      "contract": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+      "family": "governance & admin",
+      "answerable": true,
+      "relevant": [
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0008",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0009"
+      ],
+      "supplied": [
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0000",
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0001",
+        "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT_0000",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0008",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0040"
+      ],
+      "answer": "The agreement gives Shipper the right to audit Carrier\u2019s books and records\u202f\u2013\u202fsolely to verify that any rate increase under Section\u202f6.2 is justified by the actual, reasonable costs incurred\u202f[RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0008].\u202fCarrier, in turn, may send a representative onto the premises where Shipper\u2019s product is received or delivered to inspect, measure, test and examine any storage receptacles or meters used for the service\u202f[RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0040].",
+      "citations": [
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0008",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0040"
+      ],
+      "abstained": false,
+      "retrieval_ms": 832.7,
+      "generation_ms": 1655.9,
+      "input_tokens": 4672,
+      "output_tokens": 429,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.5,
+      "numeric_grounding": 1.0,
+      "abstention_correct": true,
+      "retrieval_hit": true,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The answer is partially correct but also includes information not present in the evidence, and it does not address the question about audit or inspection rights in the transportation services agreement."
+      },
+      "numeric_grounding_original": 0.42857142857142855,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.5,
+      "numeric_claims": [
+        "6.2"
+      ]
+    },
+    {
+      "question_id": "C0143",
+      "question": "In the promotion agreement with Janssen Biotech, Inc., how is revenue or profit shared between the parties?",
+      "clause_type": "Revenue/Profit Sharing",
+      "contract": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+      "family": "governance & admin",
+      "answerable": true,
+      "relevant": [
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0023",
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0024"
+      ],
+      "supplied": [
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0002",
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0000",
+        "JNJ_item_7_0007",
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0012",
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0015"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 729.2,
+      "generation_ms": 917.6,
+      "input_tokens": 2903,
+      "output_tokens": 155,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": false,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0186",
+      "question": "In the transportation services agreement with Shipper and Carrier may be referred to individually as a \"Party,\" or collectively as the \"Parties.\", can either party assign the agreement, and is consent required?",
+      "clause_type": "Anti-Assignment",
+      "contract": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+      "family": "governance & admin",
+      "answerable": true,
+      "relevant": [
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0021"
+      ],
+      "supplied": [
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0022",
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0001",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0000",
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0020",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0021"
+      ],
+      "answer": "Either Party may assign the agreement, but only to an Affiliate of that Party without the other Party\u2019s consent; any other assignment requires the prior written consent of the other Party, which may not be unreasonably withheld\u3010RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0022\u3011. The agreement further states that, absent the Affiliate exception, an assignment \u201cmay not be assigned\u2026 without the prior written consent of the other Party\u201d\u3010RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0021\u3011.",
+      "citations": [],
+      "abstained": false,
+      "retrieval_ms": 1189.0,
+      "generation_ms": 1749.0,
+      "input_tokens": 5103,
+      "output_tokens": 419,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 0.3333333333333333,
+      "abstention_correct": true,
+      "retrieval_hit": true,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The answer contradicts the evidence, as it states that consent is required for any assignment, whereas the evidence states that consent is only required for assignments not to an Affiliate."
+      },
+      "numeric_grounding_original": 0.3333333333333333,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": [
+        "0021",
+        "0022",
+        "10.5",
+        "20150417",
+        "8",
+        "9045501"
+      ]
+    },
+    {
+      "question_id": "C0125",
+      "question": "In the franchise agreement with We and you may collectively be referred to as the \"Parties.\", what audit or inspection rights does either party have?",
+      "clause_type": "Audit Rights",
+      "contract": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+      "family": "governance & admin",
+      "answerable": true,
+      "relevant": [
+        "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT_0029",
+        "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT_0028"
+      ],
+      "supplied": [
+        "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT_0002",
+        "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT_0029",
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0050",
+        "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT_0001",
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0002"
+      ],
+      "answer": "The franchisor (and its authorized agents) may require the franchisee to keep complete, accurate records and to permit inspection of those books at any reasonable time.  During the term and for two\u202fyears thereafter the franchisor may request, receive, inspect and audit any records related to Gross Rooms Revenue, fees or other amounts due, and may also require a certified public accountant to certify those figures.  If an audit shows an under\u2011payment, the franchisee must promptly pay the deficiency plus interest and may also be liable for the audit costs.  \u3010HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT_0029\u3011",
+      "citations": [],
+      "abstained": false,
+      "retrieval_ms": 865.4,
+      "generation_ms": 1292.0,
+      "input_tokens": 4484,
+      "output_tokens": 325,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 0.0,
+      "abstention_correct": true,
+      "retrieval_hit": true,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The answer does not mention the franchisor's right to audit or inspect records for compliance with the terms of the agreement, nor does it mention the franchisor's right to request a certified public accountant to certify figures, nor does it mention the franchisee's liability for audit costs."
+      },
+      "numeric_grounding_original": 0.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": [
+        "0029",
+        "04",
+        "07",
+        "10.26",
+        "2014"
+      ]
+    },
+    {
+      "question_id": "C0001",
+      "question": "In the reseller agreement with 695014 B.C. Ltd. dba Galaxy Telecom, can either party assign the agreement, and is consent required?",
+      "clause_type": "Anti-Assignment",
+      "contract": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+      "family": "governance & admin",
+      "answerable": true,
+      "relevant": [
+        "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement_0013",
+        "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement_0014"
+      ],
+      "supplied": [
+        "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement_0014",
+        "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement_0000",
+        "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT_0028",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0022",
+        "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement_0015"
+      ],
+      "answer": "The agreement states that **neither party may assign it without the other party\u2019s prior written consent**, but it makes an exception for Galaxy: Telnet agrees that Galaxy may assign the entire agreement to an affiliate (or sell/transfer receivables) without Telnet\u2019s consent.\u202f[ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement_0014]",
+      "citations": [
+        "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement_0014"
+      ],
+      "abstained": false,
+      "retrieval_ms": 731.5,
+      "generation_ms": 1306.6,
+      "input_tokens": 5079,
+      "output_tokens": 295,
+      "citation_validity": 1.0,
+      "citation_accuracy": 1.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": true,
+      "retrieval_hit": true,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The answer contradicts the evidence, as it states that neither party may assign the agreement without consent, but the evidence shows that Galaxy is allowed to assign the agreement to an affiliate without Telnet's consent."
+      },
+      "numeric_grounding_original": 0.4,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 1.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0153",
+      "question": "In the collaboration agreement with MacroGenics and Green Cross may be referred to herein individually as a \"Party\" or collectively as the \"Parties., is any intellectual property jointly owned by the parties?",
+      "clause_type": "Joint Ip Ownership",
+      "contract": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+      "family": "ip & licensing",
+      "answerable": true,
+      "relevant": [
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0058",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0057",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0055",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0056",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0059"
+      ],
+      "supplied": [
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0055",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0056",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0052",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0059",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0008"
+      ],
+      "answer": "Yes. The agreement provides that data, results and inventions created jointly by MacroGenics and Green\u202fCross (\u201cJointly\u202fOwned\u202fIP\u201d) are owned jointly by the Parties, each holding an undivided half\u2011interest and the right to exploit them independently\u3010MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0055\u3011.",
+      "citations": [],
+      "abstained": false,
+      "retrieval_ms": 825.4,
+      "generation_ms": 1390.8,
+      "input_tokens": 3368,
+      "output_tokens": 306,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 0.0,
+      "abstention_correct": true,
+      "retrieval_hit": true,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The answer does not mention the specific section of the agreement that states the joint ownership of intellectual property, and it also does not mention the requirement for each party to have the right to exploit the joint IP independently."
+      },
+      "numeric_grounding_original": 0.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": [
+        "0055",
+        "02",
+        "08",
+        "10",
+        "2013"
+      ]
+    },
+    {
+      "question_id": "C0094",
+      "question": "In the cologuard\u00ae promotion agreement with Pfizer and Exact may each be referred to herein individually as a \"Party\" and collectively as the \"Parties\"., is the licence granted non-transferable or non-sublicensable?",
+      "clause_type": "Non-Transferable License",
+      "contract": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+      "family": "ip & licensing",
+      "answerable": true,
+      "relevant": [
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0024",
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0025"
+      ],
+      "supplied": [
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0025",
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0002",
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0027",
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0056",
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0055"
+      ],
+      "answer": "The agreement states that the license granted to Pfizer \u201cshall be non\u2011transferable and non\u2011sublicensable.\u201d\u3010ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0025\u3011",
+      "citations": [],
+      "abstained": false,
+      "retrieval_ms": 772.5,
+      "generation_ms": 1075.1,
+      "input_tokens": 2958,
+      "output_tokens": 179,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 0.2,
+      "abstention_correct": true,
+      "retrieval_hit": true,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The answer is not supported by the evidence, and the question is not fully addressed."
+      },
+      "numeric_grounding_original": 0.2,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": [
+        "0025",
+        "10.1",
+        "11331629",
+        "20180822",
+        "8"
+      ]
+    },
+    {
+      "question_id": "C0152",
+      "question": "In the collaboration agreement with MacroGenics and Green Cross may be referred to herein individually as a \"Party\" or collectively as the \"Parties., is any licence granted on an irrevocable or perpetual basis?",
+      "clause_type": "Irrevocable Or Perpetual License",
+      "contract": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+      "family": "ip & licensing",
+      "answerable": true,
+      "relevant": [
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0041"
+      ],
+      "supplied": [
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0000",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0041",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0052",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0039",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0042"
+      ],
+      "answer": "Yes.  Section\u202f10.4 grants Green\u202fCross\u2019s clinical data to MacroGenics under a \u201cnon\u2011exclusive, royalty\u2011free, **perpetual** license, with the right to grant sublicenses\u201d for use of that data outside the Territory\u202f\u3010MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0041\u3011.  Other licenses (e.g., the exclusive license to Green\u202fCross) are limited to the Term and are not irrevocable or perpetual.",
+      "citations": [],
+      "abstained": false,
+      "retrieval_ms": 743.2,
+      "generation_ms": 1252.6,
+      "input_tokens": 3410,
+      "output_tokens": 346,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 0.3333333333333333,
+      "abstention_correct": true,
+      "retrieval_hit": true,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The answer contradicts the evidence, as Section 10.4 grants a perpetual license, but it is not irrevocable. Additionally, the answer does not address the question of whether any license is granted on an irrevocable basis, and it incorrectly states that other licenses are limited to the Term."
+      },
+      "numeric_grounding_original": 0.3333333333333333,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": [
+        "0041",
+        "02",
+        "08",
+        "10",
+        "10.4",
+        "2013"
+      ]
+    },
+    {
+      "question_id": "C0099",
+      "question": "In the media license agreement with doing business as Pro Football Hall of Fame, does the licensee's affiliates receive rights under the licence granted?",
+      "clause_type": "Affiliate License-Licensee",
+      "contract": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+      "family": "ip & licensing",
+      "answerable": true,
+      "relevant": [
+        "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement_0004",
+        "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement_0005"
+      ],
+      "supplied": [
+        "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement_0000",
+        "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement_0006",
+        "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement_0022",
+        "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement_0003",
+        "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement_0013"
+      ],
+      "answer": "Yes. The agreement provides that the Village Media Company\u2019s affiliates (its permitted licensees) may continue to fully exploit the HOFV Works under the license granted by PFHOF, subject to the license term and any rights\u2011restriction limitations\u3010GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement_0003\u3011.",
+      "citations": [],
+      "abstained": false,
+      "retrieval_ms": 981.6,
+      "generation_ms": 1612.5,
+      "input_tokens": 3053,
+      "output_tokens": 365,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 0.4,
+      "abstention_correct": true,
+      "retrieval_hit": false,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The answer contradicts the evidence, which states that the Village Media Company's affiliates (its permitted licensees) may continue to fully exploit the HOFV Works under the license granted by PFHOF, but only after the termination or expiration of this Agreement, and subject to the license term and any rights-restriction limitations. The answer also omits the important condition that the license granted by PFHOF is subject to any rights-restriction limitations."
+      },
+      "numeric_grounding_original": 0.4,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": [
+        "0003",
+        "10.6",
+        "11951677",
+        "20200123",
+        "4"
+      ]
+    },
+    {
+      "question_id": "C0043",
+      "question": "In the celebrity endorsement agreement with Joseph Theismann, does the agreement grant an unlimited or all-you-can-eat licence?",
+      "clause_type": "Unlimited/All-You-Can-Eat-License",
+      "contract": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+      "family": "ip & licensing",
+      "answerable": true,
+      "relevant": [
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0000"
+      ],
+      "supplied": [
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0000",
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0004",
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0001",
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0009",
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0005"
+      ],
+      "answer": "The agreement expressly gives Bizzingo an **unlimited right and privilege** to use Theismann\u2019s name, likeness and related \u201cProperty\u201d worldwide during the term of the contract\u3010BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0000\u3011.",
+      "citations": [],
+      "abstained": false,
+      "retrieval_ms": 679.4,
+      "generation_ms": 1051.0,
+      "input_tokens": 3070,
+      "output_tokens": 186,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 0.2,
+      "abstention_correct": true,
+      "retrieval_hit": true,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The agreement does not explicitly state that it is an 'all-you-can-eat' license, but rather an unlimited right and privilege to use Theismann's name and likeness, which may not necessarily imply an all-you-can-eat license. The agreement also specifies that the use of Theismann's name and likeness is subject to certain terms and conditions."
+      },
+      "numeric_grounding_original": 0.2,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": [
+        "0000",
+        "10.17",
+        "20120322",
+        "7504499",
+        "8"
+      ]
+    },
+    {
+      "question_id": "C0181",
+      "question": "In the intellectual property agreement with Each shall be referred to as a \"Party\" and collectively as the \"Parties.\", does the licensee's affiliates receive rights under the licence granted?",
+      "clause_type": "Affiliate License-Licensee",
+      "contract": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+      "family": "ip & licensing",
+      "answerable": true,
+      "relevant": [
+        "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT_0002"
+      ],
+      "supplied": [
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0045",
+        "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT_0000",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0060",
+        "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3)_0043",
+        "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT_0007"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 838.2,
+      "generation_ms": 1081.8,
+      "input_tokens": 3548,
+      "output_tokens": 204,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": false,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0145",
+      "question": "In the promotion agreement with Janssen Biotech, Inc., which liabilities are excluded from any cap on liability?",
+      "clause_type": "Uncapped Liability",
+      "contract": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+      "family": "liability & risk",
+      "answerable": true,
+      "relevant": [
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0053",
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0054"
+      ],
+      "supplied": [
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0002",
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0000",
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0050",
+        "JNJ_item_7_0007",
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0061"
+      ],
+      "answer": "The agreement states that Janssen\u2019s indemnification obligation covers all \u201cliabilities, costs, fines, penalties, orders of any Governmental Authorities, taxes, expenses, or amounts paid as damages or in settlement\u201d arising from a third\u2011party claim, and these types of losses are not subject to any overall cap on liability\u3010IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0050\u3011.",
+      "citations": [],
+      "abstained": false,
+      "retrieval_ms": 736.5,
+      "generation_ms": 1194.0,
+      "input_tokens": 2904,
+      "output_tokens": 284,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 0.2,
+      "abstention_correct": true,
+      "retrieval_hit": false,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The answer contradicts the evidence, as the agreement does not explicitly state that certain liabilities are excluded from any cap on liability."
+      },
+      "numeric_grounding_original": 0.2,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": [
+        "0050",
+        "07",
+        "08",
+        "10.1",
+        "2019"
+      ]
+    },
+    {
+      "question_id": "C0115",
+      "question": "In the sales, marketing, distribution, and supply agreement with Scientific Products Pharmaceutical Co. LTD., does the agreement provide for liquidated damages or a penalty?",
+      "clause_type": "Liquidated Damages",
+      "contract": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+      "family": "liability & risk",
+      "answerable": true,
+      "relevant": [
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0015"
+      ],
+      "supplied": [
+        "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT_0040",
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0000",
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0016",
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0018",
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0019"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 802.2,
+      "generation_ms": 1027.4,
+      "input_tokens": 5059,
+      "output_tokens": 97,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": false,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0138",
+      "question": "In the promotion agreement with Janssen Biotech, Inc., what insurance is either party required to maintain?",
+      "clause_type": "Insurance",
+      "contract": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+      "family": "liability & risk",
+      "answerable": true,
+      "relevant": [
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0075"
+      ],
+      "supplied": [
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0002",
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0035",
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0000",
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0046",
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0049"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 750.6,
+      "generation_ms": 842.4,
+      "input_tokens": 2932,
+      "output_tokens": 91,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": false,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0130",
+      "question": "In the franchise agreement with We and you may collectively be referred to as the \"Parties.\", what insurance is either party required to maintain?",
+      "clause_type": "Insurance",
+      "contract": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+      "family": "liability & risk",
+      "answerable": true,
+      "relevant": [
+        "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT_0014",
+        "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT_0018"
+      ],
+      "supplied": [
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0064",
+        "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT_0018",
+        "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT_0002",
+        "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT_0010",
+        "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement_0019"
+      ],
+      "answer": "Both parties must, after the Effective Date, keep insurance of the types and minimum limits set out in the Agreement\u2019s \u201cStandards.\u201d\u202fThe policies must be issued by insurers meeting the specified minimum ratings, name the parties required as additional insureds, and include the required endorsements and notice provisions\u202f[HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT_0002].",
+      "citations": [
+        "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT_0002"
+      ],
+      "abstained": false,
+      "retrieval_ms": 745.3,
+      "generation_ms": 1376.7,
+      "input_tokens": 4735,
+      "output_tokens": 304,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": true,
+      "retrieval_hit": true,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The answer does not accurately reflect the evidence, which states that the insurance requirements are set out in the Agreement's 'Standards', not explicitly stated in the provided text."
+      },
+      "numeric_grounding_original": 0.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0083",
+      "question": "In the transportation agreement with Shipper and Transporter may be referred to herein individually as a \"Party\" or collectively as the \"Parties\"., which liabilities are excluded from any cap on liability?",
+      "clause_type": "Uncapped Liability",
+      "contract": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+      "family": "liability & risk",
+      "answerable": true,
+      "relevant": [
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0025"
+      ],
+      "supplied": [
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0001",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0000",
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0024",
+        "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT_0000",
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0020"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 781.8,
+      "generation_ms": 2105.5,
+      "input_tokens": 4744,
+      "output_tokens": 154,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": false,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0038",
+      "question": "In the celebrity endorsement agreement with Joseph Theismann, what insurance is either party required to maintain?",
+      "clause_type": "Insurance",
+      "contract": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+      "family": "liability & risk",
+      "answerable": true,
+      "relevant": [
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0006"
+      ],
+      "supplied": [
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0007",
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0064",
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0000",
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0004",
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0009"
+      ],
+      "answer": "The agreement requires the parties to keep liability insurance in force \u2013 Bizzingo must maintain the liability insurance specified in the contract.\u202f[ BizzingoInc_20120322_8\u2011K_EX\u201110.17_7504499_EX\u201110.17_Endorsement Agreement_0007 ]",
+      "citations": [
+        "BizzingoInc_20120322_8\u2011K_EX\u201110.17_7504499_EX\u201110.17_Endorsement Agreement_0007"
+      ],
+      "abstained": false,
+      "retrieval_ms": 686.7,
+      "generation_ms": 1540.4,
+      "input_tokens": 3081,
+      "output_tokens": 276,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": true,
+      "retrieval_hit": false,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The answer is partially correct but the evidence cited does not support the claim that Bizzingo must maintain the liability insurance specified in the contract. The evidence only mentions that Bizzingo must maintain liability insurance as provided in the contract, but does not specify the details of the insurance."
+      },
+      "numeric_grounding_original": 0.2,
+      "citation_validity_original": 0.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0095",
+      "question": "In the cologuard\u00ae promotion agreement with Pfizer and Exact may each be referred to herein individually as a \"Party\" and collectively as the \"Parties\"., does either party hold a right of first refusal, offer or negotiation?",
+      "clause_type": "Rofr/Rofo/Rofn",
+      "contract": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+      "family": "restrictions",
+      "answerable": true,
+      "relevant": [
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0026",
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0027",
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0025"
+      ],
+      "supplied": [
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0002",
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0025",
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0061",
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0024",
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0055"
+      ],
+      "answer": "Yes. The agreement gives Pfizer a **right of first negotiation**: if Exact intends to grant an exclusive commercial license for the product outside the U.S., Exact must notify Pfizer, which then has 30\u202fdays to respond before Exact can proceed with a third\u2011party deal\u3010ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0025\u3011.",
+      "citations": [],
+      "abstained": false,
+      "retrieval_ms": 821.6,
+      "generation_ms": 1308.3,
+      "input_tokens": 2967,
+      "output_tokens": 269,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 0.3333333333333333,
+      "abstention_correct": true,
+      "retrieval_hit": true,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The answer contradicts the evidence, as the agreement actually grants Exact a right of first negotiation, not Pfizer."
+      },
+      "numeric_grounding_original": 0.3333333333333333,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": [
+        "0025",
+        "10.1",
+        "11331629",
+        "20180822",
+        "30",
+        "8"
+      ]
+    },
+    {
+      "question_id": "C0079",
+      "question": "In the transportation agreement with Shipper and Transporter may be referred to herein individually as a \"Party\" or collectively as the \"Parties\"., is there a minimum purchase, volume or payment commitment?",
+      "clause_type": "Minimum Commitment",
+      "contract": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+      "family": "restrictions",
+      "answerable": true,
+      "relevant": [
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0005"
+      ],
+      "supplied": [
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0001",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0009",
+        "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT_0000",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0000",
+        "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT_0007"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 941.2,
+      "generation_ms": 1110.4,
+      "input_tokens": 4278,
+      "output_tokens": 144,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": false,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0113",
+      "question": "In the sales, marketing, distribution, and supply agreement with Scientific Products Pharmaceutical Co. LTD., does the agreement grant exclusivity, and on what terms?",
+      "clause_type": "Exclusivity",
+      "contract": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+      "family": "restrictions",
+      "answerable": true,
+      "relevant": [
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0002",
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0013",
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0003"
+      ],
+      "supplied": [
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0013",
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0003",
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0000",
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0018",
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0016"
+      ],
+      "answer": "Yes. The agreement gives SCIEN an exclusive license to use the \u201cInterferon\u202falfa\u2011n3 (human leukocyte derived)\u201d trademark in the Territory for the full term of the agreement, and that right ends when the agreement expires or is terminated\u202f[HEMISPHERX\u202f-\u202fSales,\u202fMarketing,\u202fDistribution,\u202fand\u202fSupply\u202fAgreement_0013]. It also obligates HEMISPHERX to supply the product to SCIEN on an exclusive basis in the Territory (with a minimum six\u2011month expiry from shipment)\u202f[HEMISPHERX\u202f-\u202fSales,\u202fMarketing,\u202fDistribution,\u202fand\u202fSupply\u202fAgreement_0003].",
+      "citations": [
+        "HEMISPHERX\u202f-\u202fSales,\u202fMarketing,\u202fDistribution,\u202fand\u202fSupply\u202fAgreement_0013",
+        "HEMISPHERX\u202f-\u202fSales,\u202fMarketing,\u202fDistribution,\u202fand\u202fSupply\u202fAgreement_0003"
+      ],
+      "abstained": false,
+      "retrieval_ms": 702.6,
+      "generation_ms": 1827.4,
+      "input_tokens": 5039,
+      "output_tokens": 378,
+      "citation_validity": 1.0,
+      "citation_accuracy": 1.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": true,
+      "retrieval_hit": true,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The agreement does grant exclusivity, but the answer does not accurately describe the terms of the exclusivity, and it does not mention the exclusivity of supply in the Territory."
+      },
+      "numeric_grounding_original": 0.3333333333333333,
+      "citation_validity_original": 0.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": [
+        "3"
+      ]
+    },
+    {
+      "question_id": "C0084",
+      "question": "In the transportation agreement with Shipper and Transporter may be referred to herein individually as a \"Party\" or collectively as the \"Parties\"., are there restrictions on volume or quantity?",
+      "clause_type": "Volume Restriction",
+      "contract": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+      "family": "restrictions",
+      "answerable": true,
+      "relevant": [
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0007",
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0008",
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0005",
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0006",
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0009"
+      ],
+      "supplied": [
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0001",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0000",
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0012",
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0015",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0009"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 746.1,
+      "generation_ms": 1446.0,
+      "input_tokens": 5155,
+      "output_tokens": 199,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": false,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0154",
+      "question": "In the collaboration agreement with MacroGenics and Green Cross may be referred to herein individually as a \"Party\" or collectively as the \"Parties., does the agreement impose a non-compete restriction on either party?",
+      "clause_type": "Non-Compete",
+      "contract": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+      "family": "restrictions",
+      "answerable": true,
+      "relevant": [
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0035",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0042",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0043"
+      ],
+      "supplied": [
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0000",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0052",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0026",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0033",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0061"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 741.9,
+      "generation_ms": 5066.7,
+      "input_tokens": 3425,
+      "output_tokens": 87,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": false,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0164",
+      "question": "In the transportation services agreement with both referred to jointly as the \"Parties\" and each individually as a \"Party\"., does either party hold a right of first refusal, offer or negotiation?",
+      "clause_type": "Rofr/Rofo/Rofn",
+      "contract": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+      "family": "restrictions",
+      "answerable": true,
+      "relevant": [
+        "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT_0014",
+        "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT_0015"
+      ],
+      "supplied": [
+        "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT_0000",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0000",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0016",
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0022",
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0001"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 731.7,
+      "generation_ms": 1605.9,
+      "input_tokens": 4776,
+      "output_tokens": 266,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": false,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0222",
+      "question": "In the distributor agreement with Jaguar Investments, Inc. and its affiliates,, how much notice is required to stop the agreement renewing?",
+      "clause_type": "Notice Period To Terminate Renewal",
+      "contract": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+      "family": "term & termination",
+      "answerable": true,
+      "relevant": [
+        "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT_0001",
+        "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT_0002"
+      ],
+      "supplied": [
+        "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT_0000",
+        "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT_0017",
+        "HOLIDAYRVSUPERSTORESINC_04_15_2002-EX-10.13-ENDORSEMENT AGREEMENT_0004",
+        "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT_0042",
+        "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement_0001"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 771.1,
+      "generation_ms": 1060.7,
+      "input_tokens": 4039,
+      "output_tokens": 136,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": false,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0100",
+      "question": "In the media license agreement with doing business as Pro Football Hall of Fame, what happens on a change of control of either party?",
+      "clause_type": "Change Of Control",
+      "contract": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+      "family": "term & termination",
+      "answerable": true,
+      "relevant": [
+        "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement_0013"
+      ],
+      "supplied": [
+        "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement_0000",
+        "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement_0013",
+        "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement_0022",
+        "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement_0006",
+        "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement_0015"
+      ],
+      "answer": "If a Change of Control occurs during the Term, PFHOF may terminate the Media License Agreement immediately by notifying the Village Media Company. The termination right is triggered automatically upon such a change of control.\u3010GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement_0013\u3011",
+      "citations": [],
+      "abstained": false,
+      "retrieval_ms": 737.6,
+      "generation_ms": 1182.9,
+      "input_tokens": 3058,
+      "output_tokens": 219,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 0.4,
+      "abstention_correct": true,
+      "retrieval_hit": true,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The answer is partially correct but contradicts the evidence. The correct statement should be that PFHOF may terminate the Agreement immediately upon giving notice of such termination to the Village Media Company, and a Change of Control is defined as any transaction or series of related transactions that results in the Village Media Company no longer being controlled by or under common control with HOFV."
+      },
+      "numeric_grounding_original": 0.4,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": [
+        "0013",
+        "10.6",
+        "11951677",
+        "20200123",
+        "4"
+      ]
+    },
+    {
+      "question_id": "C0081",
+      "question": "In the transportation agreement with Shipper and Transporter may be referred to herein individually as a \"Party\" or collectively as the \"Parties\"., how does the agreement renew, and for how long?",
+      "clause_type": "Renewal Term",
+      "contract": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+      "family": "term & termination",
+      "answerable": true,
+      "relevant": [
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0015"
+      ],
+      "supplied": [
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0001",
+        "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT_0005",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0000",
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0024",
+        "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT_0000"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 786.3,
+      "generation_ms": 1140.7,
+      "input_tokens": 4296,
+      "output_tokens": 178,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": false,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0191",
+      "question": "In the transportation services agreement with Shipper and Carrier may be referred to individually as a \"Party,\" or collectively as the \"Parties.\", how does the agreement renew, and for how long?",
+      "clause_type": "Renewal Term",
+      "contract": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+      "family": "term & termination",
+      "answerable": true,
+      "relevant": [
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0005"
+      ],
+      "supplied": [
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0000",
+        "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT_0005",
+        "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT_0001",
+        "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT_0000",
+        "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement_0033"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 829.4,
+      "generation_ms": 1305.1,
+      "input_tokens": 4232,
+      "output_tokens": 223,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": false,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0118",
+      "question": "In the sales, marketing, distribution, and supply agreement with Scientific Products Pharmaceutical Co. LTD., what obligations survive termination or apply during wind-down?",
+      "clause_type": "Post-Termination Services",
+      "contract": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+      "family": "term & termination",
+      "answerable": true,
+      "relevant": [
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0008",
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0015",
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0030"
+      ],
+      "supplied": [
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0000",
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0018",
+        "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3)_0050",
+        "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement_0001",
+        "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement_0013"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 699.7,
+      "generation_ms": 1256.0,
+      "input_tokens": 4330,
+      "output_tokens": 227,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": false,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "C0048",
+      "question": "In the reseller agreement with the company set forth below (\"Company\") (each, individually, a \"party\" and collectively, \"parties\"):, what obligations survive termination or apply during wind-down?",
+      "clause_type": "Post-Termination Services",
+      "contract": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+      "family": "term & termination",
+      "answerable": true,
+      "relevant": [
+        "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0001",
+        "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0002"
+      ],
+      "supplied": [
+        "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement_0019",
+        "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT_0024",
+        "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0004",
+        "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3)_0052",
+        "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0000"
+      ],
+      "answer": "The agreement provides that, upon termination or expiration, the Reseller must immediately (i) stop using the Company\u2019s name, logo, marks or slogans, (ii) cease all representations that suggest a relationship, (iii) halt promotion, solicitation or procurement of orders for the Company\u2019s products, and (iv) return all Proprietary Information and any other Company materials in its possession.\u202fIn addition, any payments that accrued before termination remain payable after termination, and the Reseller\u2019s duties with respect to customers that existed before termination continue\u202f[BravatekSolutionsInc_20170418_8\u2011K_EX\u201110.1_10205739_EX\u201110.1_Reseller Agreement_0000].",
+      "citations": [
+        "BravatekSolutionsInc_20170418_8\u2011K_EX\u201110.1_10205739_EX\u201110.1_Reseller Agreement_0000"
+      ],
+      "abstained": false,
+      "retrieval_ms": 736.6,
+      "generation_ms": 1858.1,
+      "input_tokens": 4335,
+      "output_tokens": 603,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": true,
+      "retrieval_hit": false,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The answer contradicts the evidence, which states that the Reseller must return all Proprietary Information and any other Company materials, but the answer does not mention this obligation."
+      },
+      "numeric_grounding_original": 0.4,
+      "citation_validity_original": 0.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "CTRL01",
+      "contract": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+      "clause_type": "Joint Ip Ownership",
+      "family": "ip & licensing",
+      "answerable": false,
+      "question": "In the reseller agreement with 695014 B.C. Ltd. dba Galaxy Telecom, is any intellectual property jointly owned by the parties?",
+      "relevant": [],
+      "supplied": [
+        "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement_0000",
+        "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement_0002",
+        "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement_0015",
+        "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement_0014",
+        "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT_0018"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 715.3,
+      "generation_ms": 1061.6,
+      "input_tokens": 5173,
+      "output_tokens": 94,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": true,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "CTRL02",
+      "contract": "ArcGroupInc_20171211_8-K_EX-10.1_10976103_EX-10.1_Sponsorship Agreement.pdf",
+      "clause_type": "Joint Ip Ownership",
+      "family": "ip & licensing",
+      "answerable": false,
+      "question": "In the jacksonville jaguars sponsorship agreement with Jacksonville Jaguars, LLC, is any intellectual property jointly owned by the parties?",
+      "relevant": [],
+      "supplied": [
+        "ArcGroupInc_20171211_8-K_EX-10.1_10976103_EX-10.1_Sponsorship Agreement_0000",
+        "ArcGroupInc_20171211_8-K_EX-10.1_10976103_EX-10.1_Sponsorship Agreement_0001",
+        "ArcGroupInc_20171211_8-K_EX-10.1_10976103_EX-10.1_Sponsorship Agreement_0003",
+        "ArcGroupInc_20171211_8-K_EX-10.1_10976103_EX-10.1_Sponsorship Agreement_0004",
+        "ArcGroupInc_20171211_8-K_EX-10.1_10976103_EX-10.1_Sponsorship Agreement_0006"
+      ],
+      "answer": "The agreement does not create any jointly\u2011owned intellectual property; it only licenses the Club\u2019s \u201cTeam Marks\u201d to the Sponsor for use in promoting the Sponsor Business and expressly limits the license to those marks, stating that no other Club intellectual property is granted.\u202f[ArcGroupInc_20171211_8-K_EX-10.1_10976103_EX-10.1_Sponsorship Agreement_0000]\u202f[ArcGroupInc_20171211_8-K_EX-10.1_10976103_EX-10.1_Sponsorship Agreement_0001]",
+      "citations": [
+        "ArcGroupInc_20171211_8-K_EX-10.1_10976103_EX-10.1_Sponsorship Agreement_0000",
+        "ArcGroupInc_20171211_8-K_EX-10.1_10976103_EX-10.1_Sponsorship Agreement_0001"
+      ],
+      "abstained": false,
+      "retrieval_ms": 729.4,
+      "generation_ms": 1271.6,
+      "input_tokens": 2944,
+      "output_tokens": 349,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": false,
+      "retrieval_hit": false,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The agreement explicitly states that no license or right is granted for the use of any other Club intellectual property, and that the license for the Team Marks is limited to the Sponsor Business."
+      },
+      "numeric_grounding_original": 0.3333333333333333,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "CTRL03",
+      "contract": "BANGIINC_05_25_2005-EX-10-Premium Managed Hosting Agreement.pdf",
+      "clause_type": "Joint Ip Ownership",
+      "family": "ip & licensing",
+      "answerable": false,
+      "question": "In the premium managed hosting agreement with AstroNutrition.com, is any intellectual property jointly owned by the parties?",
+      "relevant": [],
+      "supplied": [
+        "BANGIINC_05_25_2005-EX-10-Premium Managed Hosting Agreement_0000",
+        "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3)_0042",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0055",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0058",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0056"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 822.1,
+      "generation_ms": 1173.3,
+      "input_tokens": 3348,
+      "output_tokens": 134,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": true,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "CTRL04",
+      "contract": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+      "clause_type": "Joint Ip Ownership",
+      "family": "ip & licensing",
+      "answerable": false,
+      "question": "In the celebrity endorsement agreement with Joseph Theismann, is any intellectual property jointly owned by the parties?",
+      "relevant": [],
+      "supplied": [
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0000",
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0001",
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0009",
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0004",
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0005"
+      ],
+      "answer": "No. The agreement makes clear that Bizzingo (and its affiliates) will be the sole owner of all commercials, promotional materials and any related copyright, trademark or other intellectual\u2011property rights created under the contract, while Theismann retains only his own name, likeness and publicity rights\u202f[ BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0000 ]; there is no provision granting joint ownership of any intellectual property\u202f[ BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0004 ].",
+      "citations": [
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0000",
+        "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement_0004"
+      ],
+      "abstained": false,
+      "retrieval_ms": 806.9,
+      "generation_ms": 1638.0,
+      "input_tokens": 3066,
+      "output_tokens": 314,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": false,
+      "retrieval_hit": false,
+      "judge": {
+        "faithfulness": 0.0,
+        "relevance": 0.0,
+        "completeness": 0.0,
+        "reason": "The agreement explicitly states that Bizzingo will be the sole owner of all related rights worldwide, including copyright, trademark and intellectual property rights, and that Theismann retains only his own name, likeness and publicity rights, with no provision for joint ownership of any intellectual property."
+      },
+      "numeric_grounding_original": 0.16666666666666666,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    },
+    {
+      "question_id": "CTRL05",
+      "contract": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+      "clause_type": "Joint Ip Ownership",
+      "family": "ip & licensing",
+      "answerable": false,
+      "question": "In the reseller agreement with the company set forth below (\"Company\") (each, individually, a \"party\" and collectively, \"parties\"):, is any intellectual property jointly owned by the parties?",
+      "relevant": [],
+      "supplied": [
+        "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0000",
+        "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT_0055",
+        "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT_0006",
+        "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0003",
+        "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT_0018"
+      ],
+      "answer": "NOT FOUND IN EVIDENCE",
+      "citations": [],
+      "abstained": true,
+      "retrieval_ms": 758.1,
+      "generation_ms": 1493.9,
+      "input_tokens": 4818,
+      "output_tokens": 174,
+      "citation_validity": 1.0,
+      "citation_accuracy": 0.0,
+      "numeric_grounding": 1.0,
+      "abstention_correct": true,
+      "retrieval_hit": false,
+      "judge": null,
+      "numeric_grounding_original": 1.0,
+      "citation_validity_original": 1.0,
+      "citation_accuracy_original": 0.0,
+      "numeric_claims": []
+    }
+  ]
+}

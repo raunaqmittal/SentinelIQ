@@ -1,0 +1,5491 @@
+{
+  "_meta": {
+    "generator": "cuad_clause_v1",
+    "source": "CUAD v1 expert annotations (CC BY 4.0)",
+    "unit": "one question per (contract, clause_type)",
+    "label_source": "cuad_annotation",
+    "splits": "contract-level; no contract appears in both",
+    "forced_dev": [
+      "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement",
+      "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement",
+      "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT",
+      "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT",
+      "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement",
+      "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement",
+      "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT",
+      "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT"
+    ],
+    "forced_dev_reason": "used materially in pipeline development/diagnosis (existing suite Q019-Q022), so excluded from the frozen test split",
+    "split_rule": "exclude forced-dev; order remaining contracts by descending question count; take every 3rd for test; then top up with the next contracts that add an uncovered clause type until test reaches 105 raw questions",
+    "caps": {
+      "default": 8,
+      "boilerplate": 5,
+      "boilerplate_types": [
+        "Expiration Date",
+        "Governing Law"
+      ]
+    },
+    "excluded_clause_types": [
+      "Agreement Date",
+      "Document Name",
+      "Effective Date",
+      "Parties"
+    ],
+    "excluded_reason": "short metadata answers, weak retrieval ground truth",
+    "span_mapping": "utils.find_evidence_span over utils.normalize_for_matching, disambiguated by CUAD answer_start; run aborts on any failure",
+    "metric_reporting": "TEST IS FROZEN \u2014 never use test results to choose chunk size, retriever, fusion, reranker, routing or any other parameter. All tuning happens on dev. Report separately from the 27-question suite in questions.json; never pool them."
+  },
+  "entries": [
+    {
+      "question_id": "C0001",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Anti-Assignment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+          "char_start": 30617,
+          "char_end": 30704,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0002",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Cap On Liability",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+          "char_start": 18060,
+          "char_end": 18813,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+          "char_start": 18858,
+          "char_end": 19124,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+          "char_start": 17792,
+          "char_end": 18024,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0003",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Covenant Not To Sue",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+          "char_start": 20456,
+          "char_end": 20825,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0004",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Notice Period To Terminate Renewal",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+          "char_start": 22730,
+          "char_end": 22958,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0005",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Post-Termination Services",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+          "char_start": 24200,
+          "char_end": 24308,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0006",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Renewal Term",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+          "char_start": 22730,
+          "char_end": 22958,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0007",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Unlimited/All-You-Can-Eat-License",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+          "char_start": 33640,
+          "char_end": 34439,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement.pdf",
+          "char_start": 36246,
+          "char_end": 36351,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0008",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Anti-Assignment",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 14905,
+          "char_end": 15053,
+          "role": "supporting"
+        },
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 15054,
+          "char_end": 15202,
+          "role": "supporting"
+        },
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 9726,
+          "char_end": 9844,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0009",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Change Of Control",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 9983,
+          "char_end": 10170,
+          "role": "supporting"
+        },
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 10175,
+          "char_end": 10382,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0010",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Competitive Restriction Exception",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 12603,
+          "char_end": 12879,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0011",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Exclusivity",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 12603,
+          "char_end": 12879,
+          "role": "supporting"
+        },
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 4257,
+          "char_end": 4459,
+          "role": "supporting"
+        },
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 12296,
+          "char_end": 12597,
+          "role": "supporting"
+        },
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 16762,
+          "char_end": 16937,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0012",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Insurance",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 8126,
+          "char_end": 8360,
+          "role": "supporting"
+        },
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 7662,
+          "char_end": 8121,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0013",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Ip Ownership Assignment",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 17589,
+          "char_end": 17824,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0014",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Irrevocable Or Perpetual License",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 12603,
+          "char_end": 12879,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0015",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Minimum Commitment",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 12296,
+          "char_end": 12597,
+          "role": "supporting"
+        },
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 19790,
+          "char_end": 20255,
+          "role": "supporting"
+        },
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 16552,
+          "char_end": 16761,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0016",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Non-Compete",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 17159,
+          "char_end": 17518,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0017",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Notice Period To Terminate Renewal",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 1234,
+          "char_end": 1538,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0018",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Renewal Term",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 1234,
+          "char_end": 1387,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0019",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Rofr/Rofo/Rofn",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 12062,
+          "char_end": 12253,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0020",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Warranty Duration",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "AgapeAtpCorp_20191202_10-KA_EX-10.1_11911128_EX-10.1_Supply Agreement.pdf",
+          "char_start": 6097,
+          "char_end": 6683,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0021",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Expiration Date",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ArcGroupInc_20171211_8-K_EX-10.1_10976103_EX-10.1_Sponsorship Agreement.pdf",
+          "char_start": 1324,
+          "char_end": 1664,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0022",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "License Grant",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ArcGroupInc_20171211_8-K_EX-10.1_10976103_EX-10.1_Sponsorship Agreement.pdf",
+          "char_start": 1699,
+          "char_end": 2490,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0023",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Expiration Date",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BANGIINC_05_25_2005-EX-10-Premium Managed Hosting Agreement.pdf",
+          "char_start": 241,
+          "char_end": 326,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0024",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Competitive Restriction Exception",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 33409,
+          "char_end": 33871,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0025",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Covenant Not To Sue",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 45340,
+          "char_end": 45917,
+          "role": "supporting"
+        },
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 45922,
+          "char_end": 46088,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0026",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Expiration Date",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 674,
+          "char_end": 839,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0027",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Governing Law",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 53694,
+          "char_end": 53990,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0028",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Ip Ownership Assignment",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 44633,
+          "char_end": 45152,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0029",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "No-Solicit Of Employees",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 39321,
+          "char_end": 39701,
+          "role": "supporting"
+        },
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 37625,
+          "char_end": 37933,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0030",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Non-Compete",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 37625,
+          "char_end": 38796,
+          "role": "supporting"
+        },
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 38801,
+          "char_end": 40147,
+          "role": "supporting"
+        },
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 33121,
+          "char_end": 33871,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0031",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Post-Termination Services",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 23258,
+          "char_end": 24773,
+          "role": "supporting"
+        },
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 15370,
+          "char_end": 16169,
+          "role": "supporting"
+        },
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 22169,
+          "char_end": 22770,
+          "role": "supporting"
+        },
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 14999,
+          "char_end": 15366,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0032",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Rofr/Rofo/Rofn",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 6483,
+          "char_end": 7884,
+          "role": "supporting"
+        },
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 6186,
+          "char_end": 6482,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0033",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Termination For Convenience",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 18109,
+          "char_end": 18201,
+          "role": "supporting"
+        },
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 17749,
+          "char_end": 18103,
+          "role": "supporting"
+        },
+        {
+          "document_name": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.pdf",
+          "char_start": 18205,
+          "char_end": 18397,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0034",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Affiliate License-Licensee",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+          "char_start": 1365,
+          "char_end": 1829,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0035",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Anti-Assignment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+          "char_start": 17599,
+          "char_end": 17803,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0036",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Audit Rights",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+          "char_start": 8585,
+          "char_end": 8814,
+          "role": "supporting"
+        },
+        {
+          "document_name": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+          "char_start": 8165,
+          "char_end": 8581,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0037",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Exclusivity",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+          "char_start": 9024,
+          "char_end": 9435,
+          "role": "supporting"
+        },
+        {
+          "document_name": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+          "char_start": 11511,
+          "char_end": 11924,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0038",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Insurance",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+          "char_start": 12964,
+          "char_end": 13255,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0039",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "License Grant",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+          "char_start": 1831,
+          "char_end": 2333,
+          "role": "supporting"
+        },
+        {
+          "document_name": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+          "char_start": 1365,
+          "char_end": 1832,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0040",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Renewal Term",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+          "char_start": 3987,
+          "char_end": 4306,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0041",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Revenue/Profit Sharing",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+          "char_start": 21471,
+          "char_end": 21762,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0042",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Termination For Convenience",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+          "char_start": 16156,
+          "char_end": 16356,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0043",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Unlimited/All-You-Can-Eat-License",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+          "char_start": 1365,
+          "char_end": 1832,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0044",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Volume Restriction",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+          "char_start": 7440,
+          "char_end": 7678,
+          "role": "supporting"
+        },
+        {
+          "document_name": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+          "char_start": 7185,
+          "char_end": 7436,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0045",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Cap On Liability",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+          "char_start": 10686,
+          "char_end": 10989,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0046",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Exclusivity",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+          "char_start": 4055,
+          "char_end": 4945,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0047",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "License Grant",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+          "char_start": 5725,
+          "char_end": 6101,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0048",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Post-Termination Services",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+          "char_start": 4055,
+          "char_end": 4945,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0049",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Renewal Term",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+          "char_start": 928,
+          "char_end": 1002,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0050",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Revenue/Profit Sharing",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+          "char_start": 14036,
+          "char_end": 14182,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0051",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Termination For Convenience",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+          "char_start": 1003,
+          "char_end": 1092,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0052",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Anti-Assignment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CANOPETROLEUM,INC_12_13_2007-EX-10.1-Sponsorship Agreement.pdf",
+          "char_start": 7102,
+          "char_end": 7206,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0053",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Expiration Date",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CANOPETROLEUM,INC_12_13_2007-EX-10.1-Sponsorship Agreement.pdf",
+          "char_start": 3562,
+          "char_end": 3671,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0054",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Governing Law",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CANOPETROLEUM,INC_12_13_2007-EX-10.1-Sponsorship Agreement.pdf",
+          "char_start": 4175,
+          "char_end": 4505,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0055",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Minimum Commitment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CANOPETROLEUM,INC_12_13_2007-EX-10.1-Sponsorship Agreement.pdf",
+          "char_start": 1124,
+          "char_end": 1212,
+          "role": "supporting"
+        },
+        {
+          "document_name": "CANOPETROLEUM,INC_12_13_2007-EX-10.1-Sponsorship Agreement.pdf",
+          "char_start": 2172,
+          "char_end": 2314,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0056",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Affiliate License-Licensor",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 12449,
+          "char_end": 12940,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0057",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Audit Rights",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 7119,
+          "char_end": 7468,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0058",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Insurance",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 19564,
+          "char_end": 19718,
+          "role": "supporting"
+        },
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 19719,
+          "char_end": 19821,
+          "role": "supporting"
+        },
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 19822,
+          "char_end": 19974,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0059",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "License Grant",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 12449,
+          "char_end": 12940,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0060",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Liquidated Damages",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 21232,
+          "char_end": 21653,
+          "role": "supporting"
+        },
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 4577,
+          "char_end": 4869,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0061",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Non-Transferable License",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 12449,
+          "char_end": 12940,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0062",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Notice Period To Terminate Renewal",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 5776,
+          "char_end": 5990,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0063",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Post-Termination Services",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 9845,
+          "char_end": 10188,
+          "role": "supporting"
+        },
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 19822,
+          "char_end": 19974,
+          "role": "supporting"
+        },
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 10494,
+          "char_end": 10708,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0064",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Renewal Term",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 5776,
+          "char_end": 5990,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0065",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Revenue/Profit Sharing",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 8005,
+          "char_end": 8193,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0066",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Termination For Convenience",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 21232,
+          "char_end": 21384,
+          "role": "supporting"
+        },
+        {
+          "document_name": "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT.pdf",
+          "char_start": 21385,
+          "char_end": 21653,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0067",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Anti-Assignment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CHIPMOSTECHNOLOGIESBERMUDALTD_04_18_2016-EX-4.72-Strategic Alliance Agreement.pdf",
+          "char_start": 8039,
+          "char_end": 8161,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0068",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Expiration Date",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CHIPMOSTECHNOLOGIESBERMUDALTD_04_18_2016-EX-4.72-Strategic Alliance Agreement.pdf",
+          "char_start": 5129,
+          "char_end": 5259,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0069",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Governing Law",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CHIPMOSTECHNOLOGIESBERMUDALTD_04_18_2016-EX-4.72-Strategic Alliance Agreement.pdf",
+          "char_start": 6605,
+          "char_end": 6694,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0070",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Renewal Term",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "CHIPMOSTECHNOLOGIESBERMUDALTD_04_18_2016-EX-4.72-Strategic Alliance Agreement.pdf",
+          "char_start": 5260,
+          "char_end": 5384,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0071",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Audit Rights",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "CUROGROUPHOLDINGSCORP_05_04_2020-EX-10.3-SERVICING AGREEMENT.pdf",
+          "char_start": 7450,
+          "char_end": 7685,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0072",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Covenant Not To Sue",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "CUROGROUPHOLDINGSCORP_05_04_2020-EX-10.3-SERVICING AGREEMENT.pdf",
+          "char_start": 32544,
+          "char_end": 33174,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0073",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Expiration Date",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "CUROGROUPHOLDINGSCORP_05_04_2020-EX-10.3-SERVICING AGREEMENT.pdf",
+          "char_start": 9546,
+          "char_end": 9968,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0074",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Governing Law",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "CUROGROUPHOLDINGSCORP_05_04_2020-EX-10.3-SERVICING AGREEMENT.pdf",
+          "char_start": 28501,
+          "char_end": 28832,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0075",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Post-Termination Services",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "CUROGROUPHOLDINGSCORP_05_04_2020-EX-10.3-SERVICING AGREEMENT.pdf",
+          "char_start": 12509,
+          "char_end": 12847,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0076",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Third Party Beneficiary",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "CUROGROUPHOLDINGSCORP_05_04_2020-EX-10.3-SERVICING AGREEMENT.pdf",
+          "char_start": 33212,
+          "char_end": 33442,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0077",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Anti-Assignment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+          "char_start": 43868,
+          "char_end": 44019,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+          "char_start": 43620,
+          "char_end": 43861,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0078",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Cap On Liability",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+          "char_start": 53334,
+          "char_end": 53939,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0079",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Minimum Commitment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+          "char_start": 10070,
+          "char_end": 10473,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0080",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Notice Period To Terminate Renewal",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+          "char_start": 32086,
+          "char_end": 32305,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0081",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Renewal Term",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+          "char_start": 32086,
+          "char_end": 32305,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0082",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Termination For Convenience",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+          "char_start": 32086,
+          "char_end": 32305,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0083",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Uncapped Liability",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+          "char_start": 53334,
+          "char_end": 53939,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0084",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Volume Restriction",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+          "char_start": 14503,
+          "char_end": 14579,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+          "char_start": 15789,
+          "char_end": 16300,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+          "char_start": 11782,
+          "char_end": 12582,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+          "char_start": 14580,
+          "char_end": 14728,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ENERGYXXILTD_05_08_2015-EX-10.13-Transportation AGREEMENT.pdf",
+          "char_start": 18483,
+          "char_end": 18734,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0085",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Anti-Assignment",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "EmmisCommunicationsCorp_20191125_8-K_EX-10.6_11906433_EX-10.6_Marketing Agreement.pdf",
+          "char_start": 12031,
+          "char_end": 12185,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0086",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Expiration Date",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "EmmisCommunicationsCorp_20191125_8-K_EX-10.6_11906433_EX-10.6_Marketing Agreement.pdf",
+          "char_start": 1344,
+          "char_end": 1796,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0087",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Governing Law",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "EmmisCommunicationsCorp_20191125_8-K_EX-10.6_11906433_EX-10.6_Marketing Agreement.pdf",
+          "char_start": 12745,
+          "char_end": 12880,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0088",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "License Grant",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "EmmisCommunicationsCorp_20191125_8-K_EX-10.6_11906433_EX-10.6_Marketing Agreement.pdf",
+          "char_start": 3249,
+          "char_end": 3395,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0089",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Affiliate License-Licensee",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 50625,
+          "char_end": 51134,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0090",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Affiliate License-Licensor",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 50625,
+          "char_end": 51134,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0091",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Change Of Control",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 142639,
+          "char_end": 142868,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 149427,
+          "char_end": 149850,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0092",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Exclusivity",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 49165,
+          "char_end": 49608,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 63970,
+          "char_end": 64657,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0093",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Insurance",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 132324,
+          "char_end": 132498,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 131906,
+          "char_end": 132246,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0094",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Non-Transferable License",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 49609,
+          "char_end": 49707,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 51244,
+          "char_end": 51378,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 51135,
+          "char_end": 51195,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0095",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Rofr/Rofo/Rofn",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 52705,
+          "char_end": 53188,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 53189,
+          "char_end": 53379,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 52280,
+          "char_end": 52699,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 53380,
+          "char_end": 53805,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 51415,
+          "char_end": 52089,
+          "role": "supporting"
+        },
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 52090,
+          "char_end": 52279,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0096",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Termination For Convenience",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 142316,
+          "char_end": 142488,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0097",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Uncapped Liability",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ExactSciencesCorp_20180822_8-K_EX-10.1_11331629_EX-10.1_Promotion Agreement.pdf",
+          "char_start": 133007,
+          "char_end": 133582,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0098",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Governing Law",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.pdf",
+          "char_start": 13310,
+          "char_end": 13390,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0099",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Affiliate License-Licensee",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 9619,
+          "char_end": 10123,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0100",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Change Of Control",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 26261,
+          "char_end": 26530,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 26531,
+          "char_end": 26888,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0101",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Covenant Not To Sue",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 11677,
+          "char_end": 12073,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0102",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Exclusivity",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 23189,
+          "char_end": 23730,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 23020,
+          "char_end": 23188,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0103",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Ip Ownership Assignment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 6442,
+          "char_end": 6951,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 10950,
+          "char_end": 11465,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0104",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Minimum Commitment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 27938,
+          "char_end": 28464,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0105",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Non-Transferable License",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 39353,
+          "char_end": 39541,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 39353,
+          "char_end": 39543,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 5481,
+          "char_end": 6012,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0106",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Notice Period To Terminate Renewal",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 24012,
+          "char_end": 24256,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0107",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Post-Termination Services",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 6013,
+          "char_end": 6441,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 35227,
+          "char_end": 35446,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0108",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Price Restrictions",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 20832,
+          "char_end": 21036,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 29800,
+          "char_end": 30629,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 28171,
+          "char_end": 28464,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0109",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Rofr/Rofo/Rofn",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 14445,
+          "char_end": 14666,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 14113,
+          "char_end": 14444,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 16261,
+          "char_end": 16778,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 15976,
+          "char_end": 16260,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 14671,
+          "char_end": 14938,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 13718,
+          "char_end": 14112,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 26893,
+          "char_end": 27506,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 15631,
+          "char_end": 15975,
+          "role": "supporting"
+        },
+        {
+          "document_name": "GpaqAcquisitionHoldingsInc_20200123_S-4A_EX-10.6_11951677_EX-10.6_License Agreement.pdf",
+          "char_start": 13400,
+          "char_end": 13717,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0110",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Audit Rights",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 44879,
+          "char_end": 45132,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 63167,
+          "char_end": 63325,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 45302,
+          "char_end": 45380,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 13052,
+          "char_end": 13253,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 44706,
+          "char_end": 44878,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 45383,
+          "char_end": 45480,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 64593,
+          "char_end": 64742,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 45133,
+          "char_end": 45260,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 12845,
+          "char_end": 13051,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 44590,
+          "char_end": 44705,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0111",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Cap On Liability",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 21052,
+          "char_end": 21255,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0112",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Covenant Not To Sue",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 29643,
+          "char_end": 29921,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0113",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Exclusivity",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 4412,
+          "char_end": 4643,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 28612,
+          "char_end": 28927,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 7888,
+          "char_end": 8077,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0114",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "License Grant",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 4412,
+          "char_end": 4643,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 28612,
+          "char_end": 28925,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 4649,
+          "char_end": 5031,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0115",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Liquidated Damages",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 32989,
+          "char_end": 33059,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0116",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Minimum Commitment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 5037,
+          "char_end": 5183,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0117",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Notice Period To Terminate Renewal",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 15440,
+          "char_end": 15573,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0118",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Post-Termination Services",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 17830,
+          "char_end": 17985,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 17469,
+          "char_end": 17829,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 31432,
+          "char_end": 31629,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 17180,
+          "char_end": 17463,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 63850,
+          "char_end": 64166,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0119",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Warranty Duration",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HEMISPHERX - Sales, Marketing, Distribution, and Supply Agreement.pdf",
+          "char_start": 70526,
+          "char_end": 70786,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0120",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Affiliate License-Licensee",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOLIDAYRVSUPERSTORESINC_04_15_2002-EX-10.13-ENDORSEMENT AGREEMENT.pdf",
+          "char_start": 1654,
+          "char_end": 2098,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0121",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Anti-Assignment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOLIDAYRVSUPERSTORESINC_04_15_2002-EX-10.13-ENDORSEMENT AGREEMENT.pdf",
+          "char_start": 10583,
+          "char_end": 10734,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0122",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "License Grant",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOLIDAYRVSUPERSTORESINC_04_15_2002-EX-10.13-ENDORSEMENT AGREEMENT.pdf",
+          "char_start": 1654,
+          "char_end": 2098,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0123",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Post-Termination Services",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOLIDAYRVSUPERSTORESINC_04_15_2002-EX-10.13-ENDORSEMENT AGREEMENT.pdf",
+          "char_start": 9335,
+          "char_end": 9575,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0124",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Termination For Convenience",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOLIDAYRVSUPERSTORESINC_04_15_2002-EX-10.13-ENDORSEMENT AGREEMENT.pdf",
+          "char_start": 5163,
+          "char_end": 5537,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0125",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Audit Rights",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 63744,
+          "char_end": 64080,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 62108,
+          "char_end": 62185,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 63133,
+          "char_end": 63463,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0126",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Cap On Liability",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 112756,
+          "char_end": 112963,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0127",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Change Of Control",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 73628,
+          "char_end": 73804,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 73518,
+          "char_end": 73627,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 73805,
+          "char_end": 73957,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 73958,
+          "char_end": 75066,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 75077,
+          "char_end": 75381,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 70778,
+          "char_end": 71720,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0128",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Covenant Not To Sue",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 80395,
+          "char_end": 80507,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 102625,
+          "char_end": 103653,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 82155,
+          "char_end": 82291,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 54605,
+          "char_end": 55528,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0129",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Exclusivity",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 34980,
+          "char_end": 35186,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 35605,
+          "char_end": 35891,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 31078,
+          "char_end": 31087,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 35995,
+          "char_end": 36302,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0130",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Insurance",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 31078,
+          "char_end": 31087,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 40220,
+          "char_end": 40919,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0131",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Ip Ownership Assignment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 91018,
+          "char_end": 91511,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0132",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "License Grant",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 23335,
+          "char_end": 23549,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0133",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Liquidated Damages",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 85998,
+          "char_end": 86672,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 47241,
+          "char_end": 47432,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 112756,
+          "char_end": 112963,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 88039,
+          "char_end": 88146,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 87620,
+          "char_end": 87998,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 86984,
+          "char_end": 87212,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 87224,
+          "char_end": 87608,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 86684,
+          "char_end": 86972,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0134",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Non-Compete",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 80395,
+          "char_end": 80507,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 31078,
+          "char_end": 31087,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 37370,
+          "char_end": 37710,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 82730,
+          "char_end": 82844,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0135",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Revenue/Profit Sharing",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 114869,
+          "char_end": 114976,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 115029,
+          "char_end": 115236,
+          "role": "supporting"
+        },
+        {
+          "document_name": "HOSPITALITYINVESTORSTRUST,INC_04_07_2014-EX-10.26-FRANCHISE AGREEMENT.pdf",
+          "char_start": 115241,
+          "char_end": 115349,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0136",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Change Of Control",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+          "char_start": 87092,
+          "char_end": 88032,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0137",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Covenant Not To Sue",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+          "char_start": 92770,
+          "char_end": 92952,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0138",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Insurance",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+          "char_start": 154102,
+          "char_end": 154130,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0139",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Ip Ownership Assignment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+          "char_start": 92426,
+          "char_end": 92769,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0140",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Minimum Commitment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+          "char_start": 33412,
+          "char_end": 34722,
+          "role": "supporting"
+        },
+        {
+          "document_name": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+          "char_start": 38835,
+          "char_end": 39059,
+          "role": "supporting"
+        },
+        {
+          "document_name": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+          "char_start": 34723,
+          "char_end": 35089,
+          "role": "supporting"
+        },
+        {
+          "document_name": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+          "char_start": 32676,
+          "char_end": 32945,
+          "role": "supporting"
+        },
+        {
+          "document_name": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+          "char_start": 38049,
+          "char_end": 38275,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0141",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "No-Solicit Of Employees",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+          "char_start": 88998,
+          "char_end": 90351,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0142",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Non-Compete",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+          "char_start": 86713,
+          "char_end": 87091,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0143",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Revenue/Profit Sharing",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+          "char_start": 48860,
+          "char_end": 49897,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0144",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Rofr/Rofo/Rofn",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+          "char_start": 139982,
+          "char_end": 140175,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0145",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Uncapped Liability",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+          "char_start": 111384,
+          "char_end": 111981,
+          "role": "supporting"
+        },
+        {
+          "document_name": "IMMUNOMEDICSINC_08_07_2019-EX-10.1-PROMOTION AGREEMENT.pdf",
+          "char_start": 110757,
+          "char_end": 111383,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0146",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Governing Law",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ImperialGardenResortInc_20161028_DRS (on F-1)_EX-10.13_9963189_EX-10.13_Outsourcing Agreement.pdf",
+          "char_start": 11483,
+          "char_end": 11744,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0147",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Audit Rights",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 82015,
+          "char_end": 82172,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 81755,
+          "char_end": 81918,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 81162,
+          "char_end": 81754,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 81919,
+          "char_end": 82014,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0148",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Change Of Control",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 133435,
+          "char_end": 133787,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 133843,
+          "char_end": 134195,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0149",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Covenant Not To Sue",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 135031,
+          "char_end": 135801,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 134247,
+          "char_end": 134838,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0150",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Exclusivity",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 88510,
+          "char_end": 88661,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 83501,
+          "char_end": 84179,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0151",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Ip Ownership Assignment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 137057,
+          "char_end": 137616,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 136207,
+          "char_end": 136358,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 137809,
+          "char_end": 138247,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0152",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Irrevocable Or Perpetual License",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 88971,
+          "char_end": 89594,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0153",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Joint Ip Ownership",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 126136,
+          "char_end": 126756,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 125926,
+          "char_end": 126134,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 123473,
+          "char_end": 123643,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 120782,
+          "char_end": 121116,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 119704,
+          "char_end": 120175,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 121817,
+          "char_end": 122272,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 122273,
+          "char_end": 122562,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 126762,
+          "char_end": 126976,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 126977,
+          "char_end": 127515,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 128588,
+          "char_end": 128887,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 127522,
+          "char_end": 127548,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0154",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Non-Compete",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 75174,
+          "char_end": 75284,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 92137,
+          "char_end": 92352,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0155",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Post-Termination Services",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 138545,
+          "char_end": 138611,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 138663,
+          "char_end": 138908,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0156",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Revenue/Profit Sharing",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 75174,
+          "char_end": 75284,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0157",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Uncapped Liability",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MACROGENICSINC_08_02_2013-EX-10-COLLABORATION AGREEMENT.pdf",
+          "char_start": 118113,
+          "char_end": 118375,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0158",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Cap On Liability",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 38867,
+          "char_end": 39228,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0159",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Liquidated Damages",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 40915,
+          "char_end": 41122,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 41127,
+          "char_end": 41487,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 41488,
+          "char_end": 42031,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0160",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Minimum Commitment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 15571,
+          "char_end": 16320,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 21733,
+          "char_end": 22194,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 13414,
+          "char_end": 13627,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0161",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Most Favored Nation",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 39234,
+          "char_end": 39847,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0162",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Notice Period To Terminate Renewal",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 12574,
+          "char_end": 12904,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0163",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Renewal Term",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 12574,
+          "char_end": 12904,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0164",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Rofr/Rofo/Rofn",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 31662,
+          "char_end": 32006,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 32173,
+          "char_end": 32391,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 32392,
+          "char_end": 32996,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0165",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Termination For Convenience",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 40417,
+          "char_end": 40914,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0166",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Uncapped Liability",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 38867,
+          "char_end": 39228,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0167",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Volume Restriction",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 32007,
+          "char_end": 32172,
+          "role": "supporting"
+        },
+        {
+          "document_name": "MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION SERVICES AGREEMENT.pdf",
+          "char_start": 17121,
+          "char_end": 17466,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0168",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Anti-Assignment",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 64964,
+          "char_end": 65299,
+          "role": "supporting"
+        },
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 64475,
+          "char_end": 64942,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0169",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Audit Rights",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 28240,
+          "char_end": 28351,
+          "role": "supporting"
+        },
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 27790,
+          "char_end": 27952,
+          "role": "supporting"
+        },
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 28749,
+          "char_end": 29097,
+          "role": "supporting"
+        },
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 34989,
+          "char_end": 35545,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0170",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Cap On Liability",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 59759,
+          "char_end": 60160,
+          "role": "supporting"
+        },
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 59459,
+          "char_end": 59754,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0171",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Expiration Date",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 37538,
+          "char_end": 37788,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0172",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Insurance",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 57588,
+          "char_end": 57972,
+          "role": "supporting"
+        },
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 57098,
+          "char_end": 57507,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0173",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Ip Ownership Assignment",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 47282,
+          "char_end": 47666,
+          "role": "supporting"
+        },
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 47758,
+          "char_end": 47957,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0174",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Irrevocable Or Perpetual License",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 44514,
+          "char_end": 45398,
+          "role": "supporting"
+        },
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 44115,
+          "char_end": 44190,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0175",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "License Grant",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 44514,
+          "char_end": 45281,
+          "role": "supporting"
+        },
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 45282,
+          "char_end": 45503,
+          "role": "supporting"
+        },
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 47958,
+          "char_end": 48212,
+          "role": "supporting"
+        },
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 44115,
+          "char_end": 44190,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0176",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Notice Period To Terminate Renewal",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 37789,
+          "char_end": 38021,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0177",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Renewal Term",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 37789,
+          "char_end": 38021,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0178",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Termination For Convenience",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 38249,
+          "char_end": 38369,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0179",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Uncapped Liability",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 60161,
+          "char_end": 60511,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0180",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Warranty Duration",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.pdf",
+          "char_start": 30830,
+          "char_end": 31007,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0181",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Affiliate License-Licensee",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+          "char_start": 5297,
+          "char_end": 5456,
+          "role": "supporting"
+        },
+        {
+          "document_name": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+          "char_start": 5153,
+          "char_end": 5295,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0182",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Exclusivity",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+          "char_start": 14765,
+          "char_end": 15174,
+          "role": "supporting"
+        },
+        {
+          "document_name": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+          "char_start": 3386,
+          "char_end": 4737,
+          "role": "supporting"
+        },
+        {
+          "document_name": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+          "char_start": 12948,
+          "char_end": 13082,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0183",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Governing Law",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+          "char_start": 20116,
+          "char_end": 20412,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0184",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "License Grant",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+          "char_start": 3262,
+          "char_end": 3376,
+          "role": "supporting"
+        },
+        {
+          "document_name": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+          "char_start": 3386,
+          "char_end": 4737,
+          "role": "supporting"
+        },
+        {
+          "document_name": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+          "char_start": 5153,
+          "char_end": 5456,
+          "role": "supporting"
+        },
+        {
+          "document_name": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+          "char_start": 4752,
+          "char_end": 5146,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0185",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Revenue/Profit Sharing",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+          "char_start": 12417,
+          "char_end": 12834,
+          "role": "supporting"
+        },
+        {
+          "document_name": "PREMIERBIOMEDICALINC_05_14_2020-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT.pdf",
+          "char_start": 11305,
+          "char_end": 11674,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0186",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Anti-Assignment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+          "char_start": 45776,
+          "char_end": 46051,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0187",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Audit Rights",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+          "char_start": 18130,
+          "char_end": 18581,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0188",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Cap On Liability",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+          "char_start": 29398,
+          "char_end": 30137,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0189",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Minimum Commitment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+          "char_start": 76473,
+          "char_end": 76562,
+          "role": "supporting"
+        },
+        {
+          "document_name": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+          "char_start": 78509,
+          "char_end": 78869,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0190",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Notice Period To Terminate Renewal",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+          "char_start": 11495,
+          "char_end": 11938,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0191",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Renewal Term",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+          "char_start": 11495,
+          "char_end": 11938,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0192",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Uncapped Liability",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+          "char_start": 29398,
+          "char_end": 30137,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0193",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Volume Restriction",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+          "char_start": 77285,
+          "char_end": 77404,
+          "role": "supporting"
+        },
+        {
+          "document_name": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+          "char_start": 76473,
+          "char_end": 76667,
+          "role": "supporting"
+        },
+        {
+          "document_name": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+          "char_start": 76668,
+          "char_end": 76812,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0194",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Governing Law",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "ScansourceInc_20190509_10-Q_EX-10.2_11661422_EX-10.2_Distributor Agreement.pdf",
+          "char_start": 6726,
+          "char_end": 6849,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0195",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Anti-Assignment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "TALCOTTRESOLUTIONLIFEINSURANCECO-SEPARATEACCOUNTTWELVE_04_30_2020-EX-99.8(L)-SERVICE AGREEMENT.pdf",
+          "char_start": 25873,
+          "char_end": 25994,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0196",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Audit Rights",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "TALCOTTRESOLUTIONLIFEINSURANCECO-SEPARATEACCOUNTTWELVE_04_30_2020-EX-99.8(L)-SERVICE AGREEMENT.pdf",
+          "char_start": 10370,
+          "char_end": 11421,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0197",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Cap On Liability",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "TALCOTTRESOLUTIONLIFEINSURANCECO-SEPARATEACCOUNTTWELVE_04_30_2020-EX-99.8(L)-SERVICE AGREEMENT.pdf",
+          "char_start": 22785,
+          "char_end": 22882,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0198",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Expiration Date",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "TALCOTTRESOLUTIONLIFEINSURANCECO-SEPARATEACCOUNTTWELVE_04_30_2020-EX-99.8(L)-SERVICE AGREEMENT.pdf",
+          "char_start": 17867,
+          "char_end": 18137,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0199",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Termination For Convenience",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "TALCOTTRESOLUTIONLIFEINSURANCECO-SEPARATEACCOUNTTWELVE_04_30_2020-EX-99.8(L)-SERVICE AGREEMENT.pdf",
+          "char_start": 17867,
+          "char_end": 17995,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0200",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Affiliate License-Licensee",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 6193,
+          "char_end": 7165,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0201",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Anti-Assignment",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 48806,
+          "char_end": 49094,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0202",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Audit Rights",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 29551,
+          "char_end": 29985,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0203",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Cap On Liability",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 54448,
+          "char_end": 54830,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0204",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Covenant Not To Sue",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 35511,
+          "char_end": 35872,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0205",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Exclusivity",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 10716,
+          "char_end": 10968,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 5775,
+          "char_end": 6146,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 6193,
+          "char_end": 7164,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0206",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Insurance",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 41576,
+          "char_end": 41842,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 41843,
+          "char_end": 42133,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 41361,
+          "char_end": 41574,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0207",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "License Grant",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 13364,
+          "char_end": 13723,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 6193,
+          "char_end": 7165,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0208",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Minimum Commitment",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 24968,
+          "char_end": 25316,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 31531,
+          "char_end": 32045,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0209",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Non-Compete",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 33642,
+          "char_end": 33817,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0210",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Non-Transferable License",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 11592,
+          "char_end": 11912,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 13364,
+          "char_end": 13723,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 12295,
+          "char_end": 12612,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0211",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Notice Period To Terminate Renewal",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 5477,
+          "char_end": 5768,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0212",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Post-Termination Services",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 44094,
+          "char_end": 44487,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0213",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Renewal Term",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 5775,
+          "char_end": 6146,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 5477,
+          "char_end": 5768,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0214",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Revenue/Profit Sharing",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 66914,
+          "char_end": 67069,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 62936,
+          "char_end": 63121,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 63122,
+          "char_end": 63677,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 66726,
+          "char_end": 66913,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 26869,
+          "char_end": 27071,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 19163,
+          "char_end": 19490,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0215",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Rofr/Rofo/Rofn",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 55428,
+          "char_end": 55767,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 55866,
+          "char_end": 56237,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 56238,
+          "char_end": 56519,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 55768,
+          "char_end": 55865,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0216",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Termination For Convenience",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 43043,
+          "char_end": 43461,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0217",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Volume Restriction",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 24968,
+          "char_end": 25022,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 25066,
+          "char_end": 25317,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 21068,
+          "char_end": 21617,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 24968,
+          "char_end": 25317,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 9270,
+          "char_end": 9623,
+          "role": "supporting"
+        },
+        {
+          "document_name": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement.pdf",
+          "char_start": 20841,
+          "char_end": 21067,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0218",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Audit Rights",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 20738,
+          "char_end": 20911,
+          "role": "supporting"
+        },
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 20296,
+          "char_end": 20732,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0219",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Covenant Not To Sue",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 12537,
+          "char_end": 12775,
+          "role": "supporting"
+        },
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 27581,
+          "char_end": 27748,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0220",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Insurance",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 17628,
+          "char_end": 17759,
+          "role": "supporting"
+        },
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 17760,
+          "char_end": 17850,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0221",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Minimum Commitment",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 5095,
+          "char_end": 5207,
+          "role": "supporting"
+        },
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 5214,
+          "char_end": 5613,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0222",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Notice Period To Terminate Renewal",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 4009,
+          "char_end": 4404,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0223",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Post-Termination Services",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 31536,
+          "char_end": 31717,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0224",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Revenue/Profit Sharing",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 8484,
+          "char_end": 8649,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0225",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Warranty Duration",
+      "split": "dev",
+      "evidence": [
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 37971,
+          "char_end": 38077,
+          "role": "supporting"
+        },
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 37121,
+          "char_end": 37235,
+          "role": "supporting"
+        },
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 39092,
+          "char_end": 39235,
+          "role": "supporting"
+        },
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 39752,
+          "char_end": 40015,
+          "role": "supporting"
+        },
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 48952,
+          "char_end": 49187,
+          "role": "supporting"
+        },
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 18935,
+          "char_end": 19037,
+          "role": "supporting"
+        },
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 36979,
+          "char_end": 37120,
+          "role": "supporting"
+        },
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 48333,
+          "char_end": 48517,
+          "role": "supporting"
+        },
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 42934,
+          "char_end": 43072,
+          "role": "supporting"
+        },
+        {
+          "document_name": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.pdf",
+          "char_start": 41602,
+          "char_end": 41870,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0226",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Anti-Assignment",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 73082,
+          "char_end": 73420,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0227",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Cap On Liability",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 46557,
+          "char_end": 46954,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 80708,
+          "char_end": 81006,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 66862,
+          "char_end": 67230,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 45612,
+          "char_end": 46330,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 46557,
+          "char_end": 47135,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 47007,
+          "char_end": 47135,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0228",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Competitive Restriction Exception",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 17541,
+          "char_end": 17977,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0229",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Covenant Not To Sue",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 51247,
+          "char_end": 51613,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 50931,
+          "char_end": 50988,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0230",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Exclusivity",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 17298,
+          "char_end": 17540,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0231",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Insurance",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 33529,
+          "char_end": 33831,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 34077,
+          "char_end": 34224,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 34225,
+          "char_end": 34512,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0232",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Ip Ownership Assignment",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 47545,
+          "char_end": 48536,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0233",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Irrevocable Or Perpetual License",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 47545,
+          "char_end": 48536,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0234",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "License Grant",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 49503,
+          "char_end": 49647,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 19256,
+          "char_end": 19500,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 19554,
+          "char_end": 19966,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0235",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Minimum Commitment",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 33210,
+          "char_end": 33507,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0236",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "No-Solicit Of Employees",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 36377,
+          "char_end": 36517,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 35599,
+          "char_end": 36289,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 36290,
+          "char_end": 36324,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0237",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Non-Compete",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 18443,
+          "char_end": 18538,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 18293,
+          "char_end": 18391,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0238",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Non-Transferable License",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 19554,
+          "char_end": 19966,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0239",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Post-Termination Services",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 64176,
+          "char_end": 64676,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 64757,
+          "char_end": 65181,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 63785,
+          "char_end": 64159,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0240",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Termination For Convenience",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 57265,
+          "char_end": 57672,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0241",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Volume Restriction",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 38011,
+          "char_end": 38306,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0242",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Warranty Duration",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 43424,
+          "char_end": 43500,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 43667,
+          "char_end": 43773,
+          "role": "supporting"
+        },
+        {
+          "document_name": "WORLDWIDESTRATEGIESINC_11_02_2005-EX-10-RESELLER AGREEMENT.pdf",
+          "char_start": 43826,
+          "char_end": 43962,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0243",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Cap On Liability",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.pdf",
+          "char_start": 11710,
+          "char_end": 12174,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.pdf",
+          "char_start": 11509,
+          "char_end": 11677,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.pdf",
+          "char_start": 11188,
+          "char_end": 11508,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0244",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Expiration Date",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.pdf",
+          "char_start": 9008,
+          "char_end": 9190,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0245",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Governing Law",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.pdf",
+          "char_start": 12845,
+          "char_end": 13033,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0246",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Notice Period To Terminate Renewal",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.pdf",
+          "char_start": 9191,
+          "char_end": 9485,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0247",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Renewal Term",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.pdf",
+          "char_start": 9191,
+          "char_end": 9485,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0248",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Affiliate License-Licensee",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 59500,
+          "char_end": 59831,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0249",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Anti-Assignment",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 112624,
+          "char_end": 113288,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0250",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Cap On Liability",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 70237,
+          "char_end": 70469,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 79119,
+          "char_end": 79615,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 79624,
+          "char_end": 80846,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0251",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Competitive Restriction Exception",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 65105,
+          "char_end": 65614,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0252",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Exclusivity",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 64582,
+          "char_end": 65080,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0253",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Insurance",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 81403,
+          "char_end": 81454,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 80866,
+          "char_end": 81402,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0254",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Ip Ownership Assignment",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 83480,
+          "char_end": 83604,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 82257,
+          "char_end": 82641,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 82821,
+          "char_end": 83019,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 83177,
+          "char_end": 83479,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 83605,
+          "char_end": 83801,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 84688,
+          "char_end": 85170,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 82642,
+          "char_end": 82819,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0255",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Irrevocable Or Perpetual License",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 87172,
+          "char_end": 87502,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 86846,
+          "char_end": 87163,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 64582,
+          "char_end": 65080,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0256",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Joint Ip Ownership",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 84509,
+          "char_end": 84686,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 84291,
+          "char_end": 84508,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 83831,
+          "char_end": 84196,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0257",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "License Grant",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 87172,
+          "char_end": 87502,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 59500,
+          "char_end": 59832,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 49152,
+          "char_end": 49842,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 86717,
+          "char_end": 86797,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 86846,
+          "char_end": 87163,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 87701,
+          "char_end": 88206,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 64582,
+          "char_end": 65080,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0258",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Non-Transferable License",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 87701,
+          "char_end": 88207,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0259",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Rofr/Rofo/Rofn",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 52517,
+          "char_end": 53187,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 57744,
+          "char_end": 58097,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 54126,
+          "char_end": 54818,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 58314,
+          "char_end": 58931,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 60659,
+          "char_end": 61499,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 50351,
+          "char_end": 50701,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 55214,
+          "char_end": 55981,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 58937,
+          "char_end": 59072,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 53844,
+          "char_end": 54125,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 57430,
+          "char_end": 57697,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 57091,
+          "char_end": 57424,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 50702,
+          "char_end": 51409,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 54819,
+          "char_end": 55213,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 55982,
+          "char_end": 56930,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 53234,
+          "char_end": 53491,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 56936,
+          "char_end": 57090,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 50173,
+          "char_end": 50350,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 51715,
+          "char_end": 52516,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 53497,
+          "char_end": 53843,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 51410,
+          "char_end": 51713,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0260",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Uncapped Liability",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 79119,
+          "char_end": 79615,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 79624,
+          "char_end": 80847,
+          "role": "supporting"
+        }
+      ]
+    },
+    {
+      "question_id": "C0261",
+      "evaluation_type": "rag_retrieval",
+      "label_source": "cuad_annotation",
+      "clause_type": "Warranty Duration",
+      "split": "test",
+      "evidence": [
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 42344,
+          "char_end": 42608,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 45001,
+          "char_end": 45236,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 44768,
+          "char_end": 44954,
+          "role": "supporting"
+        },
+        {
+          "document_name": "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3).pdf",
+          "char_start": 42919,
+          "char_end": 43301,
+          "role": "supporting"
+        }
+      ]
+    }
+  ]
+}

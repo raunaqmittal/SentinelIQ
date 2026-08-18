@@ -1,0 +1,127 @@
+{
+  "overall_score": 49.52,
+  "risk_level": "medium",
+  "category_scores": {
+    "compliance": 50.0,
+    "security": 50.0,
+    "financial": 50.0,
+    "contract": 20.0,
+    "evidence_quality": 90.25
+  },
+  "recommendation": "APPROVE_WITH_CONDITIONS",
+  "confidence": null,
+  "escalate": false,
+  "contradiction_found": false,
+  "missing_critical_docs": false,
+  "vendor": "Meridian CloudWorks",
+  "injection_flagged": false,
+  "evidence_signals": {
+    "retrieval_rate": 1.0,
+    "citation_validity": 1.0,
+    "citation_accuracy": 0.675,
+    "questions_with_labels": 4
+  },
+  "findings_per_category": {
+    "compliance": 1,
+    "security": 1,
+    "financial": 1,
+    "contract": 1
+  },
+  "findings": [
+    {
+      "answer": "Meridian CloudWorks does **not** currently hold a valid SOC\u202f2 Type\u202fII certification. The SOC\u202f2 Type\u202fII audit summary states that the certification was valid for twelve months from the report issue date (March\u202f20\u202f2023) and expired on\u202f15\u202fMarch\u202f2024, and that no subsequent SOC\u202f2 examination has been completed, meaning no current valid certification exists\u202f[meridian_soc2_summary_0000].  \n\nThe security policy\u2019s statement that \u201cMeridian CloudWorks is SOC\u202f2 Type\u202fII certified\u201d conflicts with the audit summary and is not supported by evidence of a current, unexpired report\u202f[meridian_security_policy_0000].",
+      "citations": [
+        "meridian_soc2_summary_0000",
+        "meridian_security_policy_0000"
+      ],
+      "dropped_citations": [],
+      "injection_flagged": false,
+      "supplied": [
+        "meridian_soc2_summary_0000",
+        "meridian_security_policy_0000",
+        "meridian_sla_0000",
+        "meridian_incident_report_0000",
+        "MSFT_item_7_0003"
+      ],
+      "category": "compliance",
+      "specialist": "Compliance Analyst",
+      "severity": "MEDIUM",
+      "input_tokens": 9304,
+      "output_tokens": 2038,
+      "question_id": "Q001",
+      "question": "Does Meridian CloudWorks currently hold a valid SOC 2 Type II certification?"
+    },
+    {
+      "answer": "Meridian\u2019s security policy states that \u201cAll customer data at rest, including primary databases, object storage, and backup snapshots, is encrypted using AES\u2011256\u201d\u202f[meridian_security_policy_0000]. However, the incident report notes that \u201cThe affected backup snapshots were stored in plaintext, without the AES\u2011256 encryption applied to primary production data\u201d\u202f[meridian_incident_report_0000]. Thus, the claim that all customer data at rest is encrypted is inconsistent with the incident report.",
+      "citations": [
+        "meridian_security_policy_0000",
+        "meridian_incident_report_0000"
+      ],
+      "dropped_citations": [],
+      "injection_flagged": false,
+      "supplied": [
+        "meridian_security_policy_0000",
+        "meridian_incident_report_0000",
+        "meridian_sla_0000",
+        "meridian_soc2_summary_0000",
+        "MSFT_item_1a_0016"
+      ],
+      "category": "security",
+      "specialist": "Security Risk Analyst",
+      "severity": "MEDIUM",
+      "input_tokens": 9346,
+      "output_tokens": 1508,
+      "question_id": "Q007",
+      "question": "Does Meridian CloudWorks encrypt all customer data at rest, and is this claim consistent with what its own incident report describes?"
+    },
+    {
+      "answer": "**Financial risk factors disclosed by Microsoft in Item\u202f1A of its most recent Form\u202f10\u2011K**\n\n- Intense competition across all markets for Microsoft\u2019s products and services, which could reduce margins and adversely affect results of operations.\u202f[MSFT_item_1a_0000]  \n- Potential cost\u2011structure increases and margin pressure from expanding vertically\u2011integrated hardware, infrastructure, and AI capabilities.\u202f[MSFT_item_1a_0000]  \n- Dependence on a limited number of qualified suppliers for certain components; disruptions or limited availability could delay datacenter operations and device manufacturing, harming revenue and profitability.\u202f[MSFT_item_7_0003]  \n- Need to attract and retain qualified employees; failure to do so could impair execution and financial performance.\u202f[MSFT_item_7_0003]  \n- Foreign\u2011exchange risk: a significant portion of revenue and expenses are denominated in non\u2011U.S. dollars, so fluctuations in exchange rates can materially affect revenue and expenses.\u202f[MSFT_item_7_0003]  \n- Global, regional, and local economic developments, including changes in monetary policy, inflation, recession, and trade restrictions (tariffs, import/export controls), which can increase supply\u2011chain costs, cause cost volatility, and create economic uncertainty that may hurt results of operations.\u202f[MSFT_item_7_0003]\u202f[MSFT_item_1a_0037]  \n- Seasonality: revenue is generally higher in the fourth fiscal quarter, creating quarterly fluctuations in financial results.\u202f[MSFT_item_7_0003]  \n- Geopolitical instability and related sanctions that may limit Microsoft\u2019s ability to do business in certain markets or with public\u2011sector customers, potentially leading to revenue loss, fines, or operational delays.\u202f[MSFT_item_1a_0037]  \n- Pandemic\u2011related risks: regional epidemics or a global pandemic could disrupt operations, reduce demand, and affect financial condition.\u202f[MSFT_item_1a_0037]  \n- Climate\u2011change and environmental\u2011regulation risks that could increase the cost of powering and cooling hardware, affecting operating expenses.\u202f[MSFT_item_1a_0037]  \n- Investments in new products, services, AI, and hardware that may not achieve expected returns, could be unprofitable, or may require significant capital without commensurate revenue, impacting financial condition.\u202f[MSFT_item_1a_0006]  \n- Potential misuse of cloud\u2011based and AI products and services for fraudulent or unlawful purposes, which could lead to reputational harm, regulatory scrutiny, service disruptions, and financial penalties.\u202f[MSFT_item_1a_0006]  \n- Cybersecurity, data\u2011privacy, and platform\u2011abuse risks that could result in reduced revenue, increased costs, liability claims, or damage to Microsoft\u2019s competitive position.\u202f[MSFT_item_1a_0008]  \n- Risks associated with acquisitions, joint ventures, and strategic alliances that could have adverse financial effects.\u202f[MSFT_item_1a_0006]\n\n****",
+      "citations": [
+        "MSFT_item_1a_0000",
+        "MSFT_item_7_0003",
+        "MSFT_item_1a_0037",
+        "MSFT_item_1a_0006",
+        "MSFT_item_1a_0008"
+      ],
+      "dropped_citations": [],
+      "injection_flagged": false,
+      "supplied": [
+        "MSFT_item_1a_0000",
+        "MSFT_item_7_0003",
+        "MSFT_item_1a_0037",
+        "MSFT_item_1a_0006",
+        "MSFT_item_1a_0008"
+      ],
+      "category": "financial",
+      "specialist": "Financial Risk Analyst",
+      "severity": "MEDIUM",
+      "input_tokens": 10954,
+      "output_tokens": 4548,
+      "question_id": "Q013",
+      "question": "What financial risk factors does Microsoft disclose in the Item 1A section of its most recent 10-K?"
+    },
+    {
+      "answer": "Either party may terminate the agreement for non\u2011cause by providing sixty (60) days written notice\u202f[BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0000].  \n\nThe Company may also terminate for cause by giving fifteen (15) business days written notice describing the breach\u202f[BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0004].  \n\nUpon termination or expiration, the Reseller must immediately discontinue any use of the Company\u2019s name, logotype, Marks or slogans, cease all representations that a relationship exists, stop promoting, soliciting or procuring orders for the Product, and return all Proprietary Information and any other Company materials in its possession\u202f[BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0004].",
+      "citations": [
+        "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0000",
+        "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0004"
+      ],
+      "dropped_citations": [],
+      "injection_flagged": false,
+      "supplied": [
+        "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0000",
+        "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0004",
+        "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0002",
+        "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0006",
+        "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement_0001"
+      ],
+      "category": "contract",
+      "specialist": "Compliance Analyst",
+      "severity": "LOW",
+      "input_tokens": 19982,
+      "output_tokens": 2546,
+      "question_id": "Q020",
+      "question": "What termination rights does each party have under the reseller agreement with Bravatek Solutions?"
+    }
+  ]
+}

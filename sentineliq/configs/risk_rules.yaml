@@ -1,0 +1,33 @@
+# Risk score weights — must sum to 1.0
+weights:
+  compliance: 0.25
+  security: 0.30
+  financial: 0.20
+  contract: 0.15
+  evidence_quality: 0.10
+
+# Agent severity labels -> category score (0–100).
+# The agent picks a label; Python does the arithmetic, so no LLM ever chooses
+# a number (ADR-021).
+severity:
+  LOW: 20
+  MEDIUM: 50
+  HIGH: 80
+
+# Evidence-quality formula — must sum to 1.0
+evidence_quality:
+  retrieval_rate: 0.50
+  citation_accuracy: 0.30
+  citation_validity: 0.20
+
+# Decision thresholds (overall risk score 0–100)
+thresholds:
+  low:      { max: 30,  decision: APPROVE }
+  medium:   { max: 55,  decision: APPROVE_WITH_CONDITIONS }
+  high:     { max: 75,  decision: ESCALATE }
+  critical: { max: 100, decision: REJECT }
+
+# Escalation rules
+escalation:
+  always_escalate_on_contradiction: true
+  always_escalate_on_missing_critical_docs: true
