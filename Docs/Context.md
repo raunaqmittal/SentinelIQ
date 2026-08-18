@@ -1218,7 +1218,7 @@ Exactly four files. See §14.
 -   Python
 -   FastAPI
 -   PostgreSQL
--   React
+-   Streamlit (ADR-022 — replaced React)
 
 ## LLM
 
@@ -2510,7 +2510,7 @@ dimensions.
 
 ## Frontend
 
--   React
+-   Streamlit (ADR-022 — replaced React)
 -   Interactive risk dashboard
 -   Evidence explorer
 

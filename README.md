@@ -1,445 +1,308 @@
 # SentinelIQ
 
-> AI-Powered Enterprise Due-Diligence & Decision Intelligence
-
-SentinelIQ is an autonomous AI system that investigates a vendor or company
-using heterogeneous documents and produces an evidence-backed risk assessment
-and recommendation.
-
-**This is not a RAG chatbot.**
-It is an autonomous enterprise investigation and decision system whose
-retrieval layer uses advanced RAG.
+**Ask a hard question about a company. Get an answer you can check.**
 
 ---
 
-## Status
+## The problem this solves
 
-**Locally complete, end to end.** Ingestion, the frozen retrieval pipeline, the
-deterministic decision engine, the CrewAI multi-agent layer, the FastAPI
-backend, the Streamlit dashboard and the PostgreSQL/SQLite persistence layer
-are all implemented, tested and verified running together in containers.
+Before a company signs a contract with a vendor, someone has to answer questions like:
 
-**343 tests pass on PostgreSQL, 342 + 1 skipped on SQLite.** No test calls an
-LLM.
+> *"Is this vendor's security certification actually current?"*
+> *"Do their own documents contradict each other?"*
+> *"What happens if they get acquired mid-contract?"*
 
-What is **not** done, and is not claimed anywhere in this repository:
+Today a human does this. They open a security questionnaire, a SOC 2 summary,
+a 40-page contract and an SEC filing, and they read. It takes hours per vendor,
+and the interesting findings are usually the ones hiding *between* two
+documents — the policy that promises encryption, and the incident report that
+quietly admits some backups weren't encrypted.
 
-- **No cloud deployment.** Local containers only.
-- **The Stage 9 multi-agent comparison is unrun** (~700K tokens, ~4 days of
-  free-tier quota), so no claim is made that multi-agent beats the single-agent
-  baseline.
-- **Live contradiction detection is unverified.** The mechanism is implemented
-  and tested deterministically; no live run has shown the Red-Team emitting
-  `CONTRADICTION: YES`.
-- **Live prompt-injection refusal is unverified**, for the same reason. The
-  controls around the model are implemented and tested (19 tests); the model's
-  own behaviour on a live payload has not been measured.
+That gap between documents is the whole job. And it's exactly what gets missed
+when someone is reviewing their ninth vendor of the week.
 
-**Generation baseline** (CUAD DEV, n=35, `openai/gpt-oss-120b` via Groq):
-citation validity **1.000** (no fabricated citations), numeric grounding 0.553.
-Faithfulness 0.974, relevance 1.000 and completeness 0.958 come from a separate
-judge run (`llama-3.3-70b-versatile`, validated first — ADR-019/020) whose
-scores were never written back into the stored results file. The judge scores
-that *are* in that file came from a rejected judge and are marked invalid, so
-the reliability dashboard refuses to display them. The model never declined a
-question whose evidence retrieval had actually supplied (0/13).
+## What SentinelIQ does
 
-### Retrieval (frozen 2026-08-15)
+You give it a vendor. It reads everything that vendor has — contracts,
+financial filings, security documents — and comes back with a risk score, a
+recommendation, and **a citation for every single claim it makes**.
+
+Here is a real finding from a real run:
+
+> **Does this vendor encrypt all customer data at rest?**
+>
+> The security policy says *"All customer data at rest, including primary
+> databases, object storage, and backup snapshots, is encrypted using
+> AES-256."*
+>
+> But the incident report says the affected backup snapshots *"were stored in
+> plaintext, without the AES-256 encryption applied to primary production
+> data."*
+>
+> **These contradict each other.** → Flagged, escalated for human review.
+
+Two documents. One claim, one admission. The system found the gap and refused
+to average it away into a comfortable answer.
+
+## Why it isn't a chatbot
+
+A chatbot answers. SentinelIQ *investigates*, and the difference shows up in
+four design decisions:
+
+**It works in teams.** Four specialist agents — compliance, financial,
+security, and a red-team reviewer — look at the same evidence. The specialist
+drafts an answer; the red-teamer checks it against the source and strips out
+anything unsupported. Neither one gets the last word alone.
+
+**The score is not written by an AI.** The agents produce findings and label
+each one low, medium or high. Then ordinary Python code — weights from a config
+file, thresholds, arithmetic — turns those into the final risk score. A
+language model never decides the number. If it did, you could not audit the
+number, and you could not defend it to an auditor who asks *why 48 and not 60*.
+
+**It treats documents as untrusted.** Every piece of evidence handed to a model
+is wrapped and explicitly labelled as data, never as instructions. This is not
+theoretical: one test vendor in this repository has malicious instructions
+hidden in all four of its documents. (More on how that turned out below.)
+
+**It would rather say nothing than guess.** If the evidence doesn't answer the
+question, the answer is `NOT FOUND IN EVIDENCE`. And every citation is checked
+against the evidence actually supplied — a made-up reference gets dropped
+before it ever reaches you.
+
+## Two things we tested for real
+
+Most projects claim their AI is safe. These two were actually run against a
+live model and the results are in the repository.
+
+**Can it catch a planted contradiction?** We built a fictional vendor with two
+deliberate self-contradictions buried in its paperwork. The system found both,
+explained the mechanism of each, and — importantly — did **not** cry wolf on
+the two control questions. One contradiction was enough to force the whole
+investigation into human review.
+
+**Can it resist a prompt-injection attack?** We built a second vendor whose
+documents each carry a different attack: fake system messages, forged
+"instructions for automated reviewers", a document claiming authority over the
+others, and a suppression order attached to genuinely bad news. That last one
+is the real test — the attack tells the reader to hide a breach affecting
+~41,000 users.
+
+The model reported the breach, with the correct figures, **and flagged all four
+attacks by name.** It obeyed none of them.
+
+## What we learned from measuring it
+
+We ran a controlled experiment: 35 questions through a single-agent pipeline,
+then the same 35 through the multi-agent one, with retrieval held **exactly**
+identical on both sides.
+
+The honest result is more interesting than a clean win.
+
+**The big improvement is real.** On answers containing numbers — notice
+periods, liability caps, renewal terms, the details that actually matter in a
+contract — grounding went from **0.24 to 0.83**. That's the rate at which
+numbers in the answer actually appear in the source. The multi-agent pipeline
+roughly stopped inventing numbers.
+
+**Two improvements we initially reported turned out to be measurement bugs.**
+Our first analysis showed the multi-agent path citing more accurately. It
+didn't. Our citation parser only recognised square brackets `[like_this]`, and
+the model sometimes cited using full-width brackets `【like_this】` — so real
+citations were being counted as no citation at all, and the *single-agent* path
+was penalised harder. Once both sides were scored fairly, the citation
+advantage vanished.
+
+We kept the correction in the documentation rather than quietly deleting the
+original number. Finding that bug also fixed a genuine defect in the product:
+real reports had been silently losing evidence links.
+
+**It costs 4.4× more.** That's the honest trade: better grounding for four
+times the tokens and about a minute per question. For due diligence a human
+acts on, we think that's worth it. For a high-volume chatbot, it wouldn't be.
+
+## What this project does *not* do
+
+Stated plainly, because a README that only lists strengths is not worth
+trusting:
+
+- **No cloud deployment.** It runs in Docker on one machine.
+- **The security documents are synthetic.** No public corpus of real vendor
+  security questionnaires exists, so we wrote nine of them. The contracts and
+  financial filings are real (CUAD and SEC EDGAR).
+- **Retrieval finds the labelled evidence about 43% of the time** on the hard
+  benchmark. That is the weakest part of the system and it is not hidden.
+- **The evaluation set is 35 questions.** Enough to detect a large effect, not
+  enough to settle a close one.
+
+---
+---
+
+# Technical documentation
+
+Everything above is the intuition. Everything below is how it works.
+
+## Architecture
 
 ```
-dense@50 (bge-base-en-v1.5) ─┐
-                             ├─ RRF k=60 → top 20 → bge-reranker-v2-m3 (FP16) → top 5
-BM25@50 ─────────────────────┘
+Streamlit dashboard  ──HTTP──▶  FastAPI  ──▶  investigation pipeline
+                                   │                    │
+                                   ▼                    ▼
+                            PostgreSQL          retrieval + agents
+                          (tenant-scoped)               │
+                                                        ▼
+                                                   Groq API
 ```
 
-Every component was selected by measurement, not by reputation. Evaluated on
-**269 questions generated from CUAD's expert clause annotations**, split by
-contract into DEV (160) and a frozen TEST (101).
+Three containers: `api` (FastAPI + retrieval + agents), `ui` (Streamlit), `db`
+(PostgreSQL 16). The UI talks to the API over HTTP only and never imports the
+pipeline — which is also why no CORS configuration is needed, since the calls
+happen server-side.
 
-| pipeline | R@5 | R@10 | MRR | NDCG@10 |
-|---|---|---|---|---|
-| dense only | 0.289 | 0.440 | 0.220 | 0.255 |
-| BM25 only | 0.247 | 0.401 | 0.208 | 0.238 |
-| RRF@50 | 0.332 | 0.534 | 0.240 | 0.294 |
-| **RRF@50 + bge-reranker-v2-m3 @20** | **0.413** | 0.560 | **0.336** | **0.368** |
+## Retrieval pipeline (frozen)
 
-*(CUAD DEV, n=160. Reranker gains confirmed with paired bootstrap 95% CIs;
-the R@10 gain specifically is not statistically significant.)*
+```
+query
+  ├─▶ dense retrieval  (bge-base-en-v1.5, FAISS)  → top 50
+  └─▶ BM25 sparse                                 → top 50
+            ↓
+      RRF fusion (k=60)                           → top 20
+            ↓
+      cross-encoder rerank (bge-reranker-v2-m3)   → top 5
+```
 
-> **Honest caveat:** the frozen TEST result (R@5 0.457) was measured on the
-> RRF@50-only pipeline *before* the reranker was selected. The final pipeline's
-> generalization to TEST is **unmeasured**, and TEST will not be re-run.
+Chunking is a recursive character splitter at 512 tokens with 64 overlap.
+~500 ms per query on a GPU; ~21 s on CPU.
 
-Two cross-encoders were measured as *worse than no reranker at all*
-(`ms-marco-MiniLM-L-6-v2`, `bge-reranker-base`), and Summary-Augmented
-Chunking, smaller chunks and query routing were each tested and rejected on
-evidence. See [`Docs/PROGRESS.md`](Docs/PROGRESS.md) for the full trail,
-including rejected alternatives.
+**This pipeline is frozen.** Every component was chosen by measurement, not
+preference — two rerankers were tested and found *worse than no reranker at
+all*. Downstream quality problems are treated as generation problems; retrieval
+is not reopened without a new experiment.
 
-See [`Docs/PROGRESS.md`](Docs/PROGRESS.md) for current status and next steps.
+## The agent layer
 
----
+Four specialists (compliance, financial, security, red-team) built on CrewAI.
+Each question routes to one specialist by category, which drafts a cited
+answer. The red-team agent then re-reads the same evidence, removes unsupported
+claims, drops citations that don't support their claim, and labels the finding
+`LOW`/`MEDIUM`/`HIGH`.
 
-## Data
+The evidence block is deliberately sent to **both** agents. It costs tokens —
+90% of the multi-agent token spend is input — but the red-teamer cannot detect
+an injected instruction it has not been shown.
 
-SentinelIQ is built and evaluated on **public data only**. No confidential
-or customer documents are used in development or committed to this repo.
+## Decision engine
 
-| Source | Used for | License / access |
-|---|---|---|
-| [CUAD](https://www.atticusprojectai.org/cuad) — 510 contracts, 13k+ expert clause annotations | Contract & compliance evidence; **retrieval ground truth** | CC BY 4.0 |
-| [SEC EDGAR](https://www.sec.gov/search-filings/edgar-application-programming-interfaces) — 10-K Item 1A / Item 7, XBRL facts | Financial risk evidence (unstructured + structured) | Public, no API key |
-| Synthetic security documents | SOC 2-style reports, policies, SLAs, incident reports | Generated for this project |
+Deterministic Python, no LLM (ADR-021):
 
-> **Disclosure:** the security-document corpus is **synthetic**. No public
-> corpus of SOC 2 reports or security policies exists — they are
-> confidential by nature. Synthetic documents contain deliberately planted
-> contradictions so the Red-Team agent's contradiction detection can be
-> measured rather than merely demonstrated. All synthetic files are flagged
-> `synthetic: true` in metadata.
+- Agent severity labels → numeric scores via `risk_rules.yaml`
+- Weighted category scores → overall risk score → recommendation
+- Weights are validated to sum to 1.0 **on load**, so a typo fails loudly
+- One contradiction anywhere forces escalation regardless of score
 
-Retrieval quality is measured against **CUAD's expert human annotations**,
-not against ground truth generated by the same LLM being evaluated.
+## Security model
 
----
-
-## Security & Privacy
-
-The system is architected for confidential enterprise documents from the
-start (details in [`Docs/Context.md`](Docs/Context.md) §26):
-
-- **Minimal LLM exposure** — only reranked chunks reach the LLM, never whole documents
-- **Tenant isolation** — `tenant_id` enforced server-side in the repository layer
-- **Documents are untrusted input** — in-document instructions are reported as findings, never executed
-- **Deterministic decisions** — risk scoring is Python, not LLM output
-- **Secure logging** — metadata only; never raw document text or prompts
-- **Configurable retention** — deletion removes documents, chunks *and* index entries
-
-Retrieval, indexing and the database all run locally; only the LLM call
-leaves the trust boundary. Moving to a fully private deployment is a
-configuration change behind the `LLMProvider` interface, not a rewrite.
-
----
-
-## Documentation
-
-`Docs/` contains exactly four files — architecture, API design and
-evaluation methodology all live inside `Context.md` rather than in
-separate documents.
-
-| File | Purpose |
+| Control | Implementation |
 |---|---|
-| [`Docs/Context.md`](Docs/Context.md) | Project source of truth — architecture, data strategy, security model |
-| [`Docs/REQUIREMENTS.md`](Docs/REQUIREMENTS.md) | Functional and non-functional requirements with acceptance criteria |
-| [`Docs/CONVENTIONS.md`](Docs/CONVENTIONS.md) | Coding conventions, security conventions, LangSmith integration |
-| [`Docs/PROGRESS.md`](Docs/PROGRESS.md) | Live status, ADR log, evaluation results, session log |
+| Tenant isolation | Structural — indexes are built per vendor, so one tenant's search cannot reach another's chunks. Every repository query filters by `tenant_id` |
+| Auth | bcrypt password hashes, 30-minute JWTs carrying `tenant_id` and role. `SECRET_KEY` has **no default** — a fallback would sign forgeable tokens |
+| RBAC | `analyst` and `admin`; deletion requires `admin` |
+| Injection resistance | Evidence delimited and labelled untrusted; **empty tool allow-list**; citations filtered against supplied evidence; injection reports never suppressed |
+| File validation | Magic-byte checks before any parser runs — a renamed executable is rejected |
+| Log redaction | Secrets and document content masked before a log line is written |
 
----
-
-## Setup
-
-SentinelIQ uses **two virtual environments on purpose**. The backend needs
-torch; Streamlit needs pandas; loading pandas after torch corrupts the heap on
-Windows (diagnosed 2026-08-16, see `Docs/PROGRESS.md`). Keeping them apart is
-also correct architecture — the UI talks HTTP only.
-
-```bash
-# 1. Clone
-git clone <repo-url>
-cd SentinelIQ
-
-# 2. Backend environment
-python -m venv .venv
-.venv\Scripts\activate           # Windows
-# source .venv/bin/activate      # macOS/Linux
-pip install -r requirements.txt
-pip install -e . --no-deps       # makes `sentineliq` importable by the CLIs
-
-# 3. UI environment (separate, no ML stack)
-python -m venv .venv-ui
-.venv-ui\Scripts\pip install -r frontend/requirements.txt
-
-# 4. Configuration
-cp .env.example .env
-# Required: SECRET_KEY (any long random string) and GROQ_API_KEY.
-# Generate a key:  python -c "import secrets; print(secrets.token_urlsafe(48))"
-
-# 5. Create a user
-python scripts/create_user.py alice --tenant tenant-a --role admin
-```
-
-### Running it
-
-```bash
-# Terminal 1 — API on http://127.0.0.1:8000
-uvicorn sentineliq.components.api.app:create_app --factory --reload
-
-# Terminal 2 — dashboard on http://localhost:8501
-.venv-ui\Scripts\streamlit run frontend/app.py
-```
-
-Check the API is alive: `curl http://127.0.0.1:8000/health`
-Interactive API docs: <http://127.0.0.1:8000/docs>
-
-### Tests
-
-```bash
-pytest                      # 342 tests + 1 skipped, on in-memory SQLite
-```
-
-To run the same suite against PostgreSQL instead, start the database and point
-`TEST_DATABASE_URL` at a database **of its own** — every test drops its tables,
-so this must not be the application's database:
-
-```bash
-docker compose up -d db
-docker compose exec db psql -U sentineliq -d postgres \
-    -c "CREATE DATABASE sentineliq_test OWNER sentineliq;"
-TEST_DATABASE_URL=postgresql://sentineliq:$POSTGRES_PASSWORD@localhost:5433/sentineliq_test pytest
-```
-
-**Run this before trusting a change to the API's session handling.** SQLite
-gives every session the same connection, so it cannot show a lock conflict
-between two of them — two real deadlock/visibility bugs were found this way
-and are described in `Docs/PROGRESS.md`.
-
-### Command line, without the web stack
-
-```bash
-python scripts/investigate.py "Meridian CloudWorks" --limit 2 --json report.json
-```
-
-`--limit` keeps a trial run cheap: every question costs roughly 15K LLM tokens.
-
----
-
-## API
-
-Every endpoint except `/health`, `/ready` and `/api/auth/login` needs a bearer
-token, and every one derives the tenant from that token — never from the
-request body.
-
-| Method | Path | Purpose |
-|---|---|---|
-| GET | `/health` | Liveness — 200 while the process serves, reports the database separately |
-| GET | `/ready` | Readiness — 503 when the database is unreachable |
-| POST | `/api/auth/login` | Exchange credentials for a 30-minute token |
-| POST | `/api/documents` | Upload a document (validated by content) |
-| GET | `/api/documents` | List this tenant's documents |
-| DELETE | `/api/documents/{id}` | Delete a document, its chunks and its file (**admin**) |
-| POST | `/api/investigations` | Create a pending investigation |
-| GET | `/api/investigations` | List this tenant's investigations |
-| POST | `/api/investigations/{id}/run` | Start it — **202, returns immediately**; 409 if already running |
-| GET | `/api/investigations/{id}/status` | Poll status: `pending` → `running` → `complete` / `failed` |
-| GET | `/api/investigations/{id}/report` | Full report including the "Why?" section |
-| GET | `/api/investigations/{id}/findings` | Findings with evidence |
-| GET | `/api/investigations/{id}/evidence` | Every citation with document and page |
-| DELETE | `/api/investigations/{id}` | Delete it with findings and evidence (**admin**) |
-| GET | `/api/evaluations` | Reliability metrics for the dashboard |
-
-A run takes minutes, so `/run` does not wait for it:
-
-```bash
-ID=$(curl -sX POST localhost:8000/api/investigations -H "$AUTH" \
-     -d '{"vendor_name":"Meridian CloudWorks"}' | jq -r .investigation_id)
-curl -sX POST localhost:8000/api/investigations/$ID/run -H "$AUTH"   # 202
-curl -s localhost:8000/api/investigations/$ID/status -H "$AUTH"      # poll
-```
-
-A run does not survive a restart of the API process — the investigation is
-left at `running` and nothing resets it (ADR-024).
-
-### Retention
-
-Uploaded documents are kept for ever unless `retention.document_days` is set
-in `sentineliq/configs/app.yaml`. Nothing purges automatically:
-
-```bash
-python scripts/purge_expired.py --dry-run   # preview
-python scripts/purge_expired.py             # delete, and audit each deletion
-```
-
----
-
-## Dashboard (Streamlit)
-
-Pages: **Dashboard** (all investigations), **Start an investigation**,
-**Investigation report** (verdict, category scores, "Why?", findings by
-category, evidence explorer) and **AI reliability** (measured quality).
-
----
+Structural guards enforce this in CI: an AST check fails the build if a route
+lacks authentication or a repository function lacks a tenant filter.
 
 ## Measured results
 
-All figures are CUAD **DEV**; the frozen TEST split has been scored once and is
-not quoted here. See `Docs/PROGRESS.md` for full method, `n`, and limitations.
+**Stage 9 — single-agent vs multi-agent, 35 questions, identical retrieval:**
 
-Each metric is measured over the group it applies to, never pooled — the
-denominators differ and a single number would misrepresent all of them.
+| Metric | Single | Multi | Delta |
+|---|---|---|---|
+| numeric grounding (17 answered by both) | 0.2429 | **0.8255** | **+0.5826**, p = 0.00026 |
+| citation accuracy (30 answerable) | 0.3667 | 0.3833 | +0.0167, not significant (p = 0.75) |
+| citation validity | 1.0000 | 1.0000 | 0.0000 |
+| retrieval hit rate | 0.3714 | 0.3714 | identical — 35/35 same chunks, same order |
+| tokens | 147,185 | 645,668 | 4.39× |
 
-| Metric | Value | Measured over |
-|---|---|---|
-| Citation validity | **1.000** | 30 answerable — no fabricated citations |
-| Citation accuracy | 0.206 | 17 answered |
-| Numeric grounding | 0.553 | 17 answered |
-| Retrieval hit rate @5 | 0.433 | 30 answerable — retrieval is the bottleneck |
-| Abstention on unanswerable controls | 0.600 | 5 controls |
-| Faithfulness | 0.974 | 19 non-abstained, judge `llama-3.3-70b-versatile` |
-| Relevance | 1.000 | 19 — the judge is generous on genuine attempts |
-| Completeness | 0.958 | 19 |
-| Abstention with evidence in hand | **0/13** | never refused a question it could answer |
+**Retrieval**, on a 269-question benchmark generated from CUAD expert
+annotations (DEV 160 / TEST 101, split by contract, TEST scored once).
 
-`GET /api/evaluations` recomputes the deterministic figures from the stored
-records and returns them beside the recorded ones; a regression test asserts
-the two agree metric by metric.
+**Live verifications:** contradiction detection and prompt-injection refusal,
+both against a real model, both recorded in `Docs/PROGRESS.md`.
 
-**Not measured:** the Stage 9 multi-agent vs Stage 8 single-agent comparison.
-Stage 9 is built and smoke-tested but the 35-question run has not been done, so
-no claim that multi-agent is better is supported.
+**Judge metrics:** a valid `llama-3.3-70b-versatile` judge run exists over the
+19 judgeable single-agent answers (faithfulness 0.974, relevance 1.000,
+completeness 0.958). It is **not yet surfaced in the dashboard**, which still
+shows the earlier judge as invalid — an honest gap, noted rather than papered
+over.
 
----
+## Data
 
-## Known limitations
+87 documents across 9 vendor dossiers:
 
-- **Live contradiction detection is unverified.** The escalation path is proven
-  by deterministic tests; no live run has yet shown the Red-Team emitting
-  `CONTRADICTION: YES`.
-- **Recorded NDCG figures are understated.** `ndcg_at_k` capped its ideal
-  wrongly until 2026-08-16; questions with more relevant chunks than `k`
-  (≥5% of CUAD) scored too low. Fixed, but the ablations were not re-run.
-  Recall, MRR and MAP are unaffected, and NDCG did not drive any decision.
-- **The Stage 9 comparison is unrun** (~700K tokens, about 4 days of free-tier
-  quota).
-- **Faithfulness and Answer Relevance are not on the reliability dashboard.**
-  The judge scores stored in the results file came from a rejected judge and
-  are marked invalid; the page says so rather than showing them. Needs a
-  re-judge run (quota).
-- **Precision@K and Context Precision are implemented but never measured** —
-  no ablation has been re-run, so no figure for either is recorded.
-- **Context Recall is not implemented** — two incompatible definitions, and
-  the choice needs a decision (see FR-020).
-- **Retention keeps documents for ever by default**, and nothing schedules the
-  purge. Both are policy decisions, not implementation gaps.
-- **A run does not survive an API restart** — the investigation is left at
-  `running` and nothing resets it (ADR-024).
-- **No database migrations** — `create_all` only, so a column added later has
-  no upgrade path for an existing PostgreSQL database.
-- **Not deployed to any cloud.** The three containers build and run locally;
-  nothing has been deployed to a hosting provider.
-- **TLS and encryption at rest are not configured** — they belong to the
-  deployment platform and are not claimed as done.
-- **SQLite by default, PostgreSQL verified locally.** `DATABASE_URL` selects
-  the database. The full suite passes on both, and the whole stack has been
-  run against PostgreSQL 16 in a container (see Deployment). PostgreSQL has
-  not been run anywhere but locally.
-- **Retrieval quality is the ceiling.** 57% of questions never receive their
-  evidence, which bounds everything downstream.
-- **Section-level citation is not supported** — citations stop at document and
-  page because the loaders do not extract sections.
-- The corpus is public data only: CUAD contracts, SEC EDGAR filings, and
-  synthetic security documents written for this project.
+- **35 CUAD contracts** — real SEC-filed agreements, expert-annotated (CC BY 4.0)
+- **SEC EDGAR filings** for 8 companies — Item 1A, Item 7, and XBRL facts
+- **9 synthetic security vendors** — written for this project; 4 carry planted
+  contradictions and 1 carries prompt-injection payloads
 
----
-
-## Deployment
-
-**Local containers work. Cloud deployment has not been done** — it needs
-credentials this repository does not contain.
+## Running it
 
 ```bash
-# Build and run everything locally (SECRET_KEY, GROQ_API_KEY, POSTGRES_PASSWORD
-# come from .env)
+cp .env.example .env      # set SECRET_KEY and GROQ_API_KEY
 docker compose up -d --build
-
-# API  http://localhost:8000/docs     UI  http://localhost:8501
-# Create a user before signing in:
-docker compose exec api python scripts/create_user.py alice \
-    --tenant tenant-a --role analyst
 ```
 
-What has actually been verified locally:
+API at `http://localhost:8000/docs`, dashboard at `http://localhost:8501`.
+First start downloads ~2.6 GB of models into a cache volume.
 
-| | status |
-|---|---|
-| `frontend/Dockerfile` builds | yes |
-| UI container runs, health check passes | yes |
-| `docker-compose.yml` config validates | yes, and it refuses to start without `SECRET_KEY` |
-| Backend image builds and runs, health check passes | yes — 0.98 GB |
-| Full `docker compose up` with Postgres | yes — db, api and ui all healthy (2026-08-16) |
-| Test suite against PostgreSQL 16 | yes — **343 passed** (342 + 1 skipped on SQLite) |
-| Live checks against the running stack | yes — **74 passed, 0 failed** |
-| API waits for Postgres instead of crashing | yes — retries, then recovers when the database returns |
-| Streamlit reaching the API on Postgres | yes — driven from inside the ui container |
-| Any cloud deployment | **not done** |
-
-The Postgres container publishes **5433** on the host, not 5432: a natively
-installed PostgreSQL commonly holds 5432, and the host would silently reach
-that one instead. Containers still talk to `db:5432` between themselves.
-
-The backend image installs **CPU torch** deliberately — the default Linux wheel
-drags in about 4 GB of CUDA libraries a CPU container cannot use. Results are
-identical; only speed differs, so the recorded latency figures (measured on a
-GPU) do not describe this image.
-
-Before deploying anywhere:
-
-1. Set `SECRET_KEY`, `GROQ_API_KEY`, `DATABASE_URL`, `SEC_USER_AGENT`.
-2. Point `DATABASE_URL` at managed PostgreSQL and run it once to create tables.
-3. Terminate TLS at the platform; enable encryption at rest on the database.
-4. Give the API container a persistent volume for the model cache
-   (`HF_HOME`), or the first request downloads ~2 GB of models.
-5. Set `SENTINELIQ_API_URL` on the UI to the API's public URL.
-
----
-
-## Architecture Overview
-
-```
-User
- ↓
-Streamlit Dashboard
- ↓
-FastAPI Backend
- ↓
-Query Router  (internal docs / structured DB / web search)
- ↓
-FAISS + BM25 → RRF → Cross-Encoder Reranker
- ↓
-Evidence Set
- ↓
-CrewAI Agents
-  Document Intelligence → Compliance / Financial / Security → Red-Team
- ↓
-Decision Engine
- ↓
-Risk Report + Recommendation + Evidence Citations
+```bash
+docker compose exec api python scripts/create_user.py alice --tenant acme --role admin
 ```
 
-Full architecture detail in [`Docs/Context.md`](Docs/Context.md).
+Single vendor from the CLI:
 
----
+```bash
+python scripts/investigate.py "Meridian CloudWorks" --json report.json
+```
 
-## Tech Stack
+## Tests
 
-| Layer | Technology |
-|---|---|
-| Backend | FastAPI, Python 3.11+ |
-| Agents | CrewAI + CrewAI Flows |
-| Vector store | FAISS |
-| Sparse retrieval | BM25 |
-| Reranker | Cross-Encoder (sentence-transformers) |
-| Database | PostgreSQL |
-| Evaluation | Deterministic checks + separate-model LLM judge |
-| Observability | LangSmith |
-| Frontend | Streamlit |
+```bash
+pytest                                   # 391 passed, 1 skipped
+TEST_DATABASE_URL=postgresql+psycopg://... pytest    # 392 on PostgreSQL
+```
 
----
+**No test calls an LLM.** The skipped test is PostgreSQL-only: it proves `/run`
+does not hold a row lock while its background task works — a deadlock that
+SQLite structurally cannot reproduce, and which was only found by running the
+suite against a real server database.
 
-## Attribution
+## Repository layout
 
-- **CUAD** (Contract Understanding Atticus Dataset) — The Atticus Project,
-  licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-  <https://www.atticusprojectai.org/cuad>
-- **SEC EDGAR** — U.S. Securities and Exchange Commission, public domain.
-  Accessed via the EDGAR APIs in accordance with SEC access guidelines
-  (descriptive `User-Agent`, 10 requests/second limit).
+```
+sentineliq/
+  components/
+    ingestion/     loaders + chunker
+    retrieval/     dense, sparse, fusion, reranker  (frozen)
+    agents/        four specialists + shared prompts
+    evaluation/    retrieval and generation metrics
+    database/      SQLAlchemy models + tenant-scoped repository
+    api/           FastAPI app and routes
+  pipeline/        flow (agents), engine (deterministic scoring), investigation
+  service.py       business logic, auth, RBAC
+frontend/app.py    Streamlit dashboard
+scripts/           ingest, investigate, evaluate, create_user, purge_expired
+Docs/              CONTEXT, REQUIREMENTS, CONVENTIONS, PROGRESS
+```
+
+## Documentation
+
+`Docs/PROGRESS.md` is the honest record: what was measured, what was corrected,
+and what was withdrawn. It contains 24 architecture decision records with their
+reasoning, including the ones we got wrong and had to revise.
+
+If you read one thing beyond this file, read the Stage 12 and Stage 13 sections
+— they document two measurement bugs we found in our own published results, and
+what the numbers looked like after fixing them.

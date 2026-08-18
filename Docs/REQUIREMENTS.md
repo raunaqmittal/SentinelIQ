@@ -372,8 +372,10 @@ Each requirement has:
         with **zero** citations is still recorded rather than rejected
   - [/] Evidence references can be resolved back to exact document locations —
         to document and page, not to the exact text span
-  - [/] Evidence is stored and queryable — in **SQLite** locally (ADR-023);
-        PostgreSQL is configured but unverified
+  - [x] Evidence is stored and queryable — SQLite locally, PostgreSQL in
+        containers (ADR-023). **PostgreSQL verified 2026-08-16**: the full
+        suite passes against PostgreSQL 16 and the stack was driven end to
+        end against it
 
 ### FR-018 — Investigation Report
 - **Priority:** P1
@@ -688,14 +690,15 @@ Each requirement has:
   - [x] A test document containing an injection payload is included in the test corpus
         — Thornbury Identity Services, a 9th synthetic vendor whose four documents
         each carry a different injection technique (`thornbury_*.txt`)
-  - [/] An injection attempt found in a document is reported as a finding, not
-        obeyed — **the machinery is implemented and tested, the model's live
-        behaviour is not.** `engine.synthesise` surfaces an
-        `INJECTION ATTEMPT DETECTED` marker from either agent and never
-        suppresses it, and `tests/unit/test_injection.py` proves the whole
-        chain deterministically. Whether the model actually refuses a live
-        Thornbury payload needs a real run and is **unverified** — it costs
-        quota and has not been done
+  - [x] An injection attempt found in a document is reported as a finding, not
+        obeyed — **verified live on 2026-08-18.** `engine.synthesise` surfaces
+        an `INJECTION ATTEMPT DETECTED` marker from either agent and never
+        suppresses it, and `tests/unit/test_injection.py` proves the chain
+        deterministically. A live run against the Thornbury dossier
+        (question I001) reported the real incident the payload told it to
+        suppress — ~41,000 affected users — and flagged all four payloads,
+        one per technique. `injection_flagged` was true. See PROGRESS.md,
+        "Thornbury injection verification"
 - **Test coverage:** `tests/unit/test_injection.py`, 19 deterministic tests,
   no LLM call and no quota.
 

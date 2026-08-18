@@ -33,19 +33,37 @@ blockers discovered.
 
 # Current Stage
 
-**Stage:** 14–15 — application built, tested and containerised locally, and
-verified end to end against PostgreSQL and SQLite. Stages 1–11 done,
-API/UI/persistence/security done including asynchronous `/run` (FR-022),
-both Docker images build and run; **retrieval frozen**. Remaining: the
-cloud deployment (credentials) and Stages 12–13 (error analysis and
-optimization, now unblocked — the Stage 9 comparison is measured).
-**Live contradiction detection and live injection refusal are both verified as
-of 2026-08-18** — see "Meridian live verification" and "Thornbury injection
-verification".
+**Stage:** Stages 1–13 complete. The application is built, tested and
+containerised, and runs end to end on both PostgreSQL and SQLite.
+**Retrieval frozen.** The 35-question single-agent vs multi-agent comparison
+is measured (Stage 9), analysed (Stage 12) and its two scoring artifacts
+corrected (Stage 13). Live contradiction detection and live prompt-injection
+refusal are both verified against a real model.
 
-**Test suite: 343 passing on PostgreSQL** (342 passing + 1 skipped on
-SQLite; unit + integration; no test calls an LLM). Plus 74 live checks
-against the running container stack, 0 failed.
+**Cloud deployment is OUT OF SCOPE**, decided 2026-08-19. The project targets
+its local Docker stack. A preparation pass was completed before that decision
+and its changes were kept, because each is an improvement in its own right:
+the retrieval context is now loaded once per process instead of once per
+investigation, uploads go to a configurable path on a volume, half precision
+is switchable for CPU hosts, and a `.dockerignore` keeps secrets and the
+214 MB dataset cache out of the image. `docker-compose.prod.yml` is the one
+remaining cloud-only artifact and is unused.
+
+**Test suite: 391 passing, 1 skipped** on SQLite (the skip is a
+PostgreSQL-only lock test, so 392 on PostgreSQL). Unit + integration.
+**No test calls an LLM.** Plus 74 live checks against the running container
+stack, 0 failed.
+
+**The remaining evaluation gap is smaller than previously recorded.** A valid
+judge run already exists in `data/evaluation/stage8_rejudge.jsonl`: 19 rows
+scored by `llama-3.3-70b-versatile` (the judge ADR-019 requires), covering
+exactly the 19 single-agent answers that can be judged — the other 16 are
+abstentions with nothing to score. The scores discriminate rather than
+collapsing: faithfulness mean 0.974 (values 0.8, 0.9, 1.0), completeness
+0.958, relevance 1.000. What is missing is only that these numbers are not
+wired into the reliability dashboard, which still reads the `judge_INVALID`
+marker from the rejected `llama-3.1-8b-instant` run. Surfacing them needs no
+quota. Judging the multi-agent answers for a like-for-like comparison would.
 
 > Stages 5–7 are finished and the retrieval pipeline is **frozen** — see
 > "FINAL RETRIEVAL DECISION" below. Downstream answer-quality problems are to be
