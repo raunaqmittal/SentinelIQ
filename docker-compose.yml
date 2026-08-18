@@ -42,11 +42,20 @@ services:
       # JSON log lines carrying the NFR-006 metadata fields. On by default in
       # a container, where something is collecting the logs.
       LOG_STRUCTURED: ${LOG_STRUCTURED:-true}
+      # Absolute path on the mounted volume below. Without this the uploads go
+      # to a relative path inside the container and are lost on restart, while
+      # their database rows survive.
+      SENTINELIQ_UPLOAD_DIR: /var/lib/sentineliq/uploads
+      # Half precision is a GPU optimisation; leave it on locally where a GPU
+      # may exist, and set it false on a CPU host.
+      RETRIEVAL_FP16: ${RETRIEVAL_FP16:-true}
     ports:
       - "8000:8000"
     volumes:
       # Model cache, so a restart does not re-download the embedder+reranker.
       - hfcache:/cache/huggingface
+      # Uploaded documents, which must outlive the container.
+      - uploads:/var/lib/sentineliq/uploads
 
   ui:
     build:
@@ -63,3 +72,4 @@ services:
 volumes:
   pgdata:
   hfcache:
+  uploads:

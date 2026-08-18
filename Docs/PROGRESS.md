@@ -2830,7 +2830,380 @@ intended workflow rather than a nuisance.
 
 ------------------------------------------------------------------------
 
+# FINAL Stage 9 conclusion — corrected, 2026-08-19
+
+This supersedes every earlier Stage 9 number in this file. Two scoring
+artifacts were found after the run and corrected; the results below are what
+the 35-question experiment actually shows.
+
+## Measured
+
+Both paths scored identically: chunk ids normalised, and citations counted in
+whichever bracket style the model used.
+
+| metric | single | multi | delta | verdict |
+|---|---|---|---|---|
+| citation_validity, n=35 | 1.0000 | 1.0000 | 0.0000 | **no difference** |
+| citation_accuracy, answerable n=30 | 0.3667 | 0.3833 | +0.0167 | **not significant** (1 up, 1 down, p = 0.75) |
+| numeric_grounding, both answered n=17 | 0.2429 | **0.8255** | **+0.5826** | **significant** (15 up, 1 down, p = 0.00026) |
+| retrieval_hit, n=35 | 0.3714 | 0.3714 | 0.0000 | **identical — 35/35 same chunks, same order** |
+
+**Cost: 147,185 vs 645,668 tokens (4.39x).** Mean latency 65.6 s per question,
+90.6% of multi-agent tokens are input.
+
+Other measured facts:
+
+- Neither path ever abstained when the relevant chunk was retrieved (0/13 on
+  both). All 24 false abstentions sit on the 17 retrieval misses.
+- After the citation-parser correction, exactly **1 of 20** answered
+  multi-agent questions is truly uncited; single-agent has **0**.
+- The apparent `abstention_correct` gain (0.5714 -> 0.6571) comes from
+  multi-agent answering 6 of 17 retrieval misses where single-agent answered 4
+  — including C0081 and C0191, which answered from a *different* transportation
+  agreement than the question named.
+
+## Interpretation — not measurement
+
+- **Numeric grounding is the one real advantage.** It is large, it survived
+  every correction applied to it, and it does not depend on citation parsing.
+  For a due-diligence tool whose numbers a human acts on, this is the failure
+  mode that matters most.
+- **Whether the Red-Team causes it is UNPROVEN.** The records stored only the
+  final answer, so nothing shows what the Red-Team changed. `scripts/evaluate.py`
+  now persists `draft` and `verified` separately, which makes it measurable on a
+  future run.
+- **Citation quality shows no measurable difference between the paths.**
+  Everything previously reported to the contrary was artifact.
+- **The abstention difference is not an improvement.** Answering from the wrong
+  contract is worse than abstaining, and that is what the two changed questions
+  did.
+- **Citation-gated answering is NOT justified.** It would fire on one question
+  in thirty-five, and cannot detect the wrong-contract failure it was proposed
+  for — C0081 and C0191 both cite supplied evidence.
+- **Nothing here speaks to retrieval.** It was identical by construction.
+- **Whether 4.39x is worth it** rests entirely on the grounding result. That is
+  a deployment judgement; for this product it looks defensible, for a
+  latency-sensitive one it would not.
+
+## Production defects found by this analysis and FIXED, 2026-08-19
+
+Both were live product bugs, not evaluation-only problems. Approved and applied
+to `engine.py`; prompts, models, retrieval, orchestration, weights and
+thresholds untouched.
+
+1. **`CITATION_PATTERN` now accepts full-width brackets** as well as ASCII. It
+   previously read a full-width citation as no citation, so a real report
+   silently lost evidence entries — 6 of 35 Stage 9 answers cited only that way.
+2. **`synthesise` now matches citations by `normalize_chunk_id`**, so a correct
+   id written with a non-breaking hyphen or narrow no-break space is no longer
+   dropped. It returns the **supplied** spelling, because `evidence_detail`
+   looks chunks up by exact key — returning the model's spelling would have
+   turned a dropped citation into a crash.
+
+14 regression tests in `tests/unit/test_citation_formats.py` cover both bracket
+styles, both Unicode substitutions, invented citations still being rejected,
+another tenant's chunk still being rejected, deduplication, the injection marker
+still surfacing, and a recovered citation resolving to real evidence in the
+report.
+
+**These fixes change future runs only. No stored record was altered, and the
+measured results above stand as recorded.**
+
+------------------------------------------------------------------------
+
+# Stage 13 — Evaluation correctness and offline optimization analysis, 2026-08-19
+
+No LLM call, no quota, no change to retrieval, embeddings, the reranker, the
+agents, prompts, the model or orchestration. Two things were implemented; the
+rest is analysis of the existing 35 records.
+
+## Implemented
+
+### 1. Citation scoring — the library was already correct; it is now pinned
+
+`rag_eval.citation_validity` and `citation_accuracy` **already normalise both
+sides** with `normalize_chunk_id`. They were never broken. The stale 0.9143
+figure came from the Stage 8 scorer, which is not in the repository and did not
+normalise. No stored record was altered.
+
+Six regression tests added to `tests/unit/test_evaluation.py`: U+2011 and
+U+202F cannot produce a false invalid citation, every dash variant normalises
+identically, a genuinely invented id is still caught, and the three real Stage 8
+records (C0038, C0113, C0048) re-score from a stored 0.0 to 1.0.
+
+### 2. Draft and Red-Team output are now persisted separately
+
+`flow.investigate` already returns `draft` and `verified`, so `scripts/evaluate.py`
+records them alongside the synthesised answer. **No frozen code was modified.**
+Two tests cover it, including that a record without a draft still scores, so the
+35 existing records remain readable.
+
+This closes the Stage 12 gap where the Red-Team's contribution could only be
+inferred. It takes effect on the next run; the existing 35 records have no draft.
+
+## A second scoring artifact, larger than the first
+
+`engine.CITATION_PATTERN` is `\\[([^\\[\\]]{3,200})\\]` — ASCII square brackets
+only. Models frequently cite using **full-width brackets** `【id】`, and those
+citations are parsed as *no citation at all*.
+
+- **10 of 35 single-agent** answers cite this way and are recorded as uncited.
+- **6 of 35 multi-agent** answers do the same.
+- Every one of those citations is a chunk that was actually supplied.
+
+### Correcting both paths withdraws the citation result entirely
+
+Scoring both sides fairly — normalised ids **and** full-width citations
+recovered:
+
+| metric | single | multi | delta |
+|---|---|---|---|
+| citation_accuracy, all 35 | 0.3143 | 0.3286 | **+0.0143** |
+| citation_accuracy, answerable 30 | 0.3667 | 0.3833 | **+0.0167** |
+| citation_validity, all 35 | 1.0000 | 1.0000 | 0.0000 |
+
+1 question improved, 1 worsened (C0043), sign test **p = 0.75**.
+
+**The multi-agent citation advantage does not exist.** Both the +0.1833 reported
+at Stage 9 and the +0.1500 "corrected" figure from Stage 12 were artifacts of a
+parser that only counted ASCII brackets, and both paths were undercounted —
+single-agent more than multi-agent, which is what created the illusion.
+
+Also corrected: Stage 12 section 5 said C0081 and C0191 cited "nothing at all".
+They **did** cite, in full-width brackets, chunks that were supplied but came
+from *different* transportation agreements. The substance stands — a confident
+numerate answer from the wrong contract on a retrieval miss — but "uncited" was
+the parser's error, not the model's.
+
+## What survives: numeric grounding
+
+Restricted to the **17 questions both paths actually answered** (no vacuous
+abstention scores, no parser involvement):
+
+| | single | multi | delta |
+|---|---|---|---|
+| numeric_grounding | 0.2429 | **0.8255** | **+0.5826** |
+
+15 improved, 1 worsened (C0043, -0.03), sign test **p = 0.00026**. This is the
+one multi-agent advantage that has survived every correction applied to it, and
+it does not depend on citation parsing at all.
+
+## Citation-gated answering — analysed, NOT justified, NOT implemented
+
+Offline simulation over the existing 35 records, no regeneration.
+
+Under the **buggy** parser the gate looked plausible but was actively harmful:
+7 answers appeared uncited, only 3 on retrieval misses, and 4 on retrieval
+*hits* — so the gate would have destroyed 4 good answers, pushed false
+abstentions from 11/30 to 18/30 and dropped `abstention_correct` from 0.6571 to
+0.4571, while gaining nothing on the controls (4/5 either way).
+
+Once full-width citations are counted, **exactly 1 of 20 answered multi-agent
+questions is truly uncited** (C0181, on a retrieval miss). Single-agent has
+**zero**.
+
+**Verdict: not justified.** The rule would fire on one question in thirty-five.
+The problem it was meant to solve — confident answers on retrieval misses — is
+real, but "has no citation" does not identify those cases. C0081 and C0191 both
+cite supplied evidence; what is wrong is that the evidence belongs to a
+different contract, which a citation-presence test cannot detect.
+
+## Requires a new LLM experiment before it can be decided
+
+- **Whether the Red-Team causes the grounding gain.** Now measurable from
+  `draft` vs `verified`, but only on a future run.
+- **Whether a single evidence block would preserve quality.** 90.6% of cost is
+  input. NFR-003c depends on the Red-Team seeing source text, and injection
+  refusal is now verified live, so this cannot be changed on cost grounds alone.
+- **The Financial route's 7/9 abstention rate.** n=9.
+- **Whether wrong-contract answering can be detected at all**, e.g. by checking
+  whether cited evidence comes from the contract the question names. Cheap to
+  compute offline, but no labelled examples beyond C0081/C0191 exist.
+
+## Recommended, but NOT implemented — both touch frozen code
+
+1. **`engine.cited_ids` should accept full-width brackets.** This is a live
+   production defect, not only an evaluation one: a real report loses evidence
+   entries whenever the model cites in `【】`. It affects `engine.synthesise`,
+   which is frozen scoring.
+2. **`engine.synthesise` should compare citations with `normalize_chunk_id`.**
+   It currently filters by exact string match, so a correct citation written
+   with U+2011 is dropped from a live report.
+
+Both are one-line changes in frozen code and were left unmade, as instructed.
+
+------------------------------------------------------------------------
+
+# Stage 12 — Error analysis, 2026-08-19
+
+Analysis only. No LLM call, no quota, no change to the pipeline, agents,
+prompts, models, retrieval, routing, orchestration or scoring. Everything below
+is computed from `stage9_records.jsonl` and `stage8_baseline_records.jsonl`.
+
+## Measured
+
+### 1. Abstention is entirely decided by retrieval, on both paths
+
+| | single | multi |
+|---|---|---|
+| abstained when the relevant chunk WAS retrieved (n=13) | **0** | **0** |
+| abstained when it was NOT retrieved (n=17) | 13 | 11 |
+
+**Neither path ever abstained on a question whose relevant chunk it had.** Every
+one of the 24 false abstentions across both paths sits on a retrieval miss.
+Abstention is therefore a retrieval symptom, not a generation behaviour.
+
+Retrieval hit only **13 of 30** answerable questions, identically on both paths.
+
+### 2. The citation_validity improvement was a scoring artifact
+
+Single-agent scored 0.0 validity on C0038, C0113 and C0048. Inspecting the
+answers: all three cited **chunk ids that were supplied**, written with
+non-breaking hyphens (U+2011) and narrow no-break spaces (U+202F) instead of
+ASCII. Re-scored with `rag_eval.normalize_chunk_id` — a function that exists in
+this project for exactly this reason, and whose docstring describes exactly this
+failure:
+
+| metric | stored | normalised |
+|---|---|---|
+| single citation_validity | 0.9143 | **1.0000** |
+| single citation_accuracy (35) | 0.0714 | **0.1000** |
+| multi citation_validity | 1.0000 | 1.0000 |
+| multi citation_accuracy (35) | 0.2286 | 0.2286 |
+
+**Corrected citation_validity delta: 0.0000.** The Stage 8 scorer did not
+normalise ids. C0113 was also scored 0.00 accuracy when its normalised value is
+1.00.
+
+### 3. Corrected citation accuracy still favours multi-agent
+
+> **WITHDRAWN by Stage 13.** A second artifact — `engine.cited_ids` counts
+> only ASCII brackets, missing full-width citations in 10 single-agent and
+> 6 multi-agent answers. Scoring both paths fairly gives 0.3667 vs 0.3833,
+> delta +0.0167, p = 0.75. **There is no citation-accuracy advantage.**
+
+| scope | single | multi | delta |
+|---|---|---|---|
+| all 35 | 0.1000 | 0.2286 | +0.1286 |
+| answerable 30 | 0.1167 | 0.2667 | +0.1500 |
+
+Improved on **5** questions (C0186, C0153, C0152, C0130, C0095), worsened on
+**0**. Sign test p = 0.031. (Before normalisation it read 6 improved; C0113's
+apparent gain was the artifact.)
+
+### 4. Numeric grounding, and what the three "regressions" actually are
+
+On the 21 questions whose answer contains digits: **0.2454 -> 0.8175**, improved
+on 17, worsened on 3, sign test p = 0.0013.
+
+The three regressions are not all the same thing:
+
+- **C0081 and C0191 are not regressions.** Single-agent abstained
+  ("NOT FOUND IN EVIDENCE"), which scores numeric_grounding **1.0 vacuously**
+  because there are no digits to check. Multi-agent answered and scored 0.75.
+- **C0043 is a genuine regression**, and a small one: 0.20 -> 0.17.
+
+### 5. A real multi-agent failure mode: confident, uncited, wrong-document answers
+
+C0081 and C0191 are both transportation-agreement questions whose relevant
+chunk was **not** retrieved. On both, multi-agent produced a specific,
+numerate answer — "two (2) renewal terms of five (5) years each", "six (6)
+months prior" — drawn from chunks belonging to *different* transportation
+agreements. Single-agent abstained on both. (Stage 13 correction: they did
+cite, in full-width brackets the parser missed. The wrong-contract substance
+stands; "citing nothing" was the parser's error, not the model's.)
+
+This is the mechanism behind multi-agent's apparent abstention gain
+(`abstention_correct` 0.5714 -> 0.6571): it answers 6 of 17 retrieval misses
+where single-agent answered 4. **On this evidence the abstention "improvement"
+is not an improvement.** Answering without a citation from the wrong contract is
+a worse failure than abstaining.
+
+Answered-but-cited-nothing: single 10/30, multi 7/30 answerable questions.
+**Stage 13 correction: almost all of these are the full-width-bracket parser
+artifact. Truly uncited: single 0, multi 1.**
+
+### 6. Category and routing breakdown
+
+| family | n | cit_acc s->m | num_gr s->m | abstained s->m |
+|---|---|---|---|---|
+| governance & admin | 6 | 0.42 -> 0.50 | 0.36 -> 0.86 | 1 -> 1 |
+| ip & licensing | 11 | 0.00 -> 0.18 | 0.51 -> 0.85 | 4 -> 4 |
+| liability & risk | 6 | 0.00 -> 0.17 | 0.57 -> 1.00 | 3 -> 4 |
+| restrictions | 6 | 0.00 -> 0.33 | 0.78 -> 1.00 | 4 -> 4 |
+| term & termination | 6 | 0.00 -> 0.00 | 0.80 -> 0.83 | 4 -> 2 |
+
+`term & termination` is the only family whose abstention count fell — and both
+questions that changed are C0081 and C0191, i.e. the failure mode in section 5,
+not a gain.
+
+Specialist routing (multi-agent): Compliance n=15 (4 abstained, acc 0.33),
+Security n=11 (4 abstained, acc 0.18), **Financial n=9 (7 abstained, acc 0.11)**.
+
+### 7. Cost
+
+645,668 vs 147,185 tokens (4.39x). **90.6% of multi-agent tokens are input** —
+the evidence block is sent twice by design, once to the specialist and once to
+the Red-Team. Mean latency 65.6 s per question, max 90.7 s. 15 of 30 answerable
+questions improved on some metric; **33,232 extra tokens per improved question**.
+
+## Inferred — not measured
+
+- **Red-Team attribution is not directly verifiable from these records.**
+  `stage9_records.jsonl` stores only the final synthesised answer; the harness
+  does not persist the specialist draft separately from the verified output, so
+  no record shows what the Red-Team actually changed. The grounding improvement
+  is *consistent* with the Red-Team removing unsupported numbers, and the
+  prompt asks it to do exactly that, but this is inference.
+- **Multi-agent citation_validity is 1.0 by construction, not by behaviour.**
+  `engine.synthesise` filters citations to supplied ids before the record is
+  written. It dropped only 1 citation across all 35 (C0181, a malformed
+  `XENCORINC`), so the model was rarely inventing ids — but the metric cannot
+  fall below 1.0 on this path and should not be compared across paths.
+- **The single-agent implementation is not in the repository**, so "two agents
+  beat one" cannot be cleanly separated from "a different implementation".
+  The two paths share retrieval exactly; everything downstream is assumed
+  comparable, not proven so.
+- Likely root cause of the 17 retrieval misses is a mix of genuine retrieval
+  failure and the documented CUAD label incompleteness. The two cannot be
+  separated without re-labelling.
+
+## Recommendations
+
+**Justified by this evidence, no new experiment needed:**
+
+1. **Use `normalize_chunk_id` in all citation scoring.** A correctness bug in
+   evaluation, already demonstrated to change published numbers.
+2. **Persist the specialist draft and the Red-Team output** in future records,
+   so the Red-Team's contribution becomes measurable instead of inferred.
+3. **Stop quoting cross-path `citation_validity`.** One path has a
+   deterministic filter and the other does not.
+
+**Plausible, but require an experiment before implementing:**
+
+4. **Require a surviving citation before a non-abstention answer.** Would have
+   converted C0081 and C0191 from confident wrong-document answers into
+   abstentions. Needs measurement — it would also suppress genuinely useful
+   uncited answers, and 7/30 multi-agent answers currently carry no citation.
+5. **Send the evidence block once instead of twice.** 90.6% of cost is input.
+   NFR-003c requires the Red-Team to see the source text to spot injection,
+   so this trades cost against a verified security property and must not be
+   changed on cost grounds alone.
+6. **Investigate the Financial route** (7/9 abstentions). n=9; could be routing,
+   could be that those questions' evidence simply was not retrieved.
+
+**Not supported by this evidence:** any change to chunking, the embedding
+model, the reranker or the frozen retrieval pipeline. Retrieval performed
+*identically* on both paths, so nothing in this comparison speaks to it, and
+the label-incompleteness issue confounds the 17 misses.
+
+------------------------------------------------------------------------
+
 # Stage 9 comparison — MEASURED, 2026-08-18/19
+
+> **Superseded in part.** Two scoring artifacts were found afterwards. The
+> corrected results are under "FINAL Stage 9 conclusion"; the raw run data
+> and cost figures below remain accurate.
 
 The 35-question single-agent vs multi-agent comparison, run at last. Records:
 `data/evaluation/stage9_records.jsonl` (35 successful, `path: "multi_agent"`),

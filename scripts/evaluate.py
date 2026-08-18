@@ -46,7 +46,8 @@ ABSTENTION = "NOT FOUND IN EVIDENCE"
 
 def load_baseline(path: Path = BASELINE) -> list[dict]:
     """The Stage 8 records, which are also the question list for this run."""
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    lines = path.read_text(encoding="utf-8").splitlines()
+    return [json.loads(line) for line in lines if line.strip()]
 
 
 def completed_ids(path: Path = RECORDS) -> set[str]:
@@ -103,6 +104,11 @@ def score_record(result: dict, question: dict, chunks_by_id: dict) -> dict:
         "dropped_citations": result["dropped_citations"],
         "injection_flagged": result["injection_flagged"],
         "specialist": result["specialist"],
+        # Kept separately so a later analysis can see what the Red-Team changed.
+        # Stage 12 could not attribute the grounding improvement to it because
+        # only the final synthesised answer was stored.
+        "draft": result.get("draft", ""),
+        "verified": result.get("verified", ""),
         "abstained": abstained,
         "input_tokens": result["input_tokens"],
         "output_tokens": result["output_tokens"],
@@ -113,7 +119,9 @@ def score_record(result: dict, question: dict, chunks_by_id: dict) -> dict:
         "numeric_grounding": rag_eval.numeric_grounding(
             answer, evidence_text(chunks_by_id, supplied)
         ),
-        "abstention_correct": rag_eval.abstention_correct(abstained, question["answerable"]),
+        "abstention_correct": rag_eval.abstention_correct(
+            abstained, question["answerable"]
+        ),
         "retrieval_hit": any(c in relevant for c in supplied),
     }
 
@@ -145,10 +153,15 @@ def build_context(config, app) -> flow.RunContext:
         embedder=embedder,
         faiss_index=dense.build_index(embedder, chunks),
         bm25_index=sparse.build_index(chunks),
-        cross_encoder=reranker.load_model(config.reranker.model, fp16=config.reranker.fp16),
+        cross_encoder=reranker.load_model(
+            config.reranker.model, fp16=config.reranker.fp16
+        ),
         chunks=chunks,
         llm=flow.build_llm(
-            app.llm.model, os.environ["GROQ_API_KEY"], app.llm.temperature, app.llm.base_url
+            app.llm.model,
+            os.environ["GROQ_API_KEY"],
+            app.llm.temperature,
+            app.llm.base_url,
         ),
     )
 
@@ -156,7 +169,9 @@ def build_context(config, app) -> flow.RunContext:
 def main() -> None:
     """Run the questions that have no successful record yet."""
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--limit", type=int, help="Only run the first N unfinished questions")
+    parser.add_argument(
+        "--limit", type=int, help="Only run the first N unfinished questions"
+    )
     parser.add_argument("--list", action="store_true", help="Show progress and exit")
     parser.add_argument("--records", type=Path, default=RECORDS)
     args = parser.parse_args()
@@ -190,7 +205,10 @@ def main() -> None:
         try:
             record = run_one(context, question, chunks_by_id)
         except Exception as error:  # noqa: BLE001 - the record must say what failed
-            append_record(args.records, {"question_id": qid, "error": f"{type(error).__name__}: {error}"})
+            append_record(
+                args.records,
+                {"question_id": qid, "error": f"{type(error).__name__}: {error}"},
+            )
             if "429" in str(error) or "RateLimit" in type(error).__name__:
                 print(
                     f"\nStopped at {qid}: rate limited. "

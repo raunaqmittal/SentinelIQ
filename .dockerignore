@@ -1,0 +1,32 @@
+# Secrets must never reach an image layer.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local environments and caches
+.venv/
+.venv-ui/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Not needed at runtime
+.git/
+.github/
+Docs/
+notebooks/
+tests/
+artifacts/
+frontend/
+sentineliq.egg-info/
+
+# The raw EDGAR/CUAD download cache: 214 MB the API never reads. The extracted
+# documents it does read live in data/raw/documents and are kept, as are
+# questions.json and stage8_baseline_results.json, which the API serves.
+data/evaluation/datasets/
+data/uploads/
+sentineliq.db

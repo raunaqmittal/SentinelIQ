@@ -1,0 +1,55 @@
+# SentinelIQ on a single cloud host (AWS EC2).
+#
+# Differences from docker-compose.yml, which stays the local development stack:
+#   - images are PULLED from ECR, not built here
+#   - the database is external (RDS); no Postgres container
+#   - nothing is published to the host except through the reverse proxy
+#   - every secret comes from the environment, never from this file
+#
+# Secrets are exported by the host before starting, e.g. from SSM:
+#   export SECRET_KEY=$(aws ssm get-parameter --name /sentineliq/secret_key \
+#       --with-decryption --query Parameter.Value --output text)
+#   export GROQ_API_KEY=$(aws ssm get-parameter --name /sentineliq/groq_api_key \
+#       --with-decryption --query Parameter.Value --output text)
+#   export DATABASE_URL=$(aws ssm get-parameter --name /sentineliq/database_url \
+#       --with-decryption --query Parameter.Value --output text)
+#   docker compose -f docker-compose.prod.yml up -d
+#
+# NOT YET DEPLOYED. This file is prepared and validated locally only.
+services:
+  api:
+    image: ${ECR_REGISTRY}/sentineliq-api:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL must be set}
+      SECRET_KEY: ${SECRET_KEY:?SECRET_KEY must be set}
+      GROQ_API_KEY: ${GROQ_API_KEY:?GROQ_API_KEY must be set}
+      SEC_USER_AGENT: ${SEC_USER_AGENT:-SentinelIQ contact@example.com}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      LOG_STRUCTURED: "true"
+      ENVIRONMENT: production
+      SENTINELIQ_UPLOAD_DIR: /var/lib/sentineliq/uploads
+      # CPU host: half precision is a GPU optimisation and torch runs it badly
+      # on CPU. Full precision is the more exact of the two.
+      RETRIEVAL_FP16: "false"
+    volumes:
+      - hfcache:/cache/huggingface
+      - uploads:/var/lib/sentineliq/uploads
+    # Bound to loopback: the proxy reaches it, the internet does not.
+    ports:
+      - "127.0.0.1:8000:8000"
+
+  ui:
+    image: ${ECR_REGISTRY}/sentineliq-ui:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      SENTINELIQ_API_URL: http://api:8000
+    ports:
+      - "127.0.0.1:8501:8501"
+
+volumes:
+  hfcache:
+  uploads:

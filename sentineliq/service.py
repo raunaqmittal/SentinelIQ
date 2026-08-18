@@ -11,6 +11,7 @@ import hashlib
 import json
 import logging
 import os
+import threading
 import time
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -32,7 +33,10 @@ logger = logging.getLogger(__name__)
 TOKEN_ALGORITHM = "HS256"
 TOKEN_MINUTES = 30  # short-lived, per NFR-003
 ROLES = ("analyst", "admin")
-UPLOAD_DIR = Path("data/uploads")
+#: Where uploaded documents are stored. Set SENTINELIQ_UPLOAD_DIR to an
+#: absolute path on a mounted volume in a container — the default is
+#: relative to the working directory and does not survive a restart.
+UPLOAD_DIR = Path(os.environ.get("SENTINELIQ_UPLOAD_DIR", "data/uploads"))
 BCRYPT_MAX_BYTES = 72  # bcrypt ignores anything past this, so cut it explicitly
 
 
@@ -433,14 +437,32 @@ def build_pipeline_runner(documents_dir: Path, questions_path: Path, limit: int 
     config = load_retrieval_config()
     rules = load_risk_rules()
 
+    # The embedder, the reranker and the chunked corpus are the same for every
+    # investigation, and loading them costs minutes and gigabytes. Build once on
+    # the first run and reuse. The lock stops two concurrent runs each loading
+    # their own copy. Nothing about retrieval itself changes: `run_investigation`
+    # still calls `build_scoped_context`, so each vendor still gets indexes built
+    # from its own chunks only (NFR-003a).
+    cached: dict = {}
+    lock = threading.Lock()
+
+    def shared_context():
+        from scripts.investigate import build_context
+
+        with lock:
+            if "context" not in cached:
+                logger.info("Loading retrieval models and corpus (first run)")
+                cached["context"] = build_context(config, load_app_config())
+            return cached["context"]
+
     def runner(vendor_name: str) -> dict:
-        from scripts.investigate import build_context, load_questions
+        from scripts.investigate import load_questions
 
         questions = load_questions(vendor_name, questions_path)
         if limit:
             questions = questions[:limit]
         dossier = pipeline.load_dossier(documents_dir / "dossiers.json", vendor_name)
-        context = build_context(config, load_app_config())
-        return pipeline.run_investigation(context, dossier, questions, rules)
+        return pipeline.run_investigation(shared_context(), dossier, questions, rules)
 
+    runner.shared_context = shared_context  # exposed so a test can assert reuse
     return runner

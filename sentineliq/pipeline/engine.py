@@ -10,11 +10,15 @@ Agents produce findings; this module turns findings into the final answer.
 import logging
 import re
 
+from sentineliq.components.evaluation.rag_eval import normalize_chunk_id
 from sentineliq.config import RiskRulesConfig
 
 logger = logging.getLogger(__name__)
 
-CITATION_PATTERN = re.compile(r"\[([^\[\]]{3,200})\]")
+#: A citation may arrive in ASCII brackets or the full-width pair a model
+#: often uses instead. Missing the second form loses real evidence from a
+#: report: 6 of 35 Stage 9 answers cited only that way (Stage 13).
+CITATION_PATTERN = re.compile(r"[\[\u3010]([^\[\]\u3010\u3011]{3,200})[\]\u3011]")
 INJECTION_MARKER = "INJECTION ATTEMPT DETECTED"
 
 #: The five risk categories of FR-015, in formula order. Category scores and
@@ -47,11 +51,24 @@ def synthesise(specialist: str, verification: str, supplied: list[str]) -> dict:
     answer = (verification or specialist or "").strip()
     injection_flagged = INJECTION_MARKER in (specialist + verification).upper()
 
-    allowed = set(supplied)
-    citations = [c for c in cited_ids(answer) if c in allowed]
-    dropped = [c for c in cited_ids(answer) if c not in allowed]
+    # Compared by normalized id: a model reproducing an id with a non-breaking
+    # hyphen or narrow no-break space has cited correctly, and dropping it would
+    # lose real evidence from the report (Stage 13). The *supplied* spelling is
+    # what comes back, so `evidence_detail` can still look the chunk up by key.
+    canonical = {normalize_chunk_id(s): s for s in supplied}
+    citations: list[str] = []
+    dropped: list[str] = []
+    for cited in cited_ids(answer):
+        supplied_id = canonical.get(normalize_chunk_id(cited))
+        if supplied_id is None:
+            dropped.append(cited)
+        elif supplied_id not in citations:
+            citations.append(supplied_id)
     if dropped:
-        logger.info("Dropped citations not in supplied evidence", extra={"count": len(dropped)})
+        logger.info(
+            "Dropped citations not in supplied evidence",
+            extra={"count": len(dropped)},
+        )
 
     return {
         "answer": answer,

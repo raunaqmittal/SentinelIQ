@@ -284,3 +284,64 @@ def test_the_real_stage8_file_still_marks_its_judge_invalid():
     status = rag_eval.load_reliability_summary(path)["judge"]
     assert status["available"] is False
     assert status["model"] == "llama-3.1-8b-instant"
+
+
+# --------------------------------------------------- citation id normalization
+# Stage 12 found three Stage 8 records scored 0.0 citation validity for citing
+# the correct chunk with a non-breaking hyphen or a narrow no-break space. The
+# scoring functions normalize, so those stored values are stale, not a live bug.
+# These tests pin the behaviour so it cannot regress silently.
+
+NBHYPHEN = "\u2011"  # non-breaking hyphen, as a model writes 8-K
+NNBSP = "\u202f"  # narrow no-break space
+
+
+def test_a_non_breaking_hyphen_does_not_fake_an_invalid_citation():
+    supplied = ["BizzingoInc_20120322_8-K_EX-10.17_Endorsement Agreement_0007"]
+    cited = [supplied[0].replace("-", NBHYPHEN)]
+
+    assert rag_eval.citation_validity(cited, supplied) == 1.0
+
+
+def test_a_narrow_no_break_space_does_not_fake_an_invalid_citation():
+    supplied = ["HEMISPHERX - Sales, Marketing and Supply Agreement_0013"]
+    cited = [supplied[0].replace(" ", NNBSP)]
+
+    assert rag_eval.citation_validity(cited, supplied) == 1.0
+
+
+def test_typographic_substitutions_do_not_hide_a_correct_citation():
+    relevant = ["SomeContract_8-K_EX-10.1_0004"]
+    cited = [relevant[0].replace("-", NBHYPHEN).replace("_", "_")]
+
+    assert rag_eval.citation_accuracy(cited, relevant) == 1.0
+
+
+def test_a_genuinely_invented_citation_is_still_caught():
+    """Normalization must not turn a fabricated id into a valid one."""
+    supplied = ["RealContract_0001"]
+
+    assert rag_eval.citation_validity(["InventedContract_0009"], supplied) == 0.0
+    assert rag_eval.citation_accuracy(["InventedContract_0009"], supplied) == 0.0
+
+
+def test_every_dash_variant_normalizes_to_the_same_id():
+    base = "Contract_8-K_0001"
+    for dash in "\u2011\u2010\u2012\u2013\u2014":
+        assert rag_eval.normalize_chunk_id(base.replace("-", dash)) == base
+
+
+def test_the_stage8_records_that_stage12_flagged_rescore_as_valid():
+    """The three real cases, re-scored from the stored records."""
+    path = Path("data/evaluation/stage8_baseline_records.jsonl")
+    records = {
+        json.loads(line)["question_id"]: json.loads(line)
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    }
+
+    for qid in ("C0038", "C0113", "C0048"):
+        record = records[qid]
+        assert record["citation_validity"] == 0.0, "stored value, left untouched"
+        recomputed = rag_eval.citation_validity(record["citations"], record["supplied"])
+        assert recomputed == 1.0, f"{qid} cited supplied evidence after normalization"

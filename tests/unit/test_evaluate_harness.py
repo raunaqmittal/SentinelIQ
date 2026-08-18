@@ -88,7 +88,10 @@ def test_a_failed_question_is_not_treated_as_done(tmp_path):
     path = tmp_path / "records.jsonl"
     write_lines(
         path,
-        [{"question_id": "C0001"}, {"question_id": "C0002", "error": "RateLimitError: 429"}],
+        [
+            {"question_id": "C0001"},
+            {"question_id": "C0002", "error": "RateLimitError: 429"},
+        ],
     )
 
     assert evaluate.completed_ids(path) == {"C0001"}
@@ -128,7 +131,8 @@ def test_a_record_is_on_disk_before_the_next_question_starts(tmp_path):
     path = tmp_path / "records.jsonl"
     evaluate.append_record(path, {"question_id": "C0001"})
 
-    assert json.loads(path.read_text(encoding="utf-8").strip())["question_id"] == "C0001"
+    stored = json.loads(path.read_text(encoding="utf-8").strip())
+    assert stored["question_id"] == "C0001"
 
 
 # --- 4. interruption handling ------------------------------------------------
@@ -160,10 +164,13 @@ def test_records_written_before_a_crash_survive_it(tmp_path, monkeypatch):
 
 def test_a_rate_limited_question_is_recorded_as_an_error(tmp_path):
     path = tmp_path / "records.jsonl"
-    evaluate.append_record(path, {"question_id": "C0001", "error": "RateLimitError: 429"})
+    evaluate.append_record(
+        path, {"question_id": "C0001", "error": "RateLimitError: 429"}
+    )
 
     assert evaluate.completed_ids(path) == set()
-    assert json.loads(path.read_text(encoding="utf-8").strip())["error"].startswith("RateLimit")
+    stored = json.loads(path.read_text(encoding="utf-8").strip())
+    assert stored["error"].startswith("RateLimit")
 
 
 # --- 6. record structure -----------------------------------------------------
@@ -206,10 +213,37 @@ def test_an_abstention_is_detected(monkeypatch):
     monkeypatch.setattr(
         evaluate.flow,
         "investigate",
-        lambda *a: fake_result(answer="NOT FOUND IN EVIDENCE", citations=[], supplied=[]),
+        lambda *a: fake_result(
+            answer="NOT FOUND IN EVIDENCE", citations=[], supplied=[]
+        ),
     )
 
     record = evaluate.run_one(None, dict(QUESTION, answerable=False), chunks)
 
     assert record["abstained"] is True
     assert record["abstention_correct"] is True
+
+
+def test_the_draft_and_red_team_output_are_kept_separately(monkeypatch):
+    """Stage 12 could not measure the Red-Team's contribution because only the
+    final answer was stored. Future runs must keep both sides."""
+    chunks = {"some_contract_0001": FakeChunk("The warranties last 12 months.")}
+    monkeypatch.setattr(
+        evaluate.flow,
+        "investigate",
+        lambda *a: fake_result(draft="draft text [x]", verified="verified text"),
+    )
+
+    record = evaluate.run_one(None, QUESTION, chunks)
+
+    assert record["draft"] == "draft text [x]"
+    assert record["verified"] == "verified text"
+    assert record["answer"] != record["draft"]
+
+
+def test_a_missing_draft_does_not_break_scoring():
+    """The 35 records already on disk have no draft; re-scoring must still work."""
+    chunks = {}
+    record = evaluate.score_record(fake_result(generation_ms=1), QUESTION, chunks)
+
+    assert record["draft"] == ""

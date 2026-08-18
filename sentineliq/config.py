@@ -162,9 +162,24 @@ def load_app_config(path: Path = CONFIGS_DIR / "app.yaml") -> AppConfig:
 def load_retrieval_config(
     path: Path = CONFIGS_DIR / "retrieval.yaml",
 ) -> RetrievalConfig:
-    """Load and validate retrieval.yaml."""
+    """Load and validate retrieval.yaml.
+
+    `RETRIEVAL_FP16=false` turns off half precision for the reranker. It exists
+    for CPU hosts: fp16 is a GPU memory optimisation, and on CPU torch runs it
+    slowly or not at all. Full precision is the more exact of the two, so this
+    does not degrade retrieval — the frozen benchmark figures were measured on a
+    GPU in fp16 and remain the reference for GPU runs.
+
+    Nothing else about retrieval can be overridden here. Model names, chunk
+    sizes, pool depths and k values stay in the frozen YAML.
+    """
     with open(path, encoding="utf-8") as f:
         raw = yaml.safe_load(f)
+
+    override = os.environ.get("RETRIEVAL_FP16")
+    if override is not None:
+        raw["reranker"]["fp16"] = override.strip().lower() in ("1", "true", "yes")
+
     return RetrievalConfig(**raw)
 
 
