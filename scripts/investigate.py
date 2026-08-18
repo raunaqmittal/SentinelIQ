@@ -13,6 +13,7 @@ import argparse
 import json
 import logging
 import os
+import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -67,6 +68,17 @@ def build_context(config, app) -> flow.RunContext:
     )
 
 
+def safe_print(text: str) -> None:
+    """Print text the console may not be able to encode.
+
+    Windows consoles default to cp1252, which has no character for things like
+    the narrow no-break space (\\u202f) that a model can put in an answer.
+    Unencodable characters are replaced rather than raising.
+    """
+    encoding = getattr(sys.stdout, "encoding", None) or "utf-8"
+    print(text.encode(encoding, errors="replace").decode(encoding, errors="replace"))
+
+
 def main() -> None:
     """Parse arguments and run one vendor's investigation."""
     parser = argparse.ArgumentParser(description=__doc__)
@@ -95,10 +107,14 @@ def main() -> None:
     context = build_context(config, app)
     verdict = investigation.run_investigation(context, dossier, questions, rules)
 
-    print("\n" + investigation.format_report(verdict))
+    # Save before printing. A run that has already spent quota must not lose its
+    # result to a display problem — which is exactly what happened on
+    # 2026-08-16, when a cp1252 console could not encode a character the model
+    # emitted and the process died two lines before the write.
     if args.json:
         args.json.write_text(json.dumps(verdict, indent=2), encoding="utf-8")
-        logger.info("\nwrote %s", args.json)
+        logger.info("wrote %s", args.json)
+    safe_print("\n" + investigation.format_report(verdict))
 
 
 if __name__ == "__main__":
