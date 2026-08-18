@@ -54,16 +54,15 @@ PostgreSQL-only lock test, so 392 on PostgreSQL). Unit + integration.
 **No test calls an LLM.** Plus 74 live checks against the running container
 stack, 0 failed.
 
-**The remaining evaluation gap is smaller than previously recorded.** A valid
-judge run already exists in `data/evaluation/stage8_rejudge.jsonl`: 19 rows
-scored by `llama-3.3-70b-versatile` (the judge ADR-019 requires), covering
-exactly the 19 single-agent answers that can be judged — the other 16 are
-abstentions with nothing to score. The scores discriminate rather than
-collapsing: faithfulness mean 0.974 (values 0.8, 0.9, 1.0), completeness
-0.958, relevance 1.000. What is missing is only that these numbers are not
-wired into the reliability dashboard, which still reads the `judge_INVALID`
-marker from the rejected `llama-3.1-8b-instant` run. Surfacing them needs no
-quota. Judging the multi-agent answers for a like-for-like comparison would.
+**The Stage 8 semantic metrics are now on the dashboard (2026-08-19).** The
+valid judge run in `data/evaluation/stage8_rejudge.jsonl` — 19 rows scored by
+`llama-3.3-70b-versatile`, the judge ADR-019 requires — is read as a sidecar
+and displayed: faithfulness 0.974, relevance 1.000, completeness 0.958. It was
+measured on 2026-08-16 but nothing in the repository read the file, so the
+dashboard kept reporting the rejected 8B run. No quota was needed; see
+"Stage 8 judge sidecar" below for what the fix does and does not close.
+**Judging the multi-agent answers for a like-for-like comparison still needs
+quota** — `stage9_records.jsonl` carries no judge scores at all.
 
 > Stages 5–7 are finished and the retrieval pipeline is **frozen** — see
 > "FINAL RETRIEVAL DECISION" below. Downstream answer-quality problems are to be
@@ -638,8 +637,10 @@ NEXT — ALL OF THESE NEED YOUR DECISION:
   1. Quota: the Meridian re-run (~60K, would prove live contradiction
      detection AND live injection refusal) and the Stage 9 comparison
      (~700K, ~4 days).
-  2. Quota: the re-judge run with llama-3.3-70b-versatile. Until it runs,
-     Faithfulness and Answer Relevance cannot be shown (FR-021, FR-026).
+  2. DONE 2026-08-19 — the re-judge already existed and is now wired in as a
+     sidecar; Faithfulness and Answer Relevance are shown for Stage 8.
+     STILL OPEN, needs quota: judging the Stage 9 multi-agent answers, which
+     is what a like-for-like semantic comparison requires.
   3. Cloud deployment — needs credentials.
   4. Retention: nothing schedules `scripts/purge_expired.py`, and the
      default period is "keep for ever". Both are policy calls (NFR-003d).
@@ -1488,6 +1489,60 @@ Limitations: relevance is 1.000 on every answer, which suggests the judge is
 generous on genuine attempts even though it rejects bad ones; and only the 19
 non-abstained answers are scored, so these figures describe answer quality
 *when the model chose to answer*, not end-to-end performance.
+
+### Stage 8 judge sidecar — wired to the dashboard 2026-08-19
+
+**No new measurement.** The 19 rows above were measured on 2026-08-16 and are
+unchanged; this entry records only that they now reach FR-021 / FR-026. No LLM
+call, no quota, and every file under `data/evaluation/` is byte-for-byte
+identical (verified by checksum before and after).
+
+The defect was not a wrong choice between two runs. `stage8_rejudge.jsonl` was
+an orphan — grep found **zero** references to it in `sentineliq/`, `scripts/`,
+`tests/` and `notebooks/`. The only file the dashboard ever read was
+`stage8_baseline_results.json`, whose summary still carries the `judge_INVALID`
+marker, so `judge_status` correctly refused to quote anything.
+
+Fixed by reading the re-judge as a **sidecar** rather than merging it into the
+results file. `stage8_baseline_results.json` is an audited artifact whose
+`judge_model` field is the audit record for the 8B scores still stored on all
+35 per-record `judge` fields; rewriting it would have left it internally
+inconsistent. `rag_eval.load_rejudge` averages the sidecar,
+`rag_eval.judge_status` lets a valid sidecar win, and the rejected run is
+returned as `rejected_history` so it stays visible on the page.
+
+| shown | value | n |
+|---|---|---|
+| Faithfulness | 0.974 | 19 |
+| Answer Relevance | 1.000 | 19 |
+| Completeness | 0.958 | 19 |
+
+**These are judge-scored, not deterministic.** Where they disagree with
+citation validity/accuracy, numeric grounding or abstention correctness, the
+deterministic checks win (ADR-019). All previously recorded deterministic
+figures are untouched and still reproduce exactly.
+
+**The denominator is not the deterministic `answered` group.** Verified by
+id-set comparison: the 19 rows are 17 answered *answerable* questions **plus
+2 controls** (`CTRL02`, `CTRL04`) the model answered when it should have
+declined. `summarize_records` reports `answered = 17`. The dashboard therefore
+labels the judge sample `n = 19 non-abstained answers (17 answerable + 2
+controls)` so the two cannot be read as the same group.
+
+**Still not claimable after this change:**
+- Not end-to-end quality — 16 abstentions are unscored, 13 of them answerable.
+- Relevance 1.000 is judge generosity toward genuine attempts, not perfection.
+- No Stage 8 vs Stage 9 semantic comparison — Stage 9 has no judge rows.
+- Context Precision is implemented but has no measured value, so none is shown.
+
+Changed: `rag_eval.py`, `routes.py`, `frontend/app.py`,
+`tests/unit/test_evaluation.py`. Nothing in retrieval, prompts, models,
+orchestration, the decision engine or the deterministic scoring functions was
+touched. `test_the_real_stage8_file_still_marks_its_judge_invalid` was renamed
+to `..._still_carries_the_rejected_8b_judge` — a deliberate change, as its own
+docstring required — and now asserts that the artifact still records the 8B run
+as invalid and that a missing sidecar still yields nothing quotable.
+397 passed, 1 skipped.
 
 ### Three evaluation bugs found and fixed (none in the generator)
 

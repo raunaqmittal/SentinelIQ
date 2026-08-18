@@ -278,12 +278,112 @@ def test_no_judge_run_at_all_is_unavailable():
     assert rag_eval.judge_status([])["available"] is False
 
 
-def test_the_real_stage8_file_still_marks_its_judge_invalid():
-    """Guards the dashboard: if this ever flips, it must be a deliberate change."""
+def test_the_real_stage8_file_still_carries_the_rejected_8b_judge():
+    """The rejected run must stay in the artifact, with no sidecar to override it.
+
+    Deliberately changed 2026-08-19: the dashboard now displays the valid
+    `llama-3.3-70b-versatile` sidecar. This test keeps guarding the thing that
+    must not change — the results file itself still records the rejected 8B run
+    as invalid, and without a sidecar nothing is quotable (ADR-020).
+    """
     path = Path("data/evaluation/stage8_baseline_results.json")
     status = rag_eval.load_reliability_summary(path)["judge"]
     assert status["available"] is False
     assert status["model"] == "llama-3.1-8b-instant"
+
+
+# ---------------------------------------------------- valid judge sidecar
+# The re-judge is stored beside the results file, not merged into it: the
+# results file is an audited artifact and is never rewritten.
+
+REJUDGE = Path("data/evaluation/stage8_rejudge.jsonl")
+
+SIDECAR_ROWS = [
+    {"judge_model": "j-70b", "faithfulness": 1.0, "relevance": 1.0, "completeness": 1.0},
+    {"judge_model": "j-70b", "faithfulness": 0.8, "relevance": 1.0, "completeness": 0.8},
+]
+
+
+def write_sidecar(tmp_path, rows) -> Path:
+    path = tmp_path / "rejudge.jsonl"
+    path.write_text("\n".join(json.dumps(r) for r in rows), encoding="utf-8")
+    return path
+
+
+def test_load_rejudge_averages_the_rows(tmp_path):
+    rejudge = rag_eval.load_rejudge(write_sidecar(tmp_path, SIDECAR_ROWS))
+    assert rejudge["n"] == 2
+    assert rejudge["model"] == "j-70b"
+    assert rejudge["scores"]["faithfulness"] == pytest.approx(0.9)
+    assert rejudge["scores"]["relevance"] == pytest.approx(1.0)
+    assert rejudge["scores"]["completeness"] == pytest.approx(0.9)
+
+
+def test_load_rejudge_returns_none_when_there_is_no_sidecar(tmp_path):
+    assert rag_eval.load_rejudge(None) is None
+    assert rag_eval.load_rejudge(tmp_path / "missing.jsonl") is None
+
+
+def test_a_valid_sidecar_takes_precedence_over_the_rejected_run(tmp_path):
+    path = tmp_path / "results.json"
+    path.write_text(
+        json.dumps(
+            {
+                "summary": {
+                    "judge_model": "llama-3.1-8b-instant",
+                    "judge_INVALID": {"reason": "collapsed every score to 0.0"},
+                },
+                "records": RECORDS,
+            }
+        ),
+        encoding="utf-8",
+    )
+    status = rag_eval.load_reliability_summary(
+        path, write_sidecar(tmp_path, SIDECAR_ROWS)
+    )["judge"]
+
+    assert status["available"] is True
+    assert status["model"] == "j-70b"
+    assert status["n"] == 2
+    # c. the rejected run is still readable beside the valid one
+    assert status["rejected_history"]["model"] == "llama-3.1-8b-instant"
+    assert "collapsed" in status["rejected_history"]["reason"]
+
+
+def test_a_missing_sidecar_falls_back_to_the_invalid_state():
+    status = rag_eval.judge_status(
+        {
+            "summary": {
+                "judge_model": "llama-3.1-8b-instant",
+                "judge_INVALID": {"reason": "collapsed every score to 0.0"},
+            }
+        },
+        rejudge=None,
+    )
+    assert status["available"] is False
+    assert "scores" not in status
+    assert status["rejected_history"]["model"] == "llama-3.1-8b-instant"
+
+
+@pytest.mark.skipif(not REJUDGE.exists(), reason="re-judge sidecar not present")
+def test_the_real_rejudge_sidecar_is_the_19_row_70b_run():
+    """Pins the figures the dashboard shows, and their denominator."""
+    rejudge = rag_eval.load_rejudge(REJUDGE)
+    assert rejudge["model"] == "llama-3.3-70b-versatile"
+    assert rejudge["n"] == 19
+    assert rejudge["scores"]["faithfulness"] == pytest.approx(0.974, abs=0.001)
+    assert rejudge["scores"]["relevance"] == pytest.approx(1.000, abs=0.001)
+    assert rejudge["scores"]["completeness"] == pytest.approx(0.958, abs=0.001)
+
+
+@pytest.mark.skipif(
+    not (STAGE8.exists() and REJUDGE.exists()), reason="Stage 8 data not present"
+)
+def test_the_dashboard_shows_the_70b_scores_and_keeps_the_8b_history():
+    status = rag_eval.load_reliability_summary(STAGE8, REJUDGE)["judge"]
+    assert status["available"] is True
+    assert status["model"] == "llama-3.3-70b-versatile"
+    assert status["rejected_history"]["model"] == "llama-3.1-8b-instant"
 
 
 # --------------------------------------------------- citation id normalization

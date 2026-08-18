@@ -460,7 +460,7 @@ Each requirement has:
 
 ### FR-021 — Generation Evaluation
 - **Priority:** P1
-- **Status:** [/] — measured for Stage 8; not all of it reaches the dashboard
+- **Status:** [x] — measured for Stage 8 and now shown on the dashboard
 - **Description:** The generation pipeline must be evaluated for faithfulness and relevance.
 - **Metrics required:** Faithfulness, Answer Relevance, Citation Accuracy, Hallucination Rate
 - **Acceptance Criteria:**
@@ -471,11 +471,12 @@ Each requirement has:
         *validity*, which is the stronger check: 1.000, no fabricated citations
   - [x] Hallucination rate is tracked — as `numeric_grounding`, a model-free
         check that every number in an answer appears in its evidence
-  - [/] Results are shown in the AI Reliability Dashboard — the deterministic
+  - [x] Results are shown in the AI Reliability Dashboard — the deterministic
         metrics are, each beside the group it was measured over and with
-        computed and recorded values side by side. Faithfulness and relevance
-        are **not shown as numbers**; the page states that they are
-        unavailable and why.
+        computed and recorded values side by side. Faithfulness, relevance and
+        completeness are now shown too, from the valid `llama-3.3-70b-versatile`
+        re-judge, labelled `n = 19 non-abstained answers (17 answerable + 2
+        controls)` and carrying the caveats below (2026-08-19).
 - **Correction (2026-08-16):** the earlier note that "the judge run's scores
   were never written into the stored results file" is wrong. Judge scores
   *are* in the file, on 19 of 35 records — but they come from
@@ -483,11 +484,23 @@ Each requirement has:
   marker reading *"DO NOT QUOTE AS MODEL PERFORMANCE"* because that judge
   collapsed every score to 0.0 (ADR-020). `rag_eval.judge_status` reads that
   marker and the dashboard refuses to display the scores.
-- [ ] **BLOCKED — showing real Faithfulness and Answer Relevance.** Needs the
-      re-judge run with `llama-3.3-70b-versatile`, which costs quota. The
-      0.974 faithfulness quoted above came from that separate run and is not
-      in this file. Once a valid judge run writes a `judge` block into the
-      results summary, the dashboard displays it with no code change.
+- **Resolved 2026-08-19 — the re-judge is now wired in.** The run existed all
+  along in `data/evaluation/stage8_rejudge.jsonl`; nothing read it. It is now
+  loaded as a **sidecar** by `rag_eval.load_rejudge`, and `judge_status` lets a
+  valid sidecar take precedence over the rejected 8B run while still returning
+  that run as `rejected_history`. The earlier note that "the dashboard displays
+  it with no code change" assumed the scores would be merged into the results
+  summary; they deliberately were **not** — `stage8_baseline_results.json` is an
+  audited artifact and is not rewritten, so the code reads two files instead.
+  No LLM call and no quota were involved.
+- **What these numbers still do not cover.** They score only the 19 answers the
+  model produced, so they describe quality *when it chose to answer*, not
+  end-to-end performance — the 16 abstentions are unscored and 13 of those were
+  answerable. Relevance 1.000 reflects a judge that is generous to genuine
+  attempts, not perfect answers. The 19 are **not** the deterministic
+  `answered` group (17): 2 are controls the model should have declined. And
+  Stage 9 has **no** judge scores at all, so no like-for-like single-agent vs
+  multi-agent semantic comparison exists yet — that still needs quota.
 
 ------------------------------------------------------------------------
 
@@ -578,9 +591,10 @@ Each requirement has:
   - [x] Citation accuracy, citation validity, numeric grounding (the
         hallucination check), retrieval hit rate and abstention behaviour,
         each with the group it was measured over
-  - [/] Faithfulness and Answer Relevance — the page shows why they are
-        unavailable rather than omitting them silently. Blocked on the
-        re-judge run (see FR-021)
+  - [x] Faithfulness and Answer Relevance — shown from the valid
+        `llama-3.3-70b-versatile` re-judge, with their denominator and their
+        caveats, and with the rejected 8B run kept visible in an expander
+        (2026-08-19, see FR-021)
   - [/] Context Precision — `context_precision` is implemented (FR-020), but
         no ablation has been re-run, so there is no measured value to show and
         none is displayed

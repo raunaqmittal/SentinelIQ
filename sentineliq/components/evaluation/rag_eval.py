@@ -218,7 +218,7 @@ def summarize_records(records: list[dict]) -> dict:
     }
 
 
-def load_reliability_summary(path: Path) -> dict:
+def load_reliability_summary(path: Path, rejudge_path: Path | None = None) -> dict:
     """Summarize a stored results file for the reliability dashboard.
 
     Accepts either the `{"summary", "records"}` shape written by the Stage 8
@@ -226,6 +226,10 @@ def load_reliability_summary(path: Path) -> dict:
     untouched, as `recorded`: it is the audited figure quoted in PROGRESS.md,
     and keeping both side by side means a future change to the aggregation
     shows up as a difference instead of silently replacing history.
+
+    `rejudge_path` is an optional sidecar of valid judge rows (see
+    `load_rejudge`). It is read as a *separate* file on purpose: the results
+    file is an audited measurement artifact and is never rewritten.
 
     Raises:
         FileNotFoundError: The results file does not exist yet.
@@ -236,18 +240,51 @@ def load_reliability_summary(path: Path) -> dict:
     summary = {"computed": summarize_records(records)}
     if isinstance(data, dict) and data.get("summary"):
         summary["recorded"] = data["summary"].get("deterministic", {})
-    summary["judge"] = judge_status(data)
+    summary["judge"] = judge_status(data, load_rejudge(rejudge_path))
     return summary
 
 
-def judge_status(data: dict | list) -> dict:
+def load_rejudge(path: Path | None) -> dict | None:
+    """Average a sidecar judge run, or None when there is no usable one.
+
+    The re-judge (ADR-020) was a judge-only experiment: question, evidence and
+    answer were reused byte-identically from the Stage 8 records and nothing was
+    regenerated. Each row carries `judge_model` and the three scores.
+
+    Averaging happens here rather than in `summarize_records`, which is for the
+    deterministic per-question metrics and is not touched. No LLM is called.
+    """
+    if path is None or not path.exists():
+        return None
+
+    lines = path.read_text(encoding="utf-8").splitlines()
+    rows = [json.loads(line) for line in lines if line.strip()]
+    scores = {
+        name: _mean([float(r[name]) for r in rows if r.get(name) is not None])
+        for name in ("faithfulness", "relevance", "completeness")
+    }
+    if not rows or all(v is None for v in scores.values()):
+        return None
+
+    models = {r.get("judge_model") for r in rows}
+    return {
+        "model": models.pop() if len(models) == 1 else "mixed",
+        "n": len(rows),
+        "scores": scores,
+    }
+
+
+def judge_status(data: dict | list, rejudge: dict | None = None) -> dict:
     """Whether the stored faithfulness and relevance scores may be quoted.
 
     FR-021 wants Faithfulness and Answer Relevance on the dashboard. The judge
-    scores in this file were produced by a judge the run itself marked invalid,
-    so they describe the judge's failure, not the generator's quality, and must
-    not be shown as performance. This reports that rather than hiding it, so
-    the dashboard can say *why* the two metrics are missing.
+    scores inside the results file were produced by a judge the run itself
+    marked invalid, so they describe the judge's failure, not the generator's
+    quality, and must never be shown as performance (ADR-020).
+
+    A valid `rejudge` sidecar therefore takes precedence, and the rejected run
+    is still reported alongside it as `rejected_history` so the audit trail does
+    not disappear the moment a better number exists.
 
     Only stored fields are read; nothing is recomputed and no LLM is called.
     """
@@ -256,16 +293,31 @@ def judge_status(data: dict | list) -> dict:
         "model": None,
         "reason": "no judge run is recorded in this results file",
     }
-    if not isinstance(data, dict):
-        return unavailable
-
-    stored = data.get("summary") or {}
+    stored = data.get("summary") or {} if isinstance(data, dict) else {}
     invalid = stored.get("judge_INVALID")
+
+    # The rejected run stays visible whether or not a valid one replaces it.
+    history = None
+    if invalid:
+        history = {
+            "model": stored.get("judge_model"),
+            "reason": invalid.get("reason", "the judge run was marked invalid"),
+        }
+
+    if rejudge:
+        return {
+            "available": True,
+            "model": rejudge["model"],
+            "n": rejudge["n"],
+            "scores": rejudge["scores"],
+            "rejected_history": history,
+        }
     if invalid:
         return {
             "available": False,
             "model": stored.get("judge_model"),
             "reason": invalid.get("reason", "the judge run was marked invalid"),
+            "rejected_history": history,
         }
     if stored.get("judge"):
         return {

@@ -48,6 +48,9 @@ logger = logging.getLogger(__name__)
 
 # 4. Constants
 STAGE8_RESULTS = Path("data/evaluation/stage8_baseline_results.json")
+# Valid judge run, kept beside the results file rather than merged into it
+# so the audited artifact is never rewritten (ADR-020).
+STAGE8_REJUDGE = Path("data/evaluation/stage8_rejudge.jsonl")
 
 router = APIRouter()
 
@@ -369,4 +372,4 @@ def evaluations(principal: dict = Depends(get_principal)) -> dict:
             status_code=status.HTTP_404_NOT_FOUND,
             detail="no evaluation results have been recorded yet",
         )
-    return rag_eval.load_reliability_summary(STAGE8_RESULTS)
+    return rag_eval.load_reliability_summary(STAGE8_RESULTS, STAGE8_REJUDGE)

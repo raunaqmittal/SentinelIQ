@@ -417,6 +417,12 @@ def show_reliability_metrics(data: dict) -> None:
     )
 
 
+#: The judge scored only the answers the model actually produced. Spelling the
+#: split out matters: 2 of the 19 are controls the model should have declined,
+#: so this group is NOT the `answered` group in the deterministic table above.
+JUDGE_SAMPLE = "n = 19 non-abstained answers (17 answerable + 2 controls)"
+
+
 def show_judge_metrics(judge: dict) -> None:
     """Faithfulness and Answer Relevance, or why they are not shown (FR-021)."""
     st.subheader("Faithfulness and Answer Relevance")
@@ -427,7 +433,17 @@ def show_judge_metrics(judge: dict) -> None:
                 for name, value in judge["scores"].items()
             ]
         )
-        st.caption(f"Judged by {judge.get('model')}.")
+        st.caption(f"Judged by {judge.get('model')} — {JUDGE_SAMPLE}.")
+        st.info(
+            "These scores describe answer quality **when the model chose to "
+            "answer**, not end-to-end performance: the 16 abstentions are not "
+            "scored, and 13 of those were answerable questions. Answer "
+            "Relevance of 100% is not evidence of perfect quality — this judge "
+            "is generous to genuine attempts even though it rejects bad ones. "
+            "Read these beside the deterministic metrics above, which win "
+            "where the two disagree (ADR-019)."
+        )
+        show_rejected_judge(judge.get("rejected_history"))
         return
     st.warning(
         "Not available. These need an LLM judge, and the judge run stored in "
@@ -436,6 +452,14 @@ def show_judge_metrics(judge: dict) -> None:
     )
     if judge.get("model"):
         st.caption(f"Recorded judge: {judge['model']} — {judge.get('reason', '')}")
+
+
+def show_rejected_judge(history: dict | None) -> None:
+    """Keep the rejected judge run visible next to the valid one (ADR-020)."""
+    if not history:
+        return
+    with st.expander("Earlier judge run, rejected"):
+        st.caption(f"{history.get('model')} — {history.get('reason', '')}")
 
 
 def page_reliability() -> None:
