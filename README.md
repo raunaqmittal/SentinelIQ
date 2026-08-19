@@ -44,6 +44,56 @@ Here is a real finding from a real run:
 Two documents. One claim, one admission. The system found the gap and refused
 to average it away into a comfortable answer.
 
+## Two ways to see it work
+
+**View Existing Demo Results** — a real, precomputed investigation
+(Meridian CloudWorks) opens instantly. No upload, no waiting, no LLM call: its
+findings and citations were captured on a real run and are re-scored through
+the current (unchanged) deterministic engine every time you open it, so the
+number always matches today's scoring code.
+
+**Start New Investigation** — upload your own company's documents:
+
+```
+Contract / Legal            Financial                    >-- upload any subset (1, 2 or 3)
+Security / Compliance       /
+        |
+        v
+one combined evidence context (same frozen retrieval as everything else)
+        |
+        v
+Compliance / Financial / Security specialists -> Red-Team -> risk engine
+        |
+        v
+report, explicit about which document types it actually saw
+        |
+        v
+Ask SentinelIQ about these documents (grounded Q&A, same document set)
+```
+
+Every document is chunked with the same loaders and the same frozen 512/64
+retrieval as the curated corpus. Documents you upload under the same company
+name are unioned into one FAISS + BM25 index — one specialist per document
+type, same CrewAI investigation architecture, same deterministic scoring,
+same Red-Team. Uploading all three types is recommended; one or two also
+works, and the report says so explicitly:
+
+```
+Documents analyzed:
+✓ Contract
+✓ Financial
+✗ Security/Compliance
+
+Partial evidence set: Security documentation was not provided. This
+assessment is based on the documents supplied.
+```
+
+**One honest limit.** The risk weights and thresholds were tuned on the
+curated, multi-document vendor dossiers. An uploaded set that is smaller or
+differently composed is scored by the same formula, but the report is
+explicit that this is a **document risk indication, not the validated vendor
+benchmark figure**.
+
 ## Why it isn't a chatbot
 
 A chatbot answers. SentinelIQ *investigates*, and the difference shows up in
@@ -247,6 +297,12 @@ over.
 - **9 synthetic security vendors** — written for this project; 4 carry planted
   contradictions and 1 carries prompt-injection payloads
 
+`data/raw/` is **not** in git (CUAD is redistributed under its own licence and
+the corpus is large), so a fresh clone has no vendor dossiers. That affects the
+curated-vendor investigation only — the demo path (upload a document,
+investigate it, ask it questions) needs nothing from `data/raw`, and the
+evaluation artifacts the reliability page reads are tracked.
+
 ## Running it
 
 ```bash
@@ -260,6 +316,30 @@ First start downloads ~2.6 GB of models into a cache volume.
 ```bash
 docker compose exec api python scripts/create_user.py alice --tenant acme --role admin
 ```
+
+### Demo mode — authenticated production architecture vs. showcase mode
+
+There are two things here, and it is worth being precise about which is which:
+
+**The authenticated production architecture — JWT + RBAC + tenant isolation —
+is fully implemented and untouched.** `POST /api/auth/login`, signed tokens,
+`analyst`/`admin` roles, and repository-level tenant filtering (every query in
+`repository.py` takes and filters on `tenant_id`) all still work exactly as
+built and tested.
+
+**The showcase frontend does not use it.** `frontend/app.py` never signs in
+and never sends a token — it is an anonymous, interview-facing demo, not a
+multi-tenant SaaS console. It works because of `SENTINELIQ_DEMO_MODE=true`: a
+request with no bearer token is served as a fixed demo principal — `analyst`
+role, never admin — in the `SENTINELIQ_DEMO_TENANT` workspace. The whole
+decision lives in one place, `get_principal`; a request that *does* carry a
+token is still authenticated by it exactly as before, and the demo principal
+is refused every admin-only endpoint.
+
+The API's demo mode is **off by default**; the showcase deployment turns it on.
+Everyone using the frontend shares the one demo tenant, so anything uploaded
+there is visible to other demo users — do not put confidential documents in
+it.
 
 ### Deployment status
 
@@ -280,8 +360,8 @@ python scripts/investigate.py "Meridian CloudWorks" --json report.json
 ## Tests
 
 ```bash
-pytest                                   # 396 passed, 1 skipped
-TEST_DATABASE_URL=postgresql+psycopg://... pytest    # 397 on PostgreSQL
+pytest                                   # 488 passed, 1 skipped
+TEST_DATABASE_URL=postgresql+psycopg://... pytest    # same suite on PostgreSQL
 ```
 
 **No test calls an LLM.** The skipped test is PostgreSQL-only: it proves `/run`

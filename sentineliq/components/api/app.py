@@ -70,6 +70,9 @@ def create_app() -> FastAPI:
     app.state.session_factory = repo.session_factory(engine)
     # Replaced in tests with a stub so no LLM is called.
     app.state.runner = None
+    # Same, for uploaded-document investigations. None means "build the real
+    # one per document"; a test sets a stub here instead.
+    app.state.document_runner = None
 
     register_error_handlers(app)
 
@@ -180,6 +183,74 @@ def run_investigation_in_background(
         _mark_failed_quietly(factory, tenant_id, investigation_id)
 
 
+def run_document_investigation_in_background(
+    app: FastAPI,
+    tenant_id: str,
+    actor: str,
+    investigation_id: str,
+    document_id: str,
+) -> None:
+    """Investigate one uploaded document after the response has been sent.
+
+    The same shape as `run_investigation_in_background`; only the runner
+    differs, because the subject is a document rather than a curated vendor.
+    """
+    factory = app.state.session_factory
+    try:
+        with repo.session_scope(factory) as session:
+            runner = app.state.document_runner or service.build_document_runner(
+                session, tenant_id, document_id
+            )
+            service.run_investigation(
+                session, tenant_id, actor, investigation_id, runner
+            )
+    except Exception:
+        logger.exception(
+            "Background document investigation failed",
+            extra={
+                "tenant_id": tenant_id,
+                "investigation_id": investigation_id,
+                "document_id": document_id,
+                "step": "run_document_investigation_in_background",
+            },
+        )
+        _mark_failed_quietly(factory, tenant_id, investigation_id)
+
+
+def run_vendor_group_investigation_in_background(
+    app: FastAPI,
+    tenant_id: str,
+    actor: str,
+    investigation_id: str,
+    vendor_name: str,
+) -> None:
+    """Investigate one company's whole document set after the response has been sent.
+
+    Same shape as `run_document_investigation_in_background`; only the runner
+    differs, because the subject is every document under `vendor_name`, not one.
+    """
+    factory = app.state.session_factory
+    try:
+        with repo.session_scope(factory) as session:
+            runner = app.state.document_runner or service.build_vendor_runner(
+                session, tenant_id, vendor_name
+            )
+            service.run_investigation(
+                session, tenant_id, actor, investigation_id, runner
+            )
+    except Exception:
+        logger.exception(
+            "Background vendor-group investigation failed",
+            extra={
+                "tenant_id": tenant_id,
+                "investigation_id": investigation_id,
+                "vendor_name": vendor_name,
+                "step": "run_vendor_group_investigation_in_background",
+            },
+        )
+        _mark_failed_quietly(factory, tenant_id, investigation_id)
+
+
 def _mark_failed_quietly(factory, tenant_id: str, investigation_id: str) -> None:
     """Last resort: stop the status sticking at `running` after a crash.
 
@@ -215,10 +286,18 @@ def get_principal(
     `tenant_id` comes from here and from nowhere else — never from a request
     body or query parameter (CONVENTIONS.md §16b.2).
 
+    Demo mode is handled **here and nowhere else**, so no route has to know
+    about it. A caller who presents credentials is authenticated exactly as
+    before; only a caller with none is given the demo principal, and only while
+    `SENTINELIQ_DEMO_MODE` is on. With it off — the default — an anonymous
+    request is still rejected.
+
     Raises:
-        HTTPException: No credentials were supplied.
+        HTTPException: No credentials were supplied and demo mode is off.
     """
     if credentials is None:
+        if service.demo_enabled():
+            return service.demo_principal()
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="not authenticated"
         )

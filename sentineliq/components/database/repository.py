@@ -179,12 +179,14 @@ def add_document(
     sha256: str,
     size_bytes: int,
     stored_path: str,
+    document_type: str | None = None,
 ) -> Document:
     """Record an uploaded document."""
     document = Document(
         tenant_id=tenant_id,
         vendor_name=vendor_name,
         document_name=document_name,
+        document_type=document_type,
         sha256=sha256,
         size_bytes=size_bytes,
         stored_path=stored_path,

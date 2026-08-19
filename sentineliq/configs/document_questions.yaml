@@ -1,0 +1,38 @@
+# Questions asked when investigating an UPLOADED document.
+#
+# The curated vendor investigations use data/evaluation/questions.json, where
+# every question names a vendor and was written against that vendor's dossier.
+# An uploaded document has no dossier, so it gets this fixed generic set —
+# two questions per risk category, so every category in risk_rules.yaml has
+# something to score.
+#
+# HONEST LIMITATION: risk_rules.yaml was tuned on multi-document vendor
+# dossiers (contract + SOC 2 + financials + policy). A single uploaded contract
+# usually has no security or financial evidence, so those categories score from
+# contract text alone. The resulting number is a document risk indication, not
+# the validated vendor risk score.
+questions:
+  - question_id: D001
+    category: contract
+    question: "What are the termination rights in this document, and can either party terminate unilaterally?"
+  - question_id: D002
+    category: contract
+    question: "What are the main obligations each party takes on, and how long does the agreement last?"
+  - question_id: D003
+    category: financial
+    question: "Are there any limitations of liability, indemnities or caps on damages?"
+  - question_id: D004
+    category: financial
+    question: "What payment, pricing or minimum commitment terms does this document impose?"
+  - question_id: D005
+    category: security
+    question: "What security, confidentiality or data protection obligations does this document impose?"
+  - question_id: D006
+    category: security
+    question: "How is intellectual property owned, licensed or assigned in this document?"
+  - question_id: D007
+    category: compliance
+    question: "What laws, regulations, certifications or audit rights does this document require compliance with?"
+  - question_id: D008
+    category: compliance
+    question: "Does this document contain any obligations that appear inconsistent, unusually one-sided or difficult to meet?"

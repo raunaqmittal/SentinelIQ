@@ -21,8 +21,12 @@ Docs/
 notebooks/
 tests/
 artifacts/
-frontend/
 sentineliq.egg-info/
+# frontend/ is deliberately NOT excluded. The UI image builds from this same
+# context (docker-compose `ui.build.context: .`) and copies frontend/app.py
+# and frontend/requirements.txt, so excluding it makes that image unbuildable.
+# The backend image never copies it, so leaving it in the context costs
+# nothing.
 # Completed NO-GO quantization study. `COPY scripts/` would otherwise ship it,
 # and it imports psutil, which is not a production dependency.
 scripts/experiments/

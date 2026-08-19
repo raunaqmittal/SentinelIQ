@@ -49,6 +49,19 @@ services:
       # Half precision is a GPU optimisation; leave it on locally where a GPU
       # may exist, and set it false on a CPU host.
       RETRIEVAL_FP16: ${RETRIEVAL_FP16:-true}
+      # Off by default. Set true only for a showcase deployment, where an
+      # interviewer uses the UI without signing in. Everyone then shares the
+      # demo tenant, so nothing confidential belongs in it.
+      SENTINELIQ_DEMO_MODE: ${SENTINELIQ_DEMO_MODE:-false}
+      SENTINELIQ_DEMO_TENANT: ${SENTINELIQ_DEMO_TENANT:-demo-tenant}
+      # CrewAI ships telemetry on by default and exports spans to its own
+      # collector. We do not want outbound data we never asked for, and the
+      # failing exports flooded the logs. This is the variable crewai 1.15.16
+      # actually reads (with OTEL_SDK_DISABLED and CREWAI_DISABLE_TRACKING);
+      # the older CREWAI_TELEMETRY_OPT_OUT is not read at all on this version.
+      # OTEL_SDK_DISABLED is deliberately NOT used: it is a global
+      # OpenTelemetry switch and would also silence LangSmith tracing.
+      CREWAI_DISABLE_TELEMETRY: "true"
     ports:
       - "8000:8000"
     volumes:

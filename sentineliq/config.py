@@ -206,6 +206,19 @@ def load_risk_rules(
     return rules
 
 
+def load_document_questions(
+    path: Path = CONFIGS_DIR / "document_questions.yaml",
+) -> list[dict]:
+    """The generic questions asked of an uploaded document.
+
+    Curated vendors get their own questions from `data/evaluation/questions.json`;
+    an uploaded document has no dossier, so it gets this fixed set instead.
+    """
+    with open(path, encoding="utf-8") as f:
+        raw = yaml.safe_load(f)
+    return list(raw["questions"])
+
+
 def get_sec_user_agent() -> str:
     """Return the User-Agent SEC EDGAR requires on every request (ADR-006)."""
     user_agent = os.environ.get("SEC_USER_AGENT", "")

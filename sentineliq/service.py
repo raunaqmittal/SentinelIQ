@@ -38,6 +38,10 @@ ROLES = ("analyst", "admin")
 #: relative to the working directory and does not survive a restart.
 UPLOAD_DIR = Path(os.environ.get("SENTINELIQ_UPLOAD_DIR", "data/uploads"))
 BCRYPT_MAX_BYTES = 72  # bcrypt ignores anything past this, so cut it explicitly
+#: The demo principal's role. `analyst`, never `admin`: demo callers must not
+#: be able to delete anything.
+DEMO_ROLE = "analyst"
+DEFAULT_DEMO_TENANT = "demo-tenant"
 
 
 class AuthError(SentinelIQError):
@@ -132,6 +136,41 @@ def login(session: Session, username: str, password: str) -> str:
     return create_token(user.id, user.tenant_id, user.username, user.role)
 
 
+def demo_tenant() -> str:
+    """The tenant every demo caller works in.
+
+    A fixed, real tenant — never None and never blank, so demo data goes
+    through exactly the same repository filters as any other tenant's.
+    """
+    return os.environ.get("SENTINELIQ_DEMO_TENANT", DEFAULT_DEMO_TENANT).strip()
+
+
+def demo_enabled() -> bool:
+    """Whether an unauthenticated caller may use the API.
+
+    Off unless `SENTINELIQ_DEMO_MODE` is explicitly true, so a deployment that
+    says nothing keeps rejecting anonymous requests. A blank demo tenant also
+    turns it off rather than falling through to a tenant-less principal.
+    """
+    wanted = os.environ.get("SENTINELIQ_DEMO_MODE", "").lower() in ("1", "true", "yes")
+    return wanted and bool(demo_tenant())
+
+
+def demo_principal() -> dict:
+    """The principal an anonymous caller gets while demo mode is on.
+
+    Same shape as a decoded token, so everything downstream — tenant filtering,
+    RBAC, auditing — treats it identically. It holds the analyst role, so
+    admin-only routes still refuse it.
+    """
+    return {
+        "sub": "demo",
+        "tenant_id": demo_tenant(),
+        "username": "demo",
+        "role": DEMO_ROLE,
+    }
+
+
 def require_role(principal: dict, role: str) -> None:
     """Stop a caller who does not hold the required role.
 
@@ -152,8 +191,12 @@ def store_upload(
     vendor_name: str,
     filename: str,
     content: bytes,
+    document_type: str | None = None,
 ) -> dict:
     """Validate an uploaded file, save it, and record it.
+
+    `document_type` is one of `investigation.DOCUMENT_TYPES`
+    ("contract"/"financial"/"security") or None for an untyped upload.
 
     The size limit is checked **before** the bytes are written to disk, and the
     file type is checked by content afterwards (NFR-003, Context.md 26.H).
@@ -191,6 +234,7 @@ def store_upload(
             "document_name": existing.document_name,
             "size_bytes": existing.size_bytes,
             "sha256": existing.sha256,
+            "document_type": existing.document_type,
         }
 
     # 3. Write to a tenant-scoped directory, then validate the content.
@@ -206,7 +250,14 @@ def store_upload(
 
     # 4. Record it.
     document = repo.add_document(
-        session, tenant_id, vendor_name, filename, digest, len(content), str(path)
+        session,
+        tenant_id,
+        vendor_name,
+        filename,
+        digest,
+        len(content),
+        str(path),
+        document_type,
     )
     repo.record_audit(session, tenant_id, actor, "upload_document", document.id)
     logger.info(
@@ -223,6 +274,105 @@ def store_upload(
         "document_name": document.document_name,
         "size_bytes": document.size_bytes,
         "sha256": document.sha256,
+        "document_type": document.document_type,
+    }
+
+
+def index_upload(session: Session, tenant_id: str, document_id: str) -> int:
+    """Chunk a stored document so it can be retrieved from. Returns the count.
+
+    This is what makes an upload a real retrieval source rather than a file on
+    disk. The chunks are written to `document_chunks`, so retention deletes them
+    with the document, and the same chunk boundaries are rebuilt for the FAISS
+    and BM25 indexes at query time.
+
+    Chunking an already-chunked document is skipped, which keeps a re-upload of
+    the same file idempotent.
+
+    Raises:
+        NotFound: No such document for this tenant.
+        DocumentLoadError: The file cannot be parsed or has no text.
+    """
+    document = repo.get_document(session, tenant_id, document_id)
+    if document is None:
+        raise NotFound(f"no document {document_id}")
+
+    existing = repo.list_chunks(session, tenant_id, document_id)
+    if existing:
+        return len(existing)
+
+    # Imported here: chunking pulls in the tokenizer, which is expensive and is
+    # not needed by the rest of the service.
+    from sentineliq.pipeline import documents as document_pipeline
+
+    stored = Path(document.stored_path)
+    try:
+        chunks = document_pipeline.chunk_upload(
+            stored, document_id, load_retrieval_config()
+        )
+    except Exception:
+        # A document nothing can read is not a document. The file goes with the
+        # row, which the caller's rollback removes.
+        stored.unlink(missing_ok=True)
+        raise
+    repo.add_chunks(
+        session, tenant_id, document_id, [chunk.model_dump() for chunk in chunks]
+    )
+    logger.info(
+        "Indexed an upload",
+        extra={
+            "tenant_id": tenant_id,
+            "document_id": document_id,
+            "step": "index_upload",
+            "chunks": len(chunks),
+        },
+    )
+    return len(chunks)
+
+
+def get_document(session: Session, tenant_id: str, document_id: str) -> dict:
+    """One uploaded document with its chunk count.
+
+    Raises:
+        NotFound: No such document for this tenant.
+    """
+    document = repo.get_document(session, tenant_id, document_id)
+    if document is None:
+        raise NotFound(f"no document {document_id}")
+    return {
+        "document_id": document.id,
+        "document_name": document.document_name,
+        "size_bytes": document.size_bytes,
+        "sha256": document.sha256,
+        "document_type": document.document_type,
+        "chunk_count": len(repo.list_chunks(session, tenant_id, document_id)),
+    }
+
+
+def get_vendor_group(session: Session, tenant_id: str, vendor_name: str) -> dict:
+    """Every document uploaded for one company, grouped by type.
+
+    Raises:
+        NotFound: This tenant has no documents under this vendor name.
+    """
+    documents = repo.list_documents(session, tenant_id, vendor_name)
+    if not documents:
+        raise NotFound(f"no documents for {vendor_name!r}")
+    return {
+        "vendor_name": vendor_name,
+        "documents": [
+            {
+                "document_id": d.id,
+                "document_name": d.document_name,
+                "document_type": d.document_type,
+                "size_bytes": d.size_bytes,
+                "chunk_count": len(repo.list_chunks(session, tenant_id, d.id)),
+            }
+            for d in documents
+        ],
+        "available_types": sorted(
+            {d.document_type for d in documents if d.document_type}
+        ),
     }
 
 
@@ -466,3 +616,262 @@ def build_pipeline_runner(documents_dir: Path, questions_path: Path, limit: int 
 
     runner.shared_context = shared_context  # exposed so a test can assert reuse
     return runner
+
+
+#: The one Precomputed Demo Investigation this project ships (README/PROGRESS).
+DEMO_REPORT_PATH = Path("data/evaluation/demo_investigation.json")
+DEMO_DOCUMENTS_DIR = Path("data/raw/documents")
+
+
+def load_preloaded_demo() -> dict:
+    """The precomputed Meridian CloudWorks investigation, ready to render.
+
+    No LLM call, no database row — see `investigation.load_demo_report` for
+    exactly what this replays versus what it recomputes.
+
+    Raises:
+        SentinelIQError: The demo's source documents are not present locally
+            (`data/raw/` is not committed to git — see README "Data").
+    """
+    from sentineliq.exceptions import DocumentLoadError
+    from sentineliq.pipeline import investigation
+
+    try:
+        return investigation.load_demo_report(DEMO_REPORT_PATH, DEMO_DOCUMENTS_DIR)
+    except (FileNotFoundError, DocumentLoadError) as error:
+        raise SentinelIQError(
+            "the preloaded demo's source documents are not available in this "
+            "environment (see README, section Data)"
+        ) from error
+
+
+def answer_demo_question(question: str, provider=None) -> dict:
+    """Answer a question against the preloaded demo's real Meridian documents.
+
+    Same retrieval -> rerank -> grounded LLM -> citations as every other Q&A
+    call (`pipeline/qa.py`), just sourced from the frozen demo corpus instead
+    of an upload — there is no DB row for these files, so this builds a
+    `union_context` straight from disk. Not tenant-scoped: like the report
+    itself, this is the same fixed showcase data for every caller.
+
+    Raises:
+        SentinelIQError: The demo's source documents are not available.
+        ValueError: The question is empty.
+    """
+    from sentineliq.exceptions import DocumentLoadError
+    from sentineliq.pipeline import documents as document_pipeline
+    from sentineliq.pipeline import investigation, qa
+
+    try:
+        dossier = investigation.load_dossier(
+            DEMO_DOCUMENTS_DIR / "dossiers.json", "Meridian CloudWorks"
+        )
+        wanted = investigation.dossier_document_ids(dossier)
+        doc_specs = [
+            (file.stem, file)
+            for file in sorted(DEMO_DOCUMENTS_DIR.iterdir())
+            if file.stem in wanted
+        ]
+        context = document_pipeline.union_context(
+            "__demo__", doc_specs, load_retrieval_config()
+        )
+    except (FileNotFoundError, DocumentLoadError) as error:
+        raise SentinelIQError(
+            "the preloaded demo's source documents are not available in this "
+            "environment (see README, section Data)"
+        ) from error
+
+    app_config = load_app_config()
+    if provider is None:
+        from sentineliq.components.llm.provider import GroqProvider
+
+        groq_api_key()
+        provider = GroqProvider(app_config.llm.model)
+
+    return qa.ask(
+        context,
+        provider,
+        question,
+        temperature=app_config.llm.temperature,
+        max_tokens=app_config.llm.max_tokens,
+    )
+
+
+def groq_api_key() -> str:
+    """The LLM key, with a message a user can act on.
+
+    Raises:
+        SentinelIQError: `GROQ_API_KEY` is not set.
+    """
+    key = os.environ.get("GROQ_API_KEY", "")
+    if not key:
+        raise SentinelIQError("GROQ_API_KEY is not set — see .env.example")
+    return key
+
+
+def build_document_runner(session: Session, tenant_id: str, document_id: str):
+    """A `runner(name)` that investigates one uploaded document.
+
+    Same shape as `build_pipeline_runner`'s runner, so `run_investigation`
+    drives both without knowing which it has. The document is looked up here,
+    while a session is open, because the run itself happens after the response.
+
+    Raises:
+        NotFound: No such document for this tenant.
+    """
+    document = repo.get_document(session, tenant_id, document_id)
+    if document is None:
+        raise NotFound(f"no document {document_id}")
+    stored_path = Path(document.stored_path)
+    document_name = document.document_name
+
+    def runner(_name: str) -> dict:
+        from sentineliq.config import load_document_questions
+        from sentineliq.pipeline import documents as document_pipeline
+        from sentineliq.pipeline import flow, investigation
+
+        app_config = load_app_config()
+        llm = flow.build_llm(
+            app_config.llm.model,
+            groq_api_key(),
+            app_config.llm.temperature,
+            app_config.llm.base_url,
+        )
+        context = document_pipeline.document_context(
+            tenant_id, document_id, stored_path, load_retrieval_config(), llm=llm
+        )
+        return investigation.run_document_investigation(
+            context,
+            document_id,
+            document_name,
+            load_document_questions(),
+            load_risk_rules(),
+        )
+
+    return runner
+
+
+def build_vendor_runner(session: Session, tenant_id: str, vendor_name: str):
+    """A `runner(name)` that investigates every document uploaded for one company.
+
+    This is the PRIMARY investigation path: it builds one evidence context from
+    every document this tenant has under `vendor_name` (contract, financial,
+    security — whichever were actually uploaded) and runs the same
+    specialist/Red-Team/scoring chain as `build_document_runner`, just over the
+    combined evidence instead of one file.
+
+    Raises:
+        NotFound: This tenant has no documents under this vendor name.
+    """
+    documents = repo.list_documents(session, tenant_id, vendor_name)
+    if not documents:
+        raise NotFound(f"no documents for {vendor_name!r}")
+    doc_specs = [(d.id, Path(d.stored_path)) for d in documents]
+    available_types = {d.document_type for d in documents if d.document_type}
+
+    def runner(_name: str) -> dict:
+        from sentineliq.config import load_document_questions
+        from sentineliq.pipeline import documents as document_pipeline
+        from sentineliq.pipeline import flow, investigation
+
+        app_config = load_app_config()
+        llm = flow.build_llm(
+            app_config.llm.model,
+            groq_api_key(),
+            app_config.llm.temperature,
+            app_config.llm.base_url,
+        )
+        context = document_pipeline.union_context(
+            tenant_id, doc_specs, load_retrieval_config(), llm=llm
+        )
+        return investigation.run_document_investigation(
+            context,
+            vendor_name,
+            vendor_name,
+            load_document_questions(),
+            load_risk_rules(),
+            available_types=available_types,
+        )
+
+    return runner
+
+
+def answer_vendor_question(
+    session: Session, tenant_id: str, vendor_name: str, question: str, provider=None
+) -> dict:
+    """Answer one question about every document uploaded for one company.
+
+    Retrieval is scoped to this vendor's own documents, so an answer can only
+    cite them. `provider` is injected so a test can answer without an LLM.
+
+    Raises:
+        NotFound: This tenant has no documents under this vendor name.
+        ValueError: The question is empty.
+    """
+    documents = repo.list_documents(session, tenant_id, vendor_name)
+    if not documents:
+        raise NotFound(f"no documents for {vendor_name!r}")
+    doc_specs = [(d.id, Path(d.stored_path)) for d in documents]
+
+    from sentineliq.pipeline import documents as document_pipeline
+    from sentineliq.pipeline import qa
+
+    app_config = load_app_config()
+    if provider is None:
+        from sentineliq.components.llm.provider import GroqProvider
+
+        groq_api_key()  # fail with a clear message before any model is loaded
+        provider = GroqProvider(app_config.llm.model)
+
+    context = document_pipeline.union_context(
+        tenant_id, doc_specs, load_retrieval_config()
+    )
+    return qa.ask(
+        context,
+        provider,
+        question,
+        temperature=app_config.llm.temperature,
+        max_tokens=app_config.llm.max_tokens,
+    )
+
+
+def answer_document_question(
+    session: Session, tenant_id: str, document_id: str, question: str, provider=None
+) -> dict:
+    """Answer one question about one uploaded document.
+
+    Retrieval is scoped to that document's own indexes, so an answer can only
+    ever cite that document. `provider` is injected so a test can answer without
+    calling an LLM.
+
+    Raises:
+        NotFound: No such document for this tenant.
+        ValueError: The question is empty.
+    """
+    document = repo.get_document(session, tenant_id, document_id)
+    if document is None:
+        raise NotFound(f"no document {document_id}")
+
+    from sentineliq.pipeline import documents as document_pipeline
+    from sentineliq.pipeline import qa
+
+    app_config = load_app_config()
+    if provider is None:
+        from sentineliq.components.llm.provider import GroqProvider
+
+        groq_api_key()  # fail with a clear message before any model is loaded
+        provider = GroqProvider(app_config.llm.model)
+
+    context = document_pipeline.document_context(
+        tenant_id,
+        document_id,
+        Path(document.stored_path),
+        load_retrieval_config(),
+    )
+    return qa.ask(
+        context,
+        provider,
+        question,
+        temperature=app_config.llm.temperature,
+        max_tokens=app_config.llm.max_tokens,
+    )

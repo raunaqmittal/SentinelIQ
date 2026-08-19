@@ -49,6 +49,10 @@ class Document(Base):
     tenant_id: Mapped[str] = mapped_column(String, index=True)
     vendor_name: Mapped[str] = mapped_column(String, index=True)
     document_name: Mapped[str] = mapped_column(String)
+    # "contract" | "financial" | "security" | None. None means unset — an
+    # older upload from before this column existed, or a document a caller
+    # chose not to type.
+    document_type: Mapped[str | None] = mapped_column(String, nullable=True)
     sha256: Mapped[str] = mapped_column(String)
     size_bytes: Mapped[int] = mapped_column(Integer)
     stored_path: Mapped[str] = mapped_column(String)

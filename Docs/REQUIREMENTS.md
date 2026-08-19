@@ -602,7 +602,7 @@ Each requirement has:
 
 ### FR-022 — REST API
 - **Priority:** P1
-- **Status:** [x] — 15 routes live and tested; `/run` is asynchronous
+- **Status:** [x] — 23 routes live and tested; `/run` is asynchronous
 - **Description:** All functionality must be accessible via a FastAPI REST API.
 - **Required endpoints:**
   ```
@@ -626,6 +626,30 @@ Each requirement has:
   `GET /api/investigations/{id}` — `/status` and `/report` cover it. Added
   beyond the list: `GET /health`, `POST /api/auth/login`, and `DELETE` for both
   documents and investigations (retention, NFR-003d).
+- **Added by the demo layer (2026-08-19), then extended to the multi-document
+  architecture the same day, eight routes total:**
+  ```
+  GET    /api/documents/{id}                     overview, incl. chunk count
+  POST   /api/documents/{id}/investigate          202; single-document case
+  POST   /api/documents/{id}/questions            Q&A over that one document
+  GET    /api/vendor-groups/{vendor_name}         every document for one company
+  POST   /api/vendor-groups/{vendor_name}/investigate   202; PRIMARY path
+  POST   /api/vendor-groups/{vendor_name}/questions     Q&A over the whole set
+  GET    /api/demo/meridian                       precomputed demo, instant
+  POST   /api/demo/meridian/questions             Q&A over the demo's documents
+  ```
+  `POST /api/documents` also changed: `vendor_name` became optional (falls
+  back to the filename), it gained an optional `document_type`
+  ("contract"/"financial"/"security"), and the upload is now chunked into
+  `document_chunks`, so an uploaded document is a real retrieval source.
+  `/api/vendor-groups/{vendor_name}/investigate` unions every document a
+  tenant has under that name into one retrieval context
+  (`pipeline/documents.union_context`) before running the same
+  specialist/Red-Team/scoring chain as the curated vendor path — this is now
+  the primary investigation path; the single-document endpoints are the
+  one-document case of the same mechanism. Every investigation reuses
+  `/status`, `/report`, `/findings` and `/evidence` unchanged. Every route
+  takes its tenant from the principal, like every other route.
 - **Acceptance Criteria:**
   - [x] All endpoints return properly structured JSON
   - [x] All request/response schemas are validated with Pydantic — every route

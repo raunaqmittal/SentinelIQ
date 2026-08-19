@@ -93,12 +93,42 @@ class TokenResponse(BaseModel):
 
 
 class DocumentResponse(BaseModel):
-    """An uploaded document, as returned to the client."""
+    """An uploaded document, as returned to the client.
+
+    `chunk_count` is how many retrievable pieces the document was split into.
+    It is None where the count was not looked up, which is the case for the
+    list endpoint. `document_type` is "contract" | "financial" | "security" |
+    None (untyped upload).
+    """
 
     document_id: str
     document_name: str
     size_bytes: int
     sha256: str
+    document_type: str | None = None
+    chunk_count: int | None = None
+
+
+class VendorDocumentSummary(BaseModel):
+    """One document inside a vendor group's document list."""
+
+    document_id: str
+    document_name: str
+    document_type: str | None = None
+    size_bytes: int
+    chunk_count: int
+
+
+class VendorGroupResponse(BaseModel):
+    """Every document uploaded for one company, grouped by type.
+
+    `available_types` is the set of document types actually present — what the
+    "Documents analyzed" checklist on the frontend is built from.
+    """
+
+    vendor_name: str
+    documents: list[VendorDocumentSummary]
+    available_types: list[str]
 
 
 class InvestigationCreate(BaseModel):
@@ -154,9 +184,49 @@ class FindingResponse(BaseModel):
     evidence: list[EvidenceResponse] = Field(default_factory=list)
 
 
+class QuestionRequest(BaseModel):
+    """A free-form question about one uploaded document.
+
+    The document is named in the URL and the tenant comes from the principal,
+    so neither can be chosen in the body.
+    """
+
+    question: str
+
+
+class CitationResponse(BaseModel):
+    """One retrieved chunk, with the text a reader can check the answer against."""
+
+    chunk_id: str
+    document_name: str
+    page_start: int | None = None
+    page_end: int | None = None
+    text: str
+
+
+class AnswerResponse(BaseModel):
+    """A grounded answer about one document.
+
+    There is deliberately no confidence score: any number here would be
+    unmeasured. `citations` is the honest signal — an answer stands on the
+    chunks listed there, and `abstained` is True when the document did not
+    provide enough evidence.
+    """
+
+    answer: str
+    abstained: bool
+    citations: list[CitationResponse] = Field(default_factory=list)
+    retrieved: list[CitationResponse] = Field(default_factory=list)
+
+
 class HealthResponse(BaseModel):
-    """Liveness and readiness of the service."""
+    """Liveness and readiness of the service.
+
+    `demo_mode` tells the frontend whether it may call the API without signing
+    in. It reports configuration, never a credential.
+    """
 
     status: str
     database: str
     version: str
+    demo_mode: bool = False

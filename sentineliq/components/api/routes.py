@@ -1,7 +1,12 @@
 """All API route handlers.
 
-Every route except `/health` and `/api/auth/login` requires a bearer token, and
-every one derives `tenant_id` from that token rather than from the request.
+Every route except `/health`, `/ready` and `/api/auth/login` requires a
+principal, and every one derives `tenant_id` from that principal rather than
+from the request.
+
+While demo mode is on, an anonymous caller is given a fixed demo principal
+instead of being rejected. That decision is made once, in `app.get_principal`,
+so no route here needs to know about it.
 """
 
 # 1. Standard library imports
@@ -28,11 +33,14 @@ from sentineliq import service
 from sentineliq.components.api.app import (
     get_principal,
     get_session,
+    run_document_investigation_in_background,
     run_investigation_in_background,
+    run_vendor_group_investigation_in_background,
 )
 from sentineliq.components.database import repository as repo
 from sentineliq.components.evaluation import rag_eval
 from sentineliq.components.models.schemas import (
+    AnswerResponse,
     DocumentResponse,
     EvidenceResponse,
     FindingResponse,
@@ -40,8 +48,10 @@ from sentineliq.components.models.schemas import (
     InvestigationCreate,
     InvestigationResponse,
     LoginRequest,
+    QuestionRequest,
     StatusResponse,
     TokenResponse,
+    VendorGroupResponse,
 )
 
 logger = logging.getLogger(__name__)
@@ -77,7 +87,12 @@ def health(session: Session = Depends(get_session)) -> HealthResponse:
     this must not fail the container's health check — use `/ready` for that.
     """
     database = "ok" if database_reachable(session) else "unavailable"
-    return HealthResponse(status="ok", database=database, version="0.1.0")
+    return HealthResponse(
+        status="ok",
+        database=database,
+        version="0.1.0",
+        demo_mode=service.demo_enabled(),
+    )
 
 
 @router.get("/ready", response_model=HealthResponse, tags=["health"])
@@ -97,6 +112,7 @@ def ready(
         status="ok" if reachable else "not ready",
         database="ok" if reachable else "unavailable",
         version="0.1.0",
+        demo_mode=service.demo_enabled(),
     )
 
 
@@ -122,25 +138,136 @@ def login(
     tags=["documents"],
 )
 async def upload_document(
-    vendor_name: str = Form(...),
+    vendor_name: str = Form(""),
+    document_type: str = Form(""),
     upload: UploadFile = File(...),
     principal: dict = Depends(get_principal),
     session: Session = Depends(get_session),
 ) -> DocumentResponse:
-    """Upload a document. The file is validated by content before it is kept."""
+    """Upload a document, then chunk it so it can be retrieved from.
+
+    The file is validated by content before it is kept. `vendor_name` is
+    optional: investigating a single uploaded document does not need one, so it
+    falls back to the filename. `document_type` is one of "contract",
+    "financial", "security", or blank for untyped — it is what groups several
+    documents into one company's evidence set for a vendor-group investigation.
+
+    Raises:
+        HTTPException: `document_type` was given and is not a recognised type.
+    """
+    from sentineliq.pipeline.investigation import DOCUMENT_TYPES
+
+    if document_type and document_type not in DOCUMENT_TYPES:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"document_type must be one of {DOCUMENT_TYPES}",
+        )
     content = await upload.read()
+    filename = upload.filename or "unnamed"
     stored = service.store_upload(
         session,
         principal["tenant_id"],
         principal["username"],
-        vendor_name,
-        upload.filename or "unnamed",
+        vendor_name or Path(filename).stem,
+        filename,
         content,
+        document_type or None,
+    )
+    chunk_count = service.index_upload(
+        session, principal["tenant_id"], stored["document_id"]
     )
     # Commit before responding, so the caller can immediately read the document
     # it was just handed the id of. See `create_investigation`.
     session.commit()
-    return DocumentResponse(**stored)
+    return DocumentResponse(**stored, chunk_count=chunk_count)
+
+
+@router.get(
+    "/api/documents/{document_id}",
+    response_model=DocumentResponse,
+    tags=["documents"],
+)
+def get_document(
+    document_id: str,
+    principal: dict = Depends(get_principal),
+    session: Session = Depends(get_session),
+) -> DocumentResponse:
+    """One uploaded document, with how many chunks it was split into."""
+    return DocumentResponse(
+        **service.get_document(session, principal["tenant_id"], document_id)
+    )
+
+
+@router.post(
+    "/api/documents/{document_id}/investigate",
+    response_model=StatusResponse,
+    status_code=status.HTTP_202_ACCEPTED,
+    tags=["documents"],
+)
+def investigate_document(
+    document_id: str,
+    request: Request,
+    background: BackgroundTasks,
+    principal: dict = Depends(get_principal),
+    session: Session = Depends(get_session),
+) -> StatusResponse:
+    """Run a full investigation on one uploaded document (FR-022).
+
+    Creates the investigation, accepts it, and does the work after the response
+    — same as `/api/investigations/{id}/run`, and the result is read back
+    through the same `/status`, `/report`, `/findings` and `/evidence`
+    endpoints. The investigation is named after the document.
+    """
+    tenant_id = principal["tenant_id"]
+    document = service.get_document(session, tenant_id, document_id)
+
+    investigation_id = service.start_investigation(
+        session, tenant_id, principal["username"], document["document_name"]
+    )
+    # Committed, not flushed — see `run_investigation` for why a held row lock
+    # would deadlock the background task.
+    repo.mark_running(session, tenant_id, investigation_id)
+    session.commit()
+
+    background.add_task(
+        run_document_investigation_in_background,
+        request.app,
+        tenant_id,
+        principal["username"],
+        investigation_id,
+        document_id,
+    )
+    return StatusResponse(**service.get_status(session, tenant_id, investigation_id))
+
+
+@router.post(
+    "/api/documents/{document_id}/questions",
+    response_model=AnswerResponse,
+    tags=["documents"],
+)
+def ask_document(
+    document_id: str,
+    payload: QuestionRequest,
+    principal: dict = Depends(get_principal),
+    session: Session = Depends(get_session),
+) -> AnswerResponse:
+    """Answer a question about one uploaded document.
+
+    Retrieval is scoped to that document, so the answer can only cite it. When
+    the evidence does not answer, the response says so rather than guessing.
+
+    Raises:
+        HTTPException: The question is empty.
+    """
+    try:
+        result = service.answer_document_question(
+            session, principal["tenant_id"], document_id, payload.question
+        )
+    except ValueError as error:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(error)
+        ) from error
+    return AnswerResponse(**result)
 
 
 @router.get("/api/documents", response_model=list[DocumentResponse], tags=["documents"])
@@ -153,11 +280,141 @@ def list_documents(
         DocumentResponse(
             document_id=document.id,
             document_name=document.document_name,
+            document_type=document.document_type,
             size_bytes=document.size_bytes,
             sha256=document.sha256,
         )
         for document in repo.list_documents(session, principal["tenant_id"])
     ]
+
+
+# ------------------------------------------------------- vendor groups
+#
+# A vendor group is every document one tenant has uploaded under one company
+# name (Document.vendor_name). This is the PRIMARY investigation path: the
+# original multi-document architecture, applied to whatever the caller
+# actually uploaded — one, two or three of contract/financial/security.
+
+
+@router.get(
+    "/api/vendor-groups/{vendor_name}",
+    response_model=VendorGroupResponse,
+    tags=["vendor-groups"],
+)
+def get_vendor_group(
+    vendor_name: str,
+    principal: dict = Depends(get_principal),
+    session: Session = Depends(get_session),
+) -> VendorGroupResponse:
+    """Every document uploaded for one company, grouped by type."""
+    return VendorGroupResponse(
+        **service.get_vendor_group(session, principal["tenant_id"], vendor_name)
+    )
+
+
+@router.post(
+    "/api/vendor-groups/{vendor_name}/investigate",
+    response_model=StatusResponse,
+    status_code=status.HTTP_202_ACCEPTED,
+    tags=["vendor-groups"],
+)
+def investigate_vendor_group(
+    vendor_name: str,
+    request: Request,
+    background: BackgroundTasks,
+    principal: dict = Depends(get_principal),
+    session: Session = Depends(get_session),
+) -> StatusResponse:
+    """Run the full investigation over every document uploaded for one company.
+
+    Same async shape as `/api/documents/{id}/investigate` (FR-022): accepted
+    immediately, the real work happens after the response, the caller polls
+    `/status`. The report is read back through the usual `/report`, `/findings`
+    and `/evidence` endpoints.
+    """
+    tenant_id = principal["tenant_id"]
+    service.get_vendor_group(session, tenant_id, vendor_name)  # 404 if empty
+
+    investigation_id = service.start_investigation(
+        session, tenant_id, principal["username"], vendor_name
+    )
+    repo.mark_running(session, tenant_id, investigation_id)
+    session.commit()
+
+    background.add_task(
+        run_vendor_group_investigation_in_background,
+        request.app,
+        tenant_id,
+        principal["username"],
+        investigation_id,
+        vendor_name,
+    )
+    return StatusResponse(**service.get_status(session, tenant_id, investigation_id))
+
+
+@router.post(
+    "/api/vendor-groups/{vendor_name}/questions",
+    response_model=AnswerResponse,
+    tags=["vendor-groups"],
+)
+def ask_vendor_group(
+    vendor_name: str,
+    payload: QuestionRequest,
+    principal: dict = Depends(get_principal),
+    session: Session = Depends(get_session),
+) -> AnswerResponse:
+    """Answer a question about every document uploaded for one company.
+
+    Retrieval is scoped to this vendor's documents, so an answer can only cite
+    them. When the evidence does not answer, the response says so.
+
+    Raises:
+        HTTPException: The question is empty.
+    """
+    try:
+        result = service.answer_vendor_question(
+            session, principal["tenant_id"], vendor_name, payload.question
+        )
+    except ValueError as error:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(error)
+        ) from error
+    return AnswerResponse(**result)
+
+
+@router.get("/api/demo/meridian", tags=["demo"])
+def preloaded_demo(principal: dict = Depends(get_principal)) -> dict:
+    """The Precomputed Demo Investigation — Meridian CloudWorks, instant.
+
+    No LLM call and no database row: this replays a real, previously-run
+    investigation's findings and citations through the current deterministic
+    engine (see `investigation.load_demo_report`). Not tenant-scoped — it is
+    the same fixed showcase data for every caller, like `/api/evaluations`.
+    """
+    return service.load_preloaded_demo()
+
+
+@router.post(
+    "/api/demo/meridian/questions", response_model=AnswerResponse, tags=["demo"]
+)
+def ask_preloaded_demo(
+    payload: QuestionRequest, principal: dict = Depends(get_principal)
+) -> AnswerResponse:
+    """Ask a question about the preloaded demo's real documents.
+
+    Same grounded retrieval -> citation pipeline as `/api/vendor-groups/.../questions`,
+    sourced from the fixed demo corpus rather than an upload.
+
+    Raises:
+        HTTPException: The question is empty.
+    """
+    try:
+        result = service.answer_demo_question(payload.question)
+    except ValueError as error:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(error)
+        ) from error
+    return AnswerResponse(**result)
 
 
 @router.delete(

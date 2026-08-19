@@ -4,6 +4,8 @@ Everything here is deterministic — the LLM call is replaced with a stub, so th
 whole chain from findings to cited report is tested without spending quota.
 """
 
+from pathlib import Path
+
 import pytest
 
 from sentineliq.components.agents import compliance, financial, security
@@ -463,3 +465,184 @@ def test_report_shows_the_recommendation_scores_and_cited_findings(stub_pipeline
     assert "SOC 2 expired." in report
     assert "Evidence -> meridian_sla.txt" in report
     assert "-- COMPLIANCE --" in report
+
+
+# ------------------------------------------- uploaded-document investigation
+
+
+DOCUMENT_QUESTIONS = [
+    {"question_id": "D001", "category": "contract", "question": "Termination?"},
+    {"question_id": "D003", "category": "financial", "question": "Liability cap?"},
+    {"question_id": "D005", "category": "security", "question": "Data protection?"},
+    {"question_id": "D007", "category": "compliance", "question": "Certifications?"},
+]
+
+
+def document_context():
+    """A context already scoped to one uploaded document."""
+    return fake_context([chunk("doc-abc_0000", "doc-abc")])
+
+
+def test_an_uploaded_document_is_investigated_without_a_dossier(stub_pipeline):
+    verdict = investigation.run_document_investigation(
+        document_context(), "doc-abc", "contract.pdf", DOCUMENT_QUESTIONS, RULES
+    )
+
+    assert verdict["vendor"] == "contract.pdf"
+    assert len(verdict["findings"]) == 4
+    assert verdict["recommendation"]
+    assert verdict["category_scores"]["compliance"] == 80.0
+
+
+def test_the_document_verdict_says_it_is_not_a_vendor_risk_score(stub_pipeline):
+    """The scoring model was tuned on vendor dossiers, not arbitrary uploads."""
+    verdict = investigation.run_document_investigation(
+        document_context(), "doc-abc", "contract.pdf", DOCUMENT_QUESTIONS, RULES
+    )
+
+    assert verdict["subject_type"] == "uploaded_document"
+    assert "not a validated" in verdict["generalisation_caveat"]
+
+
+def test_two_documents_with_the_same_name_get_different_investigation_ids(
+    stub_pipeline,
+):
+    first = investigation.run_document_investigation(
+        document_context(), "doc-1", "contract.pdf", DOCUMENT_QUESTIONS, RULES
+    )
+    second = investigation.run_document_investigation(
+        document_context(), "doc-2", "contract.pdf", DOCUMENT_QUESTIONS, RULES
+    )
+
+    assert first["investigation_id"] != second["investigation_id"]
+
+
+def test_a_document_that_answers_nothing_scores_no_risk_but_poor_evidence(
+    monkeypatch,
+):
+    """Insufficient evidence must not look like a clean document."""
+    install_stub(monkeypatch)
+
+    def nothing_found(context, question, category):
+        return {
+            "answer": "NOT FOUND IN EVIDENCE",
+            "citations": [],
+            "dropped_citations": [],
+            "injection_flagged": False,
+            "supplied": [context.chunks[0].chunk_id],
+            "category": category,
+            "specialist": flow.route_category(category).ROLE,
+            "severity": None,
+            "contradiction": False,
+        }
+
+    monkeypatch.setattr(flow, "investigate_finding", nothing_found)
+    verdict = investigation.run_document_investigation(
+        document_context(), "doc-abc", "contract.pdf", DOCUMENT_QUESTIONS, RULES
+    )
+
+    assert verdict["evidence_signals"]["retrieval_rate"] == 0.0
+    assert verdict["evidence_quality"] < 50
+    assert all(finding["severity"] is None for finding in verdict["findings"])
+
+
+def test_the_generic_question_set_covers_every_scored_category():
+    from sentineliq.config import load_document_questions
+
+    questions = load_document_questions()
+    categories = {question["category"] for question in questions}
+
+    assert categories == set(investigation.QUESTION_CATEGORIES)
+    assert len({question["question_id"] for question in questions}) == len(questions)
+
+
+# --------------------------------------------------- document-type coverage
+
+
+def test_three_document_types_gives_a_full_checklist_and_no_caveat():
+    result = investigation.coverage({"contract", "financial", "security"})
+
+    assert result["documents_analyzed"] == {
+        "contract": True,
+        "financial": True,
+        "security": True,
+    }
+    assert result["coverage_caveat"] is None
+
+
+def test_two_document_types_names_the_missing_one():
+    result = investigation.coverage({"contract", "financial"})
+
+    assert result["documents_analyzed"]["security"] is False
+    assert "Security" in result["coverage_caveat"]
+    assert "not provided" in result["coverage_caveat"]
+
+
+def test_one_document_type_gives_a_partial_caveat():
+    result = investigation.coverage({"contract"})
+
+    assert result["documents_analyzed"] == {
+        "contract": True,
+        "financial": False,
+        "security": False,
+    }
+    assert result["coverage_caveat"] is not None
+
+
+def test_no_document_type_gives_the_no_type_caveat():
+    result = investigation.coverage(set())
+
+    assert all(present is False for present in result["documents_analyzed"].values())
+    assert "no recognised document type" in result["coverage_caveat"]
+
+
+def test_run_document_investigation_embeds_coverage(stub_pipeline):
+    verdict = investigation.run_document_investigation(
+        document_context(),
+        "doc-abc",
+        "contract.pdf",
+        DOCUMENT_QUESTIONS,
+        RULES,
+        available_types={"contract"},
+    )
+
+    assert verdict["documents_analyzed"]["contract"] is True
+    assert verdict["documents_analyzed"]["security"] is False
+    assert verdict["coverage_caveat"] is not None
+
+
+def test_run_document_investigation_with_no_available_types_still_works(stub_pipeline):
+    """The default (no types given) must not crash — it's just an empty checklist."""
+    verdict = investigation.run_document_investigation(
+        document_context(), "doc-abc", "contract.pdf", DOCUMENT_QUESTIONS, RULES
+    )
+
+    assert verdict["coverage_caveat"] is not None
+
+
+# ------------------------------------------------------- preloaded demo
+
+
+def test_load_demo_report_recomputes_through_the_current_engine():
+    """Real findings from a stored run, re-scored by the unchanged engine.py."""
+    report = investigation.load_demo_report(
+        Path("data/evaluation/demo_investigation.json"), Path("data/raw/documents")
+    )
+
+    assert report["vendor"] == "Meridian CloudWorks"
+    assert report["subject_type"] == "preloaded_demo"
+    assert len(report["findings"]) == 4
+    assert "demo_note" in report
+    # Every finding's citations must resolve to real evidence with a document name.
+    for finding in report["findings"]:
+        for evidence in finding["evidence"]:
+            assert evidence["document_name"]
+
+
+def test_load_demo_report_never_writes_to_the_source_file():
+    path = Path("data/evaluation/demo_investigation.json")
+    before = path.read_bytes()
+
+    investigation.load_demo_report(path, Path("data/raw/documents"))
+
+    assert path.read_bytes() == before

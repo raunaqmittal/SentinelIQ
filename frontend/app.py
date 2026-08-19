@@ -30,12 +30,17 @@ RISK_COLOURS = {
 
 
 def headers() -> dict:
-    """Authorization header, empty when signed out."""
-    token = st.session_state.get("token")
-    return {"Authorization": f"Bearer {token}"} if token else {}
+    """This showcase frontend is always anonymous — no token to send.
+
+    The API's JWT/RBAC implementation is untouched; this frontend just never
+    calls /api/auth/login. It relies on the API running with
+    SENTINELIQ_DEMO_MODE=true, which serves an anonymous request as a fixed
+    demo principal (see app.get_principal).
+    """
+    return {}
 
 
-def call(method: str, path: str, **kwargs):
+def call(method: str, path: str, timeout: int = TIMEOUT, **kwargs):
     """Call the API, or return None after showing the user what went wrong.
 
     Every caller gets one of two things: a successful response, or None with a
@@ -44,7 +49,7 @@ def call(method: str, path: str, **kwargs):
     """
     try:
         response = requests.request(
-            method, f"{API_URL}{path}", headers=headers(), timeout=TIMEOUT, **kwargs
+            method, f"{API_URL}{path}", headers=headers(), timeout=timeout, **kwargs
         )
     except requests.Timeout:
         st.error("The API took too long to respond. It may still be working.")
@@ -53,11 +58,11 @@ def call(method: str, path: str, **kwargs):
         st.error(f"Cannot reach the API at {API_URL}. Is it running?")
         return None
 
-    # A 401 means the 30-minute token has expired; send the user back to login.
+    # This frontend never sends a token, so a 401 means the API is not
+    # running in demo mode (see main()'s check before any page renders).
     if response.status_code == 401:
-        st.session_state.pop("token", None)
-        st.warning("Your session has expired. Please sign in again.")
-        st.rerun()
+        st.error("The API rejected this as unauthenticated. Is demo mode on?")
+        return None
     if response.status_code == 403:
         st.error("You do not have permission to do that.")
         return None
@@ -65,13 +70,22 @@ def call(method: str, path: str, **kwargs):
 
 
 def api_get(path: str):
-    """GET from the API with the signed-in user's token."""
+    """GET from the API."""
     return call("GET", path)
 
 
 def api_post(path: str, **kwargs):
-    """POST to the API with the signed-in user's token."""
+    """POST to the API."""
     return call("POST", path, **kwargs)
+
+
+def api_health() -> dict | None:
+    """Ask the API whether it is up and whether demo mode is on."""
+    try:
+        response = requests.get(f"{API_URL}/health", timeout=10)
+    except requests.RequestException:
+        return None
+    return response.json() if response.status_code == 200 else None
 
 
 def failed(response, message: str) -> bool:
@@ -82,29 +96,6 @@ def failed(response, message: str) -> bool:
         st.error(f"{message} ({response.status_code})")
         return True
     return False
-
-
-def sign_in_form() -> None:
-    """Sidebar sign-in."""
-    st.sidebar.subheader("Sign in")
-    username = st.sidebar.text_input("Username")
-    password = st.sidebar.text_input("Password", type="password")
-    if st.sidebar.button("Sign in"):
-        try:
-            response = requests.post(
-                f"{API_URL}/api/auth/login",
-                json={"username": username, "password": password},
-                timeout=30,
-            )
-        except requests.RequestException:
-            st.sidebar.error(f"Cannot reach the API at {API_URL}")
-            return
-        if response.status_code == 200:
-            st.session_state["token"] = response.json()["access_token"]
-            st.session_state["username"] = username
-            st.rerun()
-        else:
-            st.sidebar.error("Incorrect username or password")
 
 
 def show_verdict(report: dict) -> None:
@@ -265,7 +256,9 @@ def page_dashboard() -> None:
     st.table(
         [
             {
-                "vendor": row["vendor_name"],
+                # "subject", not "vendor": this column holds a vendor name for a
+                # curated run and a filename for an uploaded document.
+                "subject": row["vendor_name"],
                 "status": row["status"],
                 "risk": row["risk_level"] or "-",
                 "recommendation": row["recommendation"] or "-",
@@ -370,6 +363,284 @@ def page_new_investigation() -> None:
         status_response = api_get(f"/api/investigations/{investigation_id}/status")
         detail = status_response.json().get("error") if status_response else None
         st.error(f"The run failed. {detail or 'Check the API logs.'}")
+
+
+# ------------------------------------------------- uploaded documents
+
+
+PIPELINE = ["DOCUMENT", "RETRIEVAL", "AGENTS", "RED TEAM", "RISK ENGINE", "REPORT"]
+
+DOC_TYPE_LABELS = {
+    "contract": "Contract / Legal",
+    "financial": "Financial",
+    "security": "Security / Compliance",
+}
+
+SUGGESTED_QUESTIONS = [
+    "What are the termination clauses?",
+    "Does this contract allow unilateral termination?",
+    "What security or confidentiality obligations does it impose?",
+    "Are there any limitations of liability?",
+    "What are the most important risks in this document?",
+]
+
+CAVEAT = (
+    "This score comes from a single uploaded document answered with a generic "
+    "question set. The risk weights were tuned on multi-document vendor "
+    "dossiers, so read it as a document risk indication, not a validated "
+    "vendor risk score."
+)
+
+
+def show_pipeline() -> None:
+    """The architecture, so a reader can see what the run actually does."""
+    st.markdown("  ->  ".join(f"`{stage}`" for stage in PIPELINE))
+
+
+def show_type_checklist(available: set) -> None:
+    """Which of the three document types are present (spec: "Documents analyzed")."""
+    for key, label in DOC_TYPE_LABELS.items():
+        mark = ":green[Y]" if key in available else ":red[N]"
+        st.write(f"{mark} {label}")
+
+
+def show_document_report(investigation_id: str) -> None:
+    """The full report of a vendor-group investigation."""
+    response = api_get(f"/api/investigations/{investigation_id}/report")
+    if failed(response, "Could not load the report."):
+        return
+    report = response.json()
+    st.divider()
+    st.subheader("Investigation report")
+    st.caption(
+        f"Investigation {report.get('investigation_id')} - "
+        f"report v{report.get('report_version')} - {report.get('generated_at')}"
+    )
+    show_verdict(report)
+    st.subheader("Documents analyzed")
+    show_type_checklist(
+        {
+            t
+            for t, present in (report.get("documents_analyzed") or {}).items()
+            if present
+        }
+    )
+    if report.get("coverage_caveat"):
+        st.warning(report["coverage_caveat"])
+    st.info(report.get("generalisation_caveat") or CAVEAT)
+    show_category_scores(report)
+    show_why(report)
+    show_findings(report)
+    evidence_explorer(investigation_id)
+
+
+def show_citation(item: dict, expanded: bool = False) -> None:
+    """One piece of evidence, with the text behind it."""
+    with st.expander(f"{cite(item)}  -  {item['chunk_id']}", expanded=expanded):
+        st.write(item["text"])
+
+
+def ask_documents(endpoint: str, scope_caption: str) -> None:
+    """The question box, answer, citations and retrieved evidence for one Q&A endpoint.
+
+    Shared by the preloaded-demo Q&A and the new-investigation Q&A — same
+    grounded retrieval -> citation flow either way, just a different
+    document-set endpoint.
+    """
+    st.caption(f"Answering from {scope_caption} only.")
+    st.caption("  -  ".join(SUGGESTED_QUESTIONS[:3]))
+
+    question = st.text_input("Your question", key=f"question_{endpoint}")
+    if not st.button("Ask", key=f"ask_{endpoint}") or not question.strip():
+        return
+
+    with st.spinner("Retrieving evidence and answering..."):
+        response = api_post(endpoint, json={"question": question})
+    if failed(response, "Could not answer the question."):
+        return
+
+    result = response.json()
+    if result["abstained"]:
+        st.warning(result["answer"])
+    else:
+        st.success(result["answer"])
+
+    if result["citations"]:
+        st.subheader("Citations")
+        for item in result["citations"]:
+            show_citation(item, expanded=True)
+    elif not result["abstained"]:
+        st.caption("No citations survived validation.")
+
+    if result["retrieved"]:
+        st.subheader("Evidence retrieved")
+        st.caption(
+            "Every chunk the model was allowed to read. An answer can only "
+            "cite from this list."
+        )
+        for item in result["retrieved"]:
+            show_citation(item)
+
+
+def page_home() -> None:
+    """Landing page: the two-path demo structure the whole frontend is built around."""
+    st.header("SentinelIQ")
+    st.caption("AI-Powered Vendor Risk Investigation")
+    st.write(
+        "SentinelIQ analyzes a company's legal/contractual, financial and "
+        "security/compliance documentation, retrieves relevant evidence "
+        "across the available document set, uses specialist risk agents plus "
+        "a Red-Team agent to investigate risks and contradictions, applies "
+        "deterministic risk scoring, and produces an evidence-grounded risk "
+        "report."
+    )
+
+    left, right = st.columns(2)
+    with left:
+        st.subheader("View Existing Demo Results")
+        st.caption(
+            "A real, precomputed investigation (Meridian CloudWorks) — "
+            "instant, no waiting."
+        )
+        if st.button("View Existing Demo Results", type="primary"):
+            st.session_state["page"] = "Existing demo"
+            st.rerun()
+    with right:
+        st.subheader("Start New Investigation")
+        st.caption(
+            "Upload your own Contract, Financial and/or Security documents. "
+            "The real pipeline runs live and can take several minutes."
+        )
+        if st.button("Start New Investigation"):
+            st.session_state["page"] = "New investigation"
+            st.rerun()
+
+
+def page_existing_demo() -> None:
+    """Precomputed Demo Investigation — Meridian CloudWorks, instant."""
+    st.header("Existing Demo Investigation")
+    response = api_get("/api/demo/meridian")
+    if failed(response, "Could not load the preloaded demo."):
+        return
+    report = response.json()
+    if report.get("demo_note"):
+        st.info(report["demo_note"])
+    show_verdict(report)
+    show_category_scores(report)
+    show_why(report)
+    show_findings(report)
+
+    st.divider()
+    st.subheader("Ask SentinelIQ about these documents")
+    ask_documents(
+        "/api/demo/meridian/questions", "the preloaded Meridian CloudWorks documents"
+    )
+
+
+def page_new_investigation_upload() -> None:
+    """Upload Contract / Financial / Security documents for one company."""
+    st.header("Start a new investigation")
+    st.caption(
+        "Recommended: upload all 3 document types for the most complete "
+        "investigation. SentinelIQ can also run with one or two available "
+        "document types; the resulting assessment will be based only on the "
+        "evidence provided."
+    )
+
+    vendor_name = st.text_input(
+        "Company / entity name", value=st.session_state.get("new_vendor_name", "")
+    )
+    st.session_state["new_vendor_name"] = vendor_name
+
+    columns = st.columns(3)
+    for column, (doc_type, label) in zip(columns, DOC_TYPE_LABELS.items(), strict=True):
+        with column:
+            st.markdown(f"**{label}**")
+            uploaded = st.file_uploader(
+                "PDF, DOCX or TXT",
+                type=["pdf", "docx", "txt"],
+                key=f"upload_{doc_type}",
+            )
+            if uploaded is not None and st.button(
+                f"Add {label}", key=f"add_{doc_type}"
+            ):
+                if not vendor_name.strip():
+                    st.error("Enter a company / entity name first.")
+                else:
+                    with st.spinner(f"Indexing {label}..."):
+                        response = call(
+                            "POST",
+                            "/api/documents",
+                            timeout=600,
+                            data={
+                                "vendor_name": vendor_name,
+                                "document_type": doc_type,
+                            },
+                            files={"upload": (uploaded.name, uploaded.getvalue())},
+                        )
+                    if not failed(response, f"Could not upload the {label} document."):
+                        st.success(
+                            f"{label} added ({response.json()['chunk_count']} chunks)"
+                        )
+
+    if not vendor_name.strip():
+        return
+    group = api_get(f"/api/vendor-groups/{vendor_name}")
+    if group is None or group.status_code != 200:
+        st.info("Upload at least one document above to continue.")
+        return
+
+    body = group.json()
+    st.divider()
+    st.subheader("Documents ready")
+    show_type_checklist(set(body["available_types"]))
+    chunks = sum(d["chunk_count"] for d in body["documents"])
+    st.caption(f"{len(body['documents'])} document(s), {chunks} chunks combined")
+
+    st.divider()
+    st.subheader("Run the investigation")
+    show_pipeline()
+    st.caption(
+        "Retrieval is hybrid dense + BM25 fused with RRF and reranked by a "
+        "cross-encoder. A specialist agent per document type answers each "
+        "question, a Red-Team agent checks it against the evidence, and the "
+        "risk score is plain Python - no LLM decides a number."
+    )
+
+    if st.button("Run investigation", type="primary"):
+        started = api_post(f"/api/vendor-groups/{vendor_name}/investigate")
+        if failed(started, "Could not start the investigation."):
+            return
+        investigation_id = started.json()["investigation_id"]
+        st.session_state["new_investigation_id"] = investigation_id
+        st.session_state["qa_vendor_name"] = vendor_name
+        with st.spinner(
+            "Indexing documents... running specialist agents... Red-Team... "
+            "risk engine..."
+        ):
+            final = poll_until_finished(investigation_id)
+        if final == "failed":
+            state = api_get(f"/api/investigations/{investigation_id}/status")
+            detail = state.json().get("error") if state else None
+            st.error(f"The run failed. {detail or 'Check the API logs.'}")
+            return
+
+    investigation_id = st.session_state.get("new_investigation_id")
+    if investigation_id:
+        show_document_report(investigation_id)
+
+
+def page_ask_new() -> None:
+    """Ask questions about the documents uploaded in "Start new investigation"."""
+    st.header("Ask SentinelIQ about these documents")
+    vendor_name = st.session_state.get("qa_vendor_name")
+    if not vendor_name:
+        st.info("Upload documents and run a new investigation first.")
+        return
+    ask_documents(
+        f"/api/vendor-groups/{vendor_name}/questions",
+        f"the documents uploaded for **{vendor_name}**",
+    )
 
 
 METRIC_LABELS = {
@@ -493,29 +764,54 @@ def page_reliability() -> None:
 
 
 def main() -> None:
-    """Render the app."""
+    """Render the app.
+
+    This is an anonymous showcase: no sign-in screen, no token handling. The
+    API's own JWT/RBAC is untouched underneath — the frontend just never calls
+    it, and relies on SENTINELIQ_DEMO_MODE=true on the API instead (see
+    `headers()`).
+    """
     st.set_page_config(page_title="SentinelIQ", page_icon="🛡️", layout="wide")
     st.title("SentinelIQ")
-    st.caption("Evidence-backed vendor due diligence")
+    st.caption("AI-powered vendor risk investigation")
 
-    if not st.session_state.get("token"):
-        sign_in_form()
-        st.info("Sign in from the sidebar to continue.")
+    health = api_health()
+    if health is None:
+        st.error(f"Cannot reach the API at {API_URL}. Is it running?")
+        return
+    if not health.get("demo_mode"):
+        st.error(
+            "This showcase frontend needs the API running with "
+            "SENTINELIQ_DEMO_MODE=true. Set it and restart the API."
+        )
         return
 
-    st.sidebar.success(f"Signed in as {st.session_state['username']}")
-    if st.sidebar.button("Sign out"):
-        st.session_state.clear()
-        st.rerun()
-
     pages = {
+        "Home": page_home,
+        "Existing demo": page_existing_demo,
+        "New investigation": page_new_investigation_upload,
+        "Ask about new investigation": page_ask_new,
+    }
+    advanced = {
         "Dashboard": page_dashboard,
-        "Start an investigation": page_new_investigation,
+        "Investigate a curated vendor": page_new_investigation,
         "Investigation report": page_investigation,
         "AI reliability": page_reliability,
     }
-    choice = st.sidebar.radio("Page", list(pages))
-    pages[choice]()
+
+    current = st.session_state.get("page", "Home")
+    choice = st.sidebar.radio(
+        "Page", list(pages), index=list(pages).index(current) if current in pages else 0
+    )
+    st.session_state["page"] = choice
+
+    with st.sidebar.expander("Advanced"):
+        advanced_choice = st.radio("Advanced pages", ["(none)"] + list(advanced))
+
+    if advanced_choice != "(none)":
+        advanced[advanced_choice]()
+    else:
+        pages[choice]()
 
 
 main()

@@ -7,11 +7,29 @@
 > vendors/companies from heterogeneous documents and produces
 > explainable risk assessments and recommendations.\
 > **Status:** **Complete and frozen (2026-08-19).** Stages 1-13 built, tested
-> and containerised; retrieval frozen; 396 tests passing. The one planned
+> and containerised; retrieval frozen; 488 tests passing. The one planned
 > component never built is the Document Intelligence Agent (FR-010). Cloud
 > deployment was cancelled and INT8 quantization was measured and rejected.
 > This header previously read "implementation not started" and was stale by
 > months.\
+> **Demo layer, around the frozen core, not inside it (2026-08-19, extended
+> 2026-08-19):** the showcase frontend is a two-path anonymous demo — a
+> Precomputed Demo Investigation (Meridian CloudWorks, real findings re-scored
+> live through the unchanged engine) for instant viewing, and "Start New
+> Investigation" where a company's Contract, Financial and Security documents
+> (any subset of the three, one upload each) are unioned into one scoped
+> retrieval context (`pipeline/documents.union_context`) and investigated by
+> the same CrewAI specialists, Red-Team and deterministic scoring as the
+> curated vendor path (`pipeline/investigation.run_on_context`, unchanged).
+> The report states exactly which document types were supplied and carries an
+> explicit partial-evidence caveat when any are missing. Q&A (a single
+> grounded LLM call, no CrewAI, no LangGraph) is scoped to the same document
+> set. **JWT, RBAC and repository-level tenant isolation are fully
+> implemented and unchanged** — the frontend simply never calls
+> `/api/auth/login`, relying on `SENTINELIQ_DEMO_MODE` (off by default; the
+> showcase deployment turns it on) instead. A risk score produced from an
+> uploaded document set is a document risk indication, **not** the validated
+> vendor benchmark figure.\
 > **Data strategy:** Built and evaluated on public datasets (CUAD, SEC EDGAR);
 > architected so a real company can later connect confidential documents
 > through a private deployment without changing the core AI pipeline.\
@@ -1074,7 +1092,6 @@ SentinelIQ/
 |   |-- conftest.py
 |   |-- unit/
 |   |   |-- test_chunker.py   <- chunking logic
-|   |   |-- test_search.py    <- RRF + hybrid search
 |   |   `-- test_engine.py    <- risk scoring
 |   `-- integration/
 |       `-- test_pipeline.py  <- end-to-end investigation flow

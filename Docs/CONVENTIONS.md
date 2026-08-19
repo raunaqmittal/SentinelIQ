@@ -638,8 +638,11 @@ tests/integration/test_api.py       <- auth, RBAC, tenant isolation over HTTP
 tests/integration/test_pipeline.py  <- end-to-end investigation flow
 ```
 
-`tests/unit/test_search.py` exists but is empty — RRF and hybrid search are
-covered indirectly by the tenant-isolation integration test. Retrieval is
+There is no dedicated `test_search.py` — an empty placeholder of that name was
+removed 2026-08-19 because it read as coverage that did not exist. RRF and
+hybrid search are covered indirectly by the tenant-isolation integration test
+and by `tests/unit/test_documents.py`, which asserts the frozen pool depths and
+fusion constant are what the uploaded-document path actually runs. Retrieval is
 frozen, so this is a documentation gap rather than an untested change.
 
 **No test may call a real LLM.** The investigation runner is injected, so every
@@ -673,7 +676,7 @@ outgrows a single process, replace the mechanism behind the existing
 `/run` + `/status` contract.
 
 ```python
-# tests/unit/test_search.py
+# tests/unit/test_retrieval_example.py  (illustrative — not a real file)
 
 import pytest
 from sentineliq.components.retrieval.search import compute_rrf

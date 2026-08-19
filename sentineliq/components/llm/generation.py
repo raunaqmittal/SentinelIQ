@@ -74,10 +74,16 @@ def answer_question(
     *,
     temperature: float,
     max_tokens: int,
+    system: str = SYSTEM_PROMPT,
 ) -> Answer:
-    """Answer one question from the retrieved chunks only."""
+    """Answer one question from the retrieved chunks only.
+
+    `system` defaults to the frozen Stage 8 prompt, so every existing caller
+    (the evaluation scripts, the tests) is byte-for-byte unaffected. A caller
+    like `pipeline/qa.py` that needs a differently-framed role passes its own.
+    """
     response = provider.complete(
-        SYSTEM_PROMPT,
+        system,
         build_user_prompt(question, chunks),
         temperature=temperature,
         max_tokens=max_tokens,
