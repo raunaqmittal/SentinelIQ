@@ -1,0 +1,63 @@
+{
+  "int8_linear": {
+    "build": {
+      "arm": "int8_linear",
+      "artifact": "artifacts\\evaluation\\quantized_models\\reranker_int8_linear.pt",
+      "disk_mb": 1362.3,
+      "build_peak_rss_mb": 3688.4,
+      "quantized": true,
+      "float_parameters": 264494080
+    },
+    "load": {
+      "arm": "int8_linear",
+      "rss_before_load_mb": 703.4,
+      "rss_after_load_mb": 2420.7,
+      "rss_after_rerank_mb": 3204.0,
+      "model_rss_cost_mb": 1717.3,
+      "load_s": 1.41,
+      "rerank_20_pairs_s": 8.3,
+      "quantized": true,
+      "float_parameters": 264494080,
+      "all_finite": true,
+      "logit_0": -0.78922
+    }
+  },
+  "int8_all": {
+    "build": {
+      "arm": "int8_all",
+      "artifact": "artifacts\\evaluation\\quantized_models\\reranker_int8_all.pt",
+      "disk_mb": 571.2,
+      "build_peak_rss_mb": 4213.3,
+      "quantized": true,
+      "float_parameters": 100352
+    },
+    "load": {
+      "arm": "int8_all",
+      "rss_before_load_mb": 703.8,
+      "rss_after_load_mb": 1898.4,
+      "rss_after_rerank_mb": 2554.8,
+      "model_rss_cost_mb": 1194.6,
+      "load_s": 0.86,
+      "rerank_20_pairs_s": 7.91,
+      "quantized": true,
+      "float_parameters": 100352,
+      "all_finite": true,
+      "logit_0": -0.5726
+    }
+  },
+  "fp32": {
+    "load": {
+      "arm": "fp32",
+      "rss_before_load_mb": 703.9,
+      "rss_after_load_mb": 724.8,
+      "rss_after_rerank_mb": 2732.8,
+      "model_rss_cost_mb": 20.9,
+      "load_s": 1.19,
+      "rerank_20_pairs_s": 15.27,
+      "quantized": false,
+      "float_parameters": 567755777,
+      "all_finite": true,
+      "logit_0": -0.13556
+    }
+  }
+}

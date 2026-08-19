@@ -1,0 +1,128 @@
+{
+  "embedder": "BAAI/bge-base-en-v1.5",
+  "reranker": "BAAI/bge-reranker-v2-m3",
+  "arms": {
+    "fp32": {
+      "embedder_device": "cpu",
+      "reranker_device": "cpu",
+      "embedder_census": {
+        "modules": {
+          "Embedding": 3,
+          "Linear": 73
+        },
+        "float_parameters_remaining": 109482240,
+        "quantized_modules": 0
+      },
+      "reranker_census": {
+        "modules": {
+          "Linear": 146,
+          "Embedding": 3
+        },
+        "float_parameters_remaining": 567755777,
+        "quantized_modules": 0
+      },
+      "embedder_finite": {
+        "tensors_checked": 201,
+        "non_finite_float_tensors": 0,
+        "non_finite_quantized_modules": 0
+      },
+      "reranker_finite": {
+        "tensors_checked": 395,
+        "non_finite_float_tensors": 0,
+        "non_finite_quantized_modules": 0
+      },
+      "embedder_weights_mb": 438.0,
+      "reranker_weights_mb": 2271.2,
+      "probe_scores": [
+        0.89908,
+        0.78211,
+        0.06637,
+        0.08746,
+        0.02254
+      ],
+      "all_scores_finite": true,
+      "max_abs_delta_vs_fp32": 0.0,
+      "rank_order_vs_fp32_identical": true
+    },
+    "int8_linear": {
+      "embedder_device": "cpu",
+      "reranker_device": "cpu",
+      "embedder_census": {
+        "modules": {
+          "Embedding": 3,
+          "Linear": 73
+        },
+        "float_parameters_remaining": 109482240,
+        "quantized_modules": 0
+      },
+      "reranker_census": {
+        "modules": {
+          "Embedding": 3
+        },
+        "float_parameters_remaining": 264494080,
+        "quantized_modules": 0
+      },
+      "embedder_finite": {
+        "tensors_checked": 201,
+        "non_finite_float_tensors": 0,
+        "non_finite_quantized_modules": 0
+      },
+      "reranker_finite": {
+        "tensors_checked": 103,
+        "non_finite_float_tensors": 0,
+        "non_finite_quantized_modules": 0
+      },
+      "embedder_weights_mb": 438.0,
+      "reranker_weights_mb": 1362.2,
+      "probe_scores": [
+        0.92521,
+        0.78708,
+        0.07837,
+        0.07568,
+        0.08463
+      ],
+      "all_scores_finite": true,
+      "max_abs_delta_vs_fp32": 0.06209,
+      "rank_order_vs_fp32_identical": false
+    },
+    "int8_all": {
+      "embedder_device": "cpu",
+      "reranker_device": "cpu",
+      "embedder_census": {
+        "modules": {
+          "Embedding": 3,
+          "Linear": 73
+        },
+        "float_parameters_remaining": 109482240,
+        "quantized_modules": 0
+      },
+      "reranker_census": {
+        "modules": {},
+        "float_parameters_remaining": 100352,
+        "quantized_modules": 0
+      },
+      "embedder_finite": {
+        "tensors_checked": 201,
+        "non_finite_float_tensors": 0,
+        "non_finite_quantized_modules": 0
+      },
+      "reranker_finite": {
+        "tensors_checked": 100,
+        "non_finite_float_tensors": 0,
+        "non_finite_quantized_modules": 0
+      },
+      "embedder_weights_mb": 438.0,
+      "reranker_weights_mb": 571.1,
+      "probe_scores": [
+        0.92702,
+        0.63129,
+        0.10124,
+        0.05895,
+        0.06053
+      ],
+      "all_scores_finite": true,
+      "max_abs_delta_vs_fp32": 0.15082,
+      "rank_order_vs_fp32_identical": false
+    }
+  }
+}

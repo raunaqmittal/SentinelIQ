@@ -435,9 +435,13 @@ def show_judge_metrics(judge: dict) -> None:
         )
         st.caption(f"Judged by {judge.get('model')} — {JUDGE_SAMPLE}.")
         st.info(
+            "**Stage 8 single-agent baseline only — not a multi-agent "
+            "comparison.** The Stage 9 multi-agent answers carry no judge "
+            "scores, so these numbers say nothing about which path is better.\n\n"
             "These scores describe answer quality **when the model chose to "
-            "answer**, not end-to-end performance: the 16 abstentions are not "
-            "scored, and 13 of those were answerable questions. Answer "
+            "answer**, not end-to-end performance: 19 of the 35 questions are "
+            "scored here, the other 16 are abstentions with nothing to score, "
+            "and 13 of those were answerable. Answer "
             "Relevance of 100% is not evidence of perfect quality — this judge "
             "is generous to genuine attempts even though it rejects bad ones. "
             "Read these beside the deterministic metrics above, which win "

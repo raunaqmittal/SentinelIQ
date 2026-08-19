@@ -1067,8 +1067,7 @@ SentinelIQ/
 |       `-- test_pipeline.py  <- end-to-end investigation flow
 |
 |-- notebooks/
-|   |-- 01_retrieval_experiments.ipynb
-|   `-- 02_evaluation.ipynb
+|   `-- cuad_ingestion_spike/   <- Stage 3 ingestion spike (the only notebook)
 |
 |-- scripts/
 |   |-- ingest.py         <- ingest documents into indexes
@@ -1187,9 +1186,13 @@ Do not test implementation details — test behaviour.
 
 ## `notebooks/`
 
-Experiments only. Two notebooks:
-- `01_retrieval_experiments.ipynb` — dense vs hybrid vs reranker comparison
-- `02_evaluation.ipynb` — RAG quality metrics and error analysis
+Experiments only. One notebook exists:
+- `cuad_ingestion_spike/` — the Stage 3 PDF extraction and chunking spike
+
+The two notebooks planned here, `01_retrieval_experiments.ipynb` and
+`02_evaluation.ipynb`, were **never written**: the retrieval ablations ran as
+scripts and are recorded in PROGRESS.md instead. Their empty placeholder files
+were removed 2026-08-19.
 
 Production logic must move into `sentineliq/` before it is considered done.
 

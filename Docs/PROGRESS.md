@@ -40,6 +40,11 @@ is measured (Stage 9), analysed (Stage 12) and its two scoring artifacts
 corrected (Stage 13). Live contradiction detection and live prompt-injection
 refusal are both verified against a real model.
 
+**Optimization work is CLOSED**, decided 2026-08-19. The INT8 quantization
+experiment returned NO-GO on both arms (see "Quantization experiment" below);
+SentinelIQ stays FP32. ONNX, INT4, QLoRA/LoRA and alternative rerankers are not
+being pursued.
+
 **Cloud deployment is OUT OF SCOPE**, decided 2026-08-19. The project targets
 its local Docker stack. A preparation pass was completed before that decision
 and its changes were kept, because each is an improvement in its own right:
@@ -49,8 +54,8 @@ is switchable for CPU hosts, and a `.dockerignore` keeps secrets and the
 214 MB dataset cache out of the image. `docker-compose.prod.yml` is the one
 remaining cloud-only artifact and is unused.
 
-**Test suite: 391 passing, 1 skipped** on SQLite (the skip is a
-PostgreSQL-only lock test, so 392 on PostgreSQL). Unit + integration.
+**Test suite: 397 passing, 1 skipped** on SQLite (the skip is a
+PostgreSQL-only lock test, so 398 on PostgreSQL). Unit + integration.
 **No test calls an LLM.** Plus 74 live checks against the running container
 stack, 0 failed.
 
@@ -1489,6 +1494,106 @@ Limitations: relevance is 1.000 on every answer, which suggests the judge is
 generous on genuine attempts even though it rejects bad ones; and only the 19
 non-abstained answers are scored, so these figures describe answer quality
 *when the model chose to answer*, not end-to-end performance.
+
+# Quantization experiment — NO-GO, measured 2026-08-19
+
+**Decision: neither INT8 arm is adopted. SentinelIQ stays FP32.** Retrieval,
+models, config and the pipeline are unchanged. The experiment lives entirely in
+`scripts/experiments/` and `artifacts/evaluation/`; deleting those restores the
+project with nothing else touched.
+
+**Question asked:** can INT8 quantization cut the RAM the retrieval models need,
+without materially degrading retrieval? Evaluation-only, retrieval-only, **no
+LLM calls**, CUAD **DEV n=160**, TEST never opened.
+
+## Validity
+
+- All three arms verified on **CPU** by reading a live model parameter, not by
+  asserting it. 14 torch threads.
+- Quantization verified by **float-parameter count**, not by arm name: reranker
+  567,755,777 float params (fp32) -> 264,494,080 (int8_linear) -> 100,352
+  (int8_all).
+- **The FP32 arm reproduced the frozen DEV benchmark**: R@5 0.4121 vs 0.413,
+  R@10 0.5601 vs 0.560, NDCG@10 0.3681 vs 0.368. MRR 0.3416 vs 0.336, the only
+  metric that moves, consistent with scoring 20 reranked candidates rather than
+  truncating at top_n 5.
+- fp32-vs-fp32 top-5 overlap = 1.000 (harness sanity).
+- 0 non-finite tensors, all logits finite, no crashes, no unsupported operators
+  in the final run.
+
+## Measured (CUAD DEV, n=160, CPU)
+
+| | FP32 | INT8 Linear | INT8 Linear+Emb |
+|---|---|---|---|
+| R@5 | 0.4121 | 0.4133 | 0.4048 |
+| R@10 | 0.5601 | 0.5539 | 0.5398 |
+| MRR | 0.3416 | 0.3392 | 0.3314 |
+| NDCG@10 | 0.3681 | 0.3637 | 0.3514 |
+| top-5 set identical to FP32 | 1.000 | **0.3875** | **0.4313** |
+| reranker weights | 2,271.2 MB | 1,362.2 MB | 571.1 MB |
+| rerank latency, mean | 23,371 ms | 8,459 ms | 8,534 ms |
+
+## The decisive result: disk savings did not become RAM savings
+
+Measured in a **fresh process loading a pre-built artifact**, which is what a
+deployment would do (the in-run peak RSS is a build cost — quantization holds
+the float and quantized copies at once, peaking 3.7-4.2 GB):
+
+| | RSS cost of loading | RSS after a real rerank | vs FP32 |
+|---|---|---|---|
+| FP32 | **20.9 MB** | 2,732.8 MB | — |
+| INT8 Linear | 1,717.3 MB | 3,204.0 MB | **+471 MB worse** |
+| INT8 Linear+Emb | 1,194.6 MB | 2,554.8 MB | **-178 MB** |
+
+**Cause: FP32 safetensors are memory-mapped.** Baseline weights sit in page
+cache and cost ~21 MB of RSS. A quantized artifact is a pickle that must be
+fully materialised. A 1,700 MB disk saving yielded a **178 MB** RAM saving.
+
+## Acceptance criteria (agreed before the run)
+
+| | INT8 Linear | INT8 Linear+Emb |
+|---|---|---|
+| A1 R@5 within 0.010 | pass | pass |
+| A2 NDCG@10 within 0.010 | pass | **fail** (-0.0167) |
+| A3 MRR within 0.015 | pass | pass |
+| A4 top-5 identical >= 90% | **fail** (38.8%) | **fail** (43.1%) |
+| A5 RSS saved >= 800 MB | **fail** (-471 MB) | **fail** (+178 MB) |
+| A6 latency not worse | pass (-64%) | pass (-63%) |
+
+**Both NO-GO.** The latency win is real (2.8x) but latency was not the goal, and
+the top-5 evidence set — the chunks the agents actually cite — changes on 57-61%
+of queries.
+
+## Three harness defects found, all disclosed
+
+1. First full run **discarded**: `CUDA_VISIBLE_DEVICES=""` does not hide the GPU
+   on Windows, so FP32 silently ran on GPU while both INT8 arms crashed
+   (`quantized::linear_dynamic` has no CUDA kernel). The output also hardcoded
+   `"device": "cpu"`. Device is now measured.
+2. **The embedder was never quantized in any arm** — `Transformer.auto_model` is
+   a read-only property in sentence-transformers 5.x, so assigning to it
+   registers a dead submodule. These are therefore **reranker-only** arms.
+   Fixed in the experiment code (`.model`), **not re-run**: a quantized embedder
+   is a second pickle, which adds resident memory against a memory-mapped
+   baseline and adds quality risk, so it cannot flip a NO-GO. One benefit: the
+   embedder being identical across arms means the 20-candidate pools are
+   identical, so every difference is attributable to the reranker alone.
+3. Module census reported `quantized_modules: 0` wrongly — the dynamic quantized
+   class is also named `Linear`. Float-parameter count is the reliable signal.
+
+## Not pursued, by decision
+
+ONNX Runtime / Optimum, INT4 / bitsandbytes, QLoRA / LoRA, alternative rerankers
+and further AWS work are all **closed**. LoRA was ruled out on evidence, not
+preference: ~620 labelled spans against a literature requirement of ~10^5 pairs,
+and training pairs would have to come from the same contracts that constitute
+DEV and TEST.
+
+Artifacts: `artifacts/evaluation/quantization_dev_{fp32,int8_linear,int8_all}.json`,
+`quantization_dev_comparison.json`, `quantization_validity.json`,
+`deployed_rss.json`. Code: `scripts/experiments/`.
+
+------------------------------------------------------------------------
 
 ### Stage 8 judge sidecar — wired to the dashboard 2026-08-19
 

@@ -23,6 +23,9 @@ tests/
 artifacts/
 frontend/
 sentineliq.egg-info/
+# Completed NO-GO quantization study. `COPY scripts/` would otherwise ship it,
+# and it imports psutil, which is not a production dependency.
+scripts/experiments/
 
 # The raw EDGAR/CUAD download cache: 214 MB the API never reads. The extracted
 # documents it does read live in data/raw/documents and are kept, as are
