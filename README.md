@@ -265,12 +265,11 @@ docker compose exec api python scripts/create_user.py alice --tenant acme --role
 
 **Local Docker Compose (`docker-compose.yml`) is the only supported deployment.**
 
-**SentinelIQ is not deployed on AWS, and never was.** `docker-compose.prod.yml`
-is an unused configuration from a cloud deployment plan that was **cancelled**
-before anything was provisioned — no image was ever pushed, no instance or
-database was ever created. It is kept only as a reference for what that setup
-would have required. Nothing in this repository provisions cloud
-infrastructure, and running the project needs no cloud account.
+**SentinelIQ is not deployed on AWS, and never was.** A cloud deployment was
+planned and then **cancelled** before anything was provisioned — no image was
+ever pushed, no instance or database was ever created — and its unused
+configuration has been removed from this repository. Nothing here provisions
+cloud infrastructure, and running the project needs no cloud account.
 
 Single vendor from the CLI:
 
@@ -281,8 +280,8 @@ python scripts/investigate.py "Meridian CloudWorks" --json report.json
 ## Tests
 
 ```bash
-pytest                                   # 397 passed, 1 skipped
-TEST_DATABASE_URL=postgresql+psycopg://... pytest    # 398 on PostgreSQL
+pytest                                   # 396 passed, 1 skipped
+TEST_DATABASE_URL=postgresql+psycopg://... pytest    # 397 on PostgreSQL
 ```
 
 **No test calls an LLM.** The skipped test is PostgreSQL-only: it proves `/run`

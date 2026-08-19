@@ -702,10 +702,15 @@ Rules:
 These are not optional — they cover the two highest-severity failure
 modes:
 
-- [ ] **Tenant isolation:** tenant A's query must never return tenant B's
-      chunks (`test_pipeline.py`)
-- [ ] **Prompt injection:** a document containing "ignore previous
-      instructions..." must be reported as a finding, never obeyed
+- [x] **Tenant isolation:** tenant A's query must never return tenant B's
+      chunks — `tests/integration/test_tenant_isolation.py`. Note the file name
+      changed: isolation outgrew `test_pipeline.py` and has its own suite
+- [x] **Prompt injection:** a document containing "ignore previous
+      instructions..." must be reported as a finding, never obeyed —
+      `tests/unit/test_injection.py`, and verified live against a real model on
+      the Thornbury dossier (NFR-003c)
+
+Both checked 2026-08-19: **24 tests pass** across the two files.
 
 ------------------------------------------------------------------------
 

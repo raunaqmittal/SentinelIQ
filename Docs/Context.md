@@ -6,8 +6,12 @@
 > **Primary goal:** Build an evidence-backed AI system that investigates
 > vendors/companies from heterogeneous documents and produces
 > explainable risk assessments and recommendations.\
-> **Status:** Scaffolded --- repository structure created, configs written,
-> implementation not started\
+> **Status:** **Complete and frozen (2026-08-19).** Stages 1-13 built, tested
+> and containerised; retrieval frozen; 396 tests passing. The one planned
+> component never built is the Document Intelligence Agent (FR-010). Cloud
+> deployment was cancelled and INT8 quantization was measured and rejected.
+> This header previously read "implementation not started" and was stale by
+> months.\
 > **Data strategy:** Built and evaluated on public datasets (CUAD, SEC EDGAR);
 > architected so a real company can later connect confidential documents
 > through a private deployment without changing the core AI pipeline.\

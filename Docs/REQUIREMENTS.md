@@ -232,18 +232,31 @@ Each requirement has:
 
 ### FR-009 — Query Router / Agentic Retrieval
 - **Priority:** P2
-- **Status:** [ ]
+- **Status:** [-] — **not built, and deliberately so.** Only one retrieval
+  source exists (internal documents), so there is nothing to route between.
+  Audited 2026-08-19.
 - **Description:** The system must route investigation queries to the appropriate retrieval source.
 - **Routing sources:**
-  - Internal documents (FAISS + BM25)
-  - Structured database (past vendor records, internal policies)
-  - Web search (public security incidents, news)
+  - Internal documents (FAISS + BM25) — **the only source implemented**
+  - Structured database (past vendor records, internal policies) — not built
+  - Web search (public security incidents, news) — not built; "unrestricted
+    web browsing agents" is listed under Out of Scope (v1)
 - **Acceptance Criteria:**
-  - [ ] Router correctly classifies queries by source type
-  - [ ] Internal-only queries do not trigger web search
-  - [ ] Web search is disabled by default and requires explicit configuration to enable
-  - [ ] Web search results are treated as low-trust and clearly labeled
-  - [ ] All sources flow through the reranker before reaching the LLM
+  - [-] Router correctly classifies queries by source type — no multi-source
+        router exists. A *different* router does exist and works:
+        `flow.route()` / `flow.route_category()` send a question to the
+        specialist that owns its clause type or category. That is agent
+        routing, not retrieval-source routing, and is covered by FR-011-013
+  - [x] Internal-only queries do not trigger web search — trivially true;
+        there is no web-search path in the code at all
+  - [x] Web search is disabled by default and requires explicit configuration
+        to enable — `retrieval.yaml` ships `query_router.enable_web_search:
+        false` and `enable_database: false`
+  - [-] Web search results are treated as low-trust and clearly labeled — moot
+        while no web path exists. Note the mechanism already exists for
+        documents: `tools.UNTRUSTED_PREAMBLE` wraps all evidence as untrusted
+  - [-] All sources flow through the reranker before reaching the LLM — the one
+        source does (`search.retrieve()`); there are no others
 
 ------------------------------------------------------------------------
 
@@ -251,56 +264,127 @@ Each requirement has:
 
 ### FR-010 — Document Intelligence Agent
 - **Priority:** P1
-- **Status:** [ ]
+- **Status:** [ ] — **NOT IMPLEMENTED. This is the one planned component that
+  was never built.** Audited 2026-08-19.
 - **Description:** First-stage agent that reads documents and builds a structured document map.
+- **Deviation from ADR-003.** That ADR specified five agents; **four exist** —
+  `compliance.py`, `financial.py`, `security.py` and `red_team.py`. There is no
+  `document_intelligence.py`. The pipeline works without it because retrieval is
+  query-driven: `flow.investigate()` retrieves per question rather than from a
+  precomputed document map, so no stage depends on this agent's output.
 - **Acceptance Criteria:**
-  - [ ] Agent identifies document types from uploaded files
+  - [ ] Agent identifies document types from uploaded files — related gap in
+        FR-002, where document type is also not inferred
   - [ ] Agent produces a structured summary of what evidence is available
   - [ ] Output is used to direct subsequent agents retrieval queries
   - [ ] Output is logged for audit
 
 ### FR-011 — Compliance Agent
 - **Priority:** P1
-- **Status:** [ ]
+- **Status:** [x] — `components/agents/compliance.py`, routed by `flow.route()`.
+  Status corrected 2026-08-19: this was still marked not-started long after it
+  was built, smoke-tested and measured in Stage 9.
 - **Description:** Analyzes uploaded documents for compliance risks.
-- **Checks:** privacy, security requirements, SLA clauses, breach notification, data retention, certifications, contractual obligations
+- **Checks:** audit rights, inspection rights, certifications, regulatory
+  obligations, governing law, insurance, notice requirements. It is also the
+  **default specialist**: any clause type not owned by finance or security
+  routes here.
 - **Acceptance Criteria:**
-  - [ ] Agent uses retrieval tool to fetch relevant evidence
-  - [ ] Agent returns structured JSON with category, risk, findings, evidence, missing_information, confidence
-  - [ ] All findings cite specific documents, pages, and sections
-  - [ ] Agent explicitly reports when required documentation is missing
+  - [x] Agent uses retrieval tool to fetch relevant evidence —
+        `agents/tools.retrieve_evidence()`, the frozen pipeline (ADR-017)
+  - [/] Agent returns structured JSON with findings and evidence citations —
+        **implemented differently, on purpose.** The agent returns a short
+        grounded answer with `[chunk_id]` citations; the structured fields
+        (category, severity, score, confidence) are derived **deterministically**
+        in `pipeline/engine.py` and `pipeline/investigation.py`, never asked of
+        the LLM (ADR-021). The report carries the structure; the agent does not
+        emit JSON
+  - [/] All findings cite specific documents and pages — citations are chunk
+        ids, and each chunk carries `page_start`/`page_end`. **Sections are not
+        tracked** (dropped by ADR-013)
+  - [x] Agent explicitly reports when required documentation is missing —
+        replies exactly `NOT FOUND IN EVIDENCE`. Measured: abstention is driven
+        entirely by retrieval, and neither path ever abstained when the relevant
+        chunk was retrieved (0/13)
 
 ### FR-012 — Financial Risk Agent
 - **Priority:** P1
-- **Status:** [ ]
+- **Status:** [x] — `components/agents/financial.py`. Status corrected
+  2026-08-19.
 - **Description:** Analyzes uploaded documents for financial risks.
 - **Checks:** financial stability, revenue trends, liabilities, unusual changes, historical concerns
 - **Acceptance Criteria:**
-  - [ ] Agent uses retrieval tool to fetch relevant evidence
-  - [ ] Agent returns structured JSON with findings and evidence citations
-  - [ ] Agent reports when financial documents are absent or insufficient
-  - [ ] Agent does NOT fabricate financial conclusions without document evidence
+  - [x] Agent uses retrieval tool to fetch relevant evidence —
+        `agents/tools.retrieve_evidence()`, the frozen pipeline (ADR-017)
+  - [/] Agent returns structured JSON with findings and evidence citations —
+        **implemented differently, on purpose.** The agent returns a short
+        grounded answer with `[chunk_id]` citations; the structured fields
+        (category, severity, score, confidence) are derived **deterministically**
+        in `pipeline/engine.py` and `pipeline/investigation.py`, never asked of
+        the LLM (ADR-021). The report carries the structure; the agent does not
+        emit JSON
+  - [/] All findings cite specific documents and pages — citations are chunk
+        ids, and each chunk carries `page_start`/`page_end`. **Sections are not
+        tracked** (dropped by ADR-013)
+  - [x] Agent reports when financial documents are absent or insufficient —
+        abstains with `NOT FOUND IN EVIDENCE`. **Known weakness:** in the Stage
+        9 run 7 of 9 financial-route questions abstained (n=9, so this may be
+        routing or simply un-retrieved evidence — recorded, not diagnosed)
+  - [x] Agent does NOT fabricate financial conclusions without document
+        evidence — measured by `numeric_grounding`: every number in an answer
+        must appear in its evidence. Multi-agent scored **0.8255** vs 0.2429
+        single-agent (n=17, p = 0.00026)
 
 ### FR-013 — Security Risk Agent
 - **Priority:** P1
-- **Status:** [ ]
+- **Status:** [x] — `components/agents/security.py`. Status corrected 2026-08-19.
 - **Description:** Analyzes uploaded documents for security risks.
 - **Checks:** certifications, security policies, incident history, data handling, access controls, vulnerability disclosures
 - **Acceptance Criteria:**
-  - [ ] Agent uses retrieval tool to fetch relevant evidence
-  - [ ] Agent returns structured JSON with findings and evidence citations
-  - [ ] Expired certifications are explicitly flagged
+  - [x] Agent uses retrieval tool to fetch relevant evidence —
+        `agents/tools.retrieve_evidence()`, the frozen pipeline (ADR-017)
+  - [/] Agent returns structured JSON with findings and evidence citations —
+        **implemented differently, on purpose.** The agent returns a short
+        grounded answer with `[chunk_id]` citations; the structured fields
+        (category, severity, score, confidence) are derived **deterministically**
+        in `pipeline/engine.py` and `pipeline/investigation.py`, never asked of
+        the LLM (ADR-021). The report carries the structure; the agent does not
+        emit JSON
+  - [/] All findings cite specific documents and pages — citations are chunk
+        ids, and each chunk carries `page_start`/`page_end`. **Sections are not
+        tracked** (dropped by ADR-013)
+  - [/] Expired certifications are explicitly flagged — there is **no dedicated
+        expiry check**. An expired certification surfaces only if the agent
+        reads the date out of the retrieved evidence and says so. Not measured
 
 ### FR-014 — Red-Team / Contradiction Agent
 - **Priority:** P1
-- **Status:** [ ]
+- **Status:** [/] — `components/agents/red_team.py`, built and verified live.
+  Partial, not complete: it verifies against the evidence it was given but
+  **does not run its own retrieval**. Status corrected 2026-08-19.
 - **Description:** Actively challenges findings from other agents by searching for counter-evidence.
 - **Acceptance Criteria:**
-  - [ ] Agent receives findings from previous agents
-  - [ ] Agent issues targeted retrieval queries specifically searching for contradictory evidence
-  - [ ] Agent returns contradiction_found, severity, claim, counter_evidence, recommended_action
-  - [ ] Contradictions trigger human escalation flag
-  - [ ] Agent does NOT merely summarize other agents
+  - [x] Agent receives findings from previous agents — the specialist's draft is
+        passed via `context=[draft_task]`, and the evidence block is repeated in
+        its prompt on purpose so it can check claims against the source text and
+        spot injected instructions (NFR-003c)
+  - [ ] Agent issues targeted retrieval queries specifically searching for
+        contradictory evidence — **not implemented.** It re-reads the same top-5
+        evidence the specialist saw, so it cannot find counter-evidence that
+        retrieval did not return
+  - [/] Agent returns contradiction_found, severity, claim, counter_evidence,
+        recommended_action — `flow.parse_contradiction()` and
+        `flow.parse_severity()` extract a contradiction flag and a severity
+        label from its prose. The full five-field structure is not produced
+  - [x] Contradictions trigger human escalation flag — verified live on the
+        Meridian dossier: both planted contradictions were found and escalation
+        fired for the documented reason
+  - [x] Agent does NOT merely summarize other agents — verified live: it
+        discriminated rather than flagging everything, and control questions
+        completed normally. **Unproven:** whether it *causes* the numeric
+        grounding gain. Stage 9 stored only the final answer;
+        `scripts/evaluate.py` now persists `draft` and `verified` separately so
+        a future run can measure it
 
 ### FR-015 — Decision Engine
 - **Priority:** P1
@@ -395,8 +479,10 @@ Each requirement has:
         returns the whole report as a dict; `--json` writes it
   - [x] Report is rendered in the dashboard — Streamlit (ADR-022), `frontend/app.py`
         Investigation report page, 2026-08-16
-  - [ ] Report can be persisted and retrieved later — written to a file, but
-        there is no database or retrieval path
+  - [x] Report can be persisted and retrieved later — corrected 2026-08-19:
+        stored in `investigations.report_json` and served by
+        `GET /api/investigations/{id}/report`. The note that "there is no
+        database or retrieval path" predated the Stage 11-14 persistence work
   - [x] Each report is associated with a specific investigation ID and version —
         `investigation_id` (a hash of vendor + question IDs, so it is stable
         across runs) and `report_version`
@@ -406,17 +492,25 @@ Each requirement has:
 
 ### FR-019 — Human Escalation
 - **Priority:** P1
-- **Status:** [/] — scoring side done 2026-08-16; dashboard and audit trail not built
+- **Status:** [/] — scoring, contradiction wiring and dashboard all done; the
+  human-override audit trail is the one part not built. Corrected 2026-08-19.
 - **Description:** High-risk or contradicted investigations must trigger a human review flag.
 - **Acceptance Criteria:**
   - [x] Escalation is triggered automatically based on configurable thresholds —
         `ESCALATE` and `REJECT` both set the flag
   - [x] Escalation is always triggered when Red-Team agent finds a contradiction —
         `contradiction_found` escalates even at a low score, gated by
-        `escalation.always_escalate_on_contradiction`. The engine takes the flag as
-        an input; nothing wires the Red-Team's output to it yet
-  - [ ] Escalation status is visible in the dashboard
-  - [ ] Human override of a recommendation is logged in the audit trail
+        `escalation.always_escalate_on_contradiction`. **Now wired**:
+        `investigation.py` collects `contradiction` flags from the findings and
+        passes `contradiction_found` into the engine. Verified live on the
+        Meridian dossier, where both planted contradictions escalated
+  - [x] Escalation status is visible in the dashboard — corrected 2026-08-19:
+        `frontend/app.py` shows a "Human review: REQUIRED" metric on the report,
+        lists escalated investigations on the dashboard, and carries a
+        "human review" column in the table
+  - [ ] Human override of a recommendation is logged in the audit trail —
+        **not implemented.** There is no override endpoint or UI control, so a
+        reviewer cannot record a decision that differs from the engine's
 
 ------------------------------------------------------------------------
 

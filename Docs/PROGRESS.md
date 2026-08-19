@@ -51,11 +51,12 @@ and its changes were kept, because each is an improvement in its own right:
 the retrieval context is now loaded once per process instead of once per
 investigation, uploads go to a configurable path on a volume, half precision
 is switchable for CPU hosts, and a `.dockerignore` keeps secrets and the
-214 MB dataset cache out of the image. `docker-compose.prod.yml` is the one
-remaining cloud-only artifact and is unused.
+214 MB dataset cache out of the image. `docker-compose.prod.yml`, the one
+remaining cloud-only artifact, was **deleted 2026-08-19** as dead
+configuration, along with the unit test that read it.
 
-**Test suite: 397 passing, 1 skipped** on SQLite (the skip is a
-PostgreSQL-only lock test, so 398 on PostgreSQL). Unit + integration.
+**Test suite: 396 passing, 1 skipped** on SQLite (the skip is a
+PostgreSQL-only lock test, so 397 on PostgreSQL). Unit + integration.
 **No test calls an LLM.** Plus 74 live checks against the running container
 stack, 0 failed.
 
@@ -207,6 +208,10 @@ against the dense-only baseline with the same group breakdown.
 
 # In Progress
 
+> **Historical heading — nothing is in progress.** The project was frozen on
+> 2026-08-19 with every stage below complete. Kept as-is so the checkbox history
+> stays readable; see "Current Stage" for the real state.
+
 ## Stage 2 — Data Collection
 - [x] Download CUAD; inspect quality and confirm CC BY 4.0 attribution
 - [x] Select the working CUAD subset — all 35 contracts from the Stage 3
@@ -263,12 +268,18 @@ against the dense-only baseline with the same group breakdown.
       FP16, chosen by measurement on CUAD DEV n=160. Two candidates were
       measured and **rejected for being worse than no reranker at all**:
       `ms-marco-MiniLM-L-6-v2` and `bge-reranker-base`
-- [ ] Selecting LLM provider (must have no-training terms — Context.md §26.C)
-      — **blocks Stage 8**
+- [x] Selecting LLM provider (must have no-training terms — Context.md §26.C)
+      — **RESOLVED by ADR-018**: Groq hosting `openai/gpt-oss-120b`, verified
+      against its no-training terms. Stage 8 was unblocked and completed.
 
 ------------------------------------------------------------------------
 
 # Not Started
+
+> **Historical heading — misleading if read literally.** Everything under it is
+> finished; several stages below are explicitly marked COMPLETE in their own
+> titles. The single genuinely unbuilt component in the whole project is the
+> Document Intelligence Agent (FR-010). Kept as-is for the checkbox history.
 
 ## Stage 2 — Evaluation Dataset
 - [x] Populate `data/raw/documents/` with the assembled dossiers
@@ -1495,6 +1506,55 @@ generous on genuine attempts even though it rejects bad ones; and only the 19
 non-abstained answers are scored, so these figures describe answer quality
 *when the model chose to answer*, not end-to-end performance.
 
+# Documentation audit — 2026-08-19
+
+Every requirement status in `REQUIREMENTS.md` was checked against the code.
+**No code was written; only statuses were corrected.** The docs had drifted
+badly: four agents that were built, measured and frozen in Stage 9 were still
+marked not-started.
+
+## Corrected from "not started" to built
+
+| requirement | was | is | evidence |
+|---|---|---|---|
+| FR-011 Compliance Agent | `[ ]` | `[x]` | `agents/compliance.py`, default specialist in `flow.route()` |
+| FR-012 Financial Risk Agent | `[ ]` | `[x]` | `agents/financial.py` |
+| FR-013 Security Risk Agent | `[ ]` | `[/]` | `agents/security.py`; no dedicated certificate-expiry check |
+| FR-014 Red-Team Agent | `[ ]` | `[/]` | `agents/red_team.py`; verified live on Meridian |
+| FR-018 report persistence | `[ ]` | `[x]` | `investigations.report_json` + `GET /report` |
+| FR-019 escalation in dashboard | `[ ]` | `[x]` | `frontend/app.py` metric, list and table column |
+| FR-019 contradiction wiring | "nothing wires it yet" | wired | `investigation.py` passes `contradiction_found` to the engine |
+
+Also corrected: `Context.md` still said *"Scaffolded — implementation not
+started"*; PROGRESS still listed *"Selecting LLM provider — blocks Stage 8"*
+though ADR-018 settled it; and the `In Progress` / `Not Started` headings were
+labelled as historical, because everything under them is finished.
+
+## Genuinely not implemented — the complete list
+
+1. **FR-010 Document Intelligence Agent — never built.** ADR-003 specified five
+   agents; four exist. Nothing depends on it: retrieval is query-driven, so no
+   stage needs a precomputed document map. This is the only planned *component*
+   missing from the project.
+2. **FR-009 multi-source query router** — only one retrieval source exists, so
+   there is nothing to route between. Web search is Out of Scope (v1) and ships
+   disabled in `retrieval.yaml`.
+3. **FR-014 red-team retrieval** — it re-reads the specialist's evidence rather
+   than issuing its own counter-evidence queries, so it cannot find what
+   retrieval did not return.
+4. **FR-019 human-override audit trail** — no endpoint or UI lets a reviewer
+   record a decision differing from the engine's.
+5. **FR-002 page count / document type** — not captured at upload.
+6. **FR-003 section-heading detection** — deliberately deferred; the spike
+   showed real complexity for uncertain benefit.
+7. **FR-004 chunk-metadata round-trip test** — serializable, not tested.
+8. **NFR-003b Groq training terms** — still an open question to the provider.
+
+Items 5-7 carry documented rationales and are unchanged by this audit. **None
+of the eight was implemented**, in line with the freeze.
+
+------------------------------------------------------------------------
+
 # Quantization experiment — NO-GO, measured 2026-08-19
 
 **Decision: neither INT8 arm is adopted. SentinelIQ stays FP32.** Retrieval,
@@ -1647,7 +1707,7 @@ touched. `test_the_real_stage8_file_still_marks_its_judge_invalid` was renamed
 to `..._still_carries_the_rejected_8b_judge` — a deliberate change, as its own
 docstring required — and now asserts that the artifact still records the 8B run
 as invalid and that a missing sidecar still yields nothing quotable.
-397 passed, 1 skipped.
+397 passed, 1 skipped at that time.
 
 ### Three evaluation bugs found and fixed (none in the generator)
 

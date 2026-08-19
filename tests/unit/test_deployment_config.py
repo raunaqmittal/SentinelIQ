@@ -1,6 +1,8 @@
-"""Deployment-preparation behaviour (Phase 1, AWS).
+"""Deployment-preparation behaviour.
 
-Three things a cloud host needs that a laptop did not:
+Written while preparing a cloud deployment that was later **cancelled**
+(2026-08-19). The three behaviours below were kept because each is an
+improvement in its own right, and the local Docker Compose stack uses them:
   - the retrieval models are loaded once, not on every /run
   - uploads go to a configurable absolute path on a mounted volume
   - half precision can be turned off on a CPU-only host
@@ -128,10 +130,3 @@ def test_the_dockerfile_never_copies_the_env_file():
         body = path.read_text(encoding="utf-8")
         assert ".env" not in body, f"{path} must not reference .env"
 
-
-def test_the_production_compose_file_hardcodes_no_secret():
-    body = Path("docker-compose.prod.yml").read_text(encoding="utf-8")
-
-    for required in ("SECRET_KEY", "GROQ_API_KEY", "DATABASE_URL"):
-        assert f"${{{required}:?" in body, f"{required} must come from the environment"
-    assert "gsk_" not in body
