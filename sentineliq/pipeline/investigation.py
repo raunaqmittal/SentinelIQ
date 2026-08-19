@@ -16,6 +16,7 @@ document, whose context `pipeline/documents.py` has already scoped the same way.
 import hashlib
 import json
 import logging
+import warnings
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -386,7 +387,6 @@ def load_demo_report(path: Path, documents_dir: Path) -> dict:
     warnings.filterwarnings(
         "ignore", message=".*TypedStorage is deprecated.*", category=UserWarning
     )
-    disable_progress_bar()
     # Hardcode the tokenizer to the frozen baseline model to prevent crashes
     # when hosted provider models (e.g., Voyage) are configured.
     tokenizer = AutoTokenizer.from_pretrained("BAAI/bge-base-en-v1.5")

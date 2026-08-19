@@ -19,12 +19,6 @@ faiss-cpu==1.15.0
 rank-bm25==0.2.2
 numpy>=2.0
 
-# --- retrieval: hosted provider (optional) ----------------------------------
-# Only imported when RETRIEVAL_EMBEDDING_PROVIDER=voyage or
-# RETRIEVAL_RERANKER_PROVIDER=voyage. The local (BGE) path works without it.
-# Pinned to a minor version; Voyage SDK has a stable API surface.
-voyageai>=0.3
-
 # --- agents and LLM --------------------------------------------------------
 groq==0.37.1
 crewai==1.15.16

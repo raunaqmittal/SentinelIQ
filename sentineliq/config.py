@@ -24,9 +24,6 @@ class DenseConfig(BaseModel):
 
     model: str
     top_k: int
-    # "local" uses bge-base-en-v1.5 via SentenceTransformer (default, no key needed).
-    # "voyage" uses the Voyage AI API (fast hosted inference, requires VOYAGE_API_KEY).
-    provider: str = "local"
 
 
 class SparseConfig(BaseModel):
@@ -48,9 +45,6 @@ class RerankerConfig(BaseModel):
     model: str
     fp16: bool
     top_n: int
-    # "local" uses bge-reranker-v2-m3 via CrossEncoder (default, no key needed).
-    # "voyage" uses the Voyage AI rerank API (fast hosted inference, requires VOYAGE_API_KEY).
-    provider: str = "local"
 
 
 class QueryRouterConfig(BaseModel):
@@ -185,17 +179,6 @@ def load_retrieval_config(
     override = os.environ.get("RETRIEVAL_FP16")
     if override is not None:
         raw["reranker"]["fp16"] = override.strip().lower() in ("1", "true", "yes")
-
-    # Provider overrides — env vars take precedence over retrieval.yaml so a
-    # demo deployment can be configured via docker-compose without editing the
-    # committed YAML. The YAML default for both is "local".
-    embed_provider = os.environ.get("RETRIEVAL_EMBEDDING_PROVIDER")
-    if embed_provider:
-        raw["dense"]["provider"] = embed_provider.strip().lower()
-
-    reranker_provider = os.environ.get("RETRIEVAL_RERANKER_PROVIDER")
-    if reranker_provider:
-        raw["reranker"]["provider"] = reranker_provider.strip().lower()
 
     return RetrievalConfig(**raw)
 
