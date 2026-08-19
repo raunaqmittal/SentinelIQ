@@ -82,8 +82,11 @@ def token_counter(config: RetrievalConfig):
         if "tokenizer" not in _models:
             from transformers import AutoTokenizer
 
-            _models["tokenizer"] = AutoTokenizer.from_pretrained(config.dense.model)
-    tokenizer = _models["tokenizer"]
+            # Hardcode the tokenizer to the frozen baseline model. If this uses
+            # config.dense.model, it will crash when Voyage models are configured
+            # because they do not exist on the Hugging Face hub.
+            _models["tokenizer"] = AutoTokenizer.from_pretrained("BAAI/bge-base-en-v1.5")
+        tokenizer = _models["tokenizer"]
     return lambda text: len(tokenizer.encode(text, add_special_tokens=False))
 
 

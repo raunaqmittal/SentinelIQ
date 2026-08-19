@@ -3,12 +3,12 @@ chunking:
   chunk_overlap: 64      # overlap between adjacent chunks
 
 dense:
-  model: "BAAI/bge-base-en-v1.5"   # chosen by measurement, ADR-015
+  model: "voyage-law-2"   # chosen by measurement, ADR-015
   top_k: 50              # deep pool: candidates survive RRF dilution, reranker filters
   # Inference provider. "local" loads the model via SentenceTransformer (default,
   # no API key). "voyage" calls the Voyage AI embedding API — faster demo cold-start,
   # requires VOYAGE_API_KEY. Override with RETRIEVAL_EMBEDDING_PROVIDER env var.
-  provider: local
+  #provider: local
 
 sparse:
   top_k: 50              # deep pool: see dense.top_k
@@ -23,13 +23,13 @@ reranker:
   # bge-reranker-base were both significantly WORSE than no reranker at all —
   # see PROGRESS.md "Rejected alternatives". Do not swap this without re-running
   # the DEV ablation.
-  model: "BAAI/bge-reranker-v2-m3"
+  model: "rerank-2" 
   fp16: true             # ~1.1GB VRAM instead of ~2.2GB; fits beside bge-base
   top_n: 5               # evidence chunks passed to the LLM (also bounds
                          # confidential exposure per request — Context.md 26.B)
   # Inference provider. "local" loads CrossEncoder (default, no key). "voyage"
   # calls the Voyage AI rerank API. Override with RETRIEVAL_RERANKER_PROVIDER env var.
-  provider: local
+ # provider: local
 
 query_router:
   enable_web_search: false   # disabled by default

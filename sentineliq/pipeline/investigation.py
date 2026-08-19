@@ -383,15 +383,22 @@ def load_demo_report(path: Path, documents_dir: Path) -> dict:
     from sentineliq.components.ingestion.chunker import chunk_document
     from sentineliq.config import load_retrieval_config, load_risk_rules
 
+    warnings.filterwarnings(
+        "ignore", message=".*TypedStorage is deprecated.*", category=UserWarning
+    )
+    disable_progress_bar()
+    # Hardcode the tokenizer to the frozen baseline model to prevent crashes
+    # when hosted provider models (e.g., Voyage) are configured.
+    tokenizer = AutoTokenizer.from_pretrained("BAAI/bge-base-en-v1.5")
+
+    def count_tokens(text):
+        return len(tokenizer.encode(text, add_special_tokens=False))
+
     raw = json.loads(path.read_text(encoding="utf-8"))
     dossier = load_dossier(documents_dir / "dossiers.json", raw["vendor"])
     wanted = dossier_document_ids(dossier)
 
     config = load_retrieval_config()
-    tokenizer = AutoTokenizer.from_pretrained(config.dense.model)
-
-    def count_tokens(text):
-        return len(tokenizer.encode(text, add_special_tokens=False))
 
     # Re-chunk the vendor's own documents with the frozen settings, so the
     # citation ids in the stored findings resolve to the same chunks they
