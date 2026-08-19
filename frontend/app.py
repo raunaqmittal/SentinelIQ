@@ -19,6 +19,10 @@ import streamlit as st
 API_URL = os.environ.get("SENTINELIQ_API_URL", "http://127.0.0.1:8000")
 # Every call is short now that /run returns straight away (FR-022).
 TIMEOUT = 60
+# Q&A blocks until the answer is returned. On the first call the retrieval
+# models (embedder + cross-encoder) cold-start from disk which can take
+# 60-120s. Subsequent calls reuse the cached models and finish in seconds.
+QA_TIMEOUT = 180
 POLL_SECONDS = 3
 
 RISK_COLOURS = {
@@ -455,7 +459,7 @@ def ask_documents(endpoint: str, scope_caption: str) -> None:
         return
 
     with st.spinner("Retrieving evidence and answering..."):
-        response = api_post(endpoint, json={"question": question})
+        response = call("POST", endpoint, timeout=QA_TIMEOUT, json={"question": question})
     if failed(response, "Could not answer the question."):
         return
 

@@ -37,7 +37,9 @@ llm:
   # was tried and REJECTED for degenerate scoring (ADR-020).
   judge_model: "llama-3.3-70b-versatile"
   temperature: 0.0        # 0.0 = deterministic decisions
-  max_tokens: 2048
+  max_tokens: 512         # Q&A answers are 2-3 sentences; investigation findings
+                          # are short per-question answers — 512 is sufficient and
+                          # cuts Groq generation time vs the previous 2048
 
 agents:
   max_iter: 5             # hard cap — never allow infinite loops
