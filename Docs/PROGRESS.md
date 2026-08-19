@@ -175,7 +175,7 @@ against the dense-only baseline with the same group breakdown.
 - [x] Project name finalized
 - [x] Core use case selected: vendor/company investigation and decision support
 - [x] Hybrid RAG architecture finalized (FAISS + BM25 + RRF + Cross-Encoder)
-- [x] Multi-agent architecture finalized (CrewAI — 5 agents)
+- [x] Multi-agent architecture finalized (CrewAI — 5 agents designed, **4 built**; Document Intelligence dropped, see ADR-003 and FR-010)
 - [x] Evaluation-first approach adopted
 - [x] Repository structure defined
 - [x] Context.md written
@@ -2277,6 +2277,13 @@ Date: 2026-08-10
 ---
 
 ### ADR-003 — Five Agents
+
+> **DEVIATED FROM IN IMPLEMENTATION (recorded 2026-08-19).** Four of the five
+> were built. The **Document Intelligence Agent was never implemented** and is
+> not planned: retrieval is query-driven, so nothing consumed the structured
+> document map it was meant to produce. Adding it now would be redundant
+> functionality, so the deviation stands. Tracked as FR-010.
+> **As built: Compliance, Financial Risk, Security Risk, Red-Team.**
 
 Decision:
 Use five specialized agents:

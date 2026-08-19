@@ -296,7 +296,7 @@ sentineliq/
   components/
     ingestion/     loaders + chunker
     retrieval/     dense, sparse, fusion, reranker  (frozen)
-    agents/        four specialists + shared prompts
+    agents/        three risk specialists + red-team + shared prompts
     evaluation/    retrieval and generation metrics
     database/      SQLAlchemy models + tenant-scoped repository
     api/           FastAPI app and routes

@@ -520,12 +520,21 @@ The LLM should receive only high-quality evidence whenever possible.
 
 # 8. Agent Architecture
 
-> **Important:** SentinelIQ uses **five** specialized agents.
+> **Important — as built, SentinelIQ uses FOUR agents, not five.**
+> This section describes the original five-agent design. §8.1, the Document
+> Intelligence Agent, was **never implemented** (FR-010): retrieval is
+> query-driven, so `flow.investigate()` retrieves per question rather than from
+> a precomputed document map, and no stage needed its output. The four that
+> exist are Compliance, Financial Risk, Security Risk and Red-Team.
+>
 > Each agent has a clearly bounded responsibility.
 > Agents do not freely chat with each other.
 > Orchestration is deterministic via a CrewAI Flow supervisor.
 
-## 8.1 Document Intelligence Agent
+## 8.1 Document Intelligence Agent — NOT IMPLEMENTED
+
+> Design only. There is no `document_intelligence.py`. Kept as the record of
+> what was planned and consciously dropped; see FR-010.
 
 ### Responsibility
 
@@ -2569,7 +2578,8 @@ configs written. No application code implemented yet.**
 -   [x] Core use case selected: enterprise due diligence / decision
     intelligence
 -   [x] Hybrid RAG architecture selected
--   [x] Multi-agent architecture selected (5 agents)
+-   [x] Multi-agent architecture selected (5 agents designed; **4 built** —
+    the Document Intelligence Agent was dropped, see §8.1 and FR-010)
 -   [x] Evaluation-first approach selected
 -   [x] Repository structure defined **and created on disk** (§14)
 -   [x] Config files written: `app.yaml`, `retrieval.yaml`,
