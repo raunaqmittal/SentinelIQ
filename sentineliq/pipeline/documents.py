@@ -88,14 +88,30 @@ def token_counter(config: RetrievalConfig):
 
 
 def load_models(config: RetrievalConfig) -> dict:
-    """The embedder and cross-encoder, loaded once and shared."""
+    """The embedder and cross-encoder, loaded once and shared.
+
+    Provider is read from the config (dense.provider / reranker.provider), so
+    changing the provider clears and reloads the cache on the next call.
+    """
+    cache_key = (config.dense.provider, config.reranker.provider)
     with _lock:
-        if "embedder" not in _models:
-            logger.info("Loading retrieval models for uploaded documents")
-            _models["embedder"] = dense.load_model(config.dense.model)
-            _models["cross_encoder"] = reranker.load_model(
-                config.reranker.model, fp16=config.reranker.fp16
+        if "embedder" not in _models or _models.get("_provider_key") != cache_key:
+            logger.info(
+                "Loading retrieval models",
+                extra={
+                    "embed_provider": config.dense.provider,
+                    "reranker_provider": config.reranker.provider,
+                },
             )
+            _models["embedder"] = dense.load_model(
+                config.dense.model, provider=config.dense.provider
+            )
+            _models["cross_encoder"] = reranker.load_model(
+                config.reranker.model,
+                fp16=config.reranker.fp16,
+                provider=config.reranker.provider,
+            )
+            _models["_provider_key"] = cache_key
         return {
             "embedder": _models["embedder"],
             "cross_encoder": _models["cross_encoder"],

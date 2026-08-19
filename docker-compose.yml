@@ -49,6 +49,12 @@ services:
       # Half precision is a GPU optimisation; leave it on locally where a GPU
       # may exist, and set it false on a CPU host.
       RETRIEVAL_FP16: ${RETRIEVAL_FP16:-true}
+      # Retrieval provider. "local" uses the local BGE models (default, no key).
+      # "voyage" uses the Voyage AI API \u2014 eliminates cold-start, requires
+      # VOYAGE_API_KEY. Set both to "voyage" for the demo deployment.
+      RETRIEVAL_EMBEDDING_PROVIDER: ${RETRIEVAL_EMBEDDING_PROVIDER:-local}
+      RETRIEVAL_RERANKER_PROVIDER: ${RETRIEVAL_RERANKER_PROVIDER:-local}
+      VOYAGE_API_KEY: ${VOYAGE_API_KEY:-}
       # Off unless this is exactly true/1/yes. When on, a request with no
       # bearer token is served as a fixed demo principal (analyst role, never admin)
       # in the demo tenant below, so an interviewer can use the app without an
