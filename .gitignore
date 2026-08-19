@@ -75,3 +75,6 @@ htmlcov/
 sentineliq.db
 smoke.db
 data/uploads/
+# Port-remapping override used to run a second stack without port clashes.
+# Not required by the application; ignored rather than committed.
+docker-compose.freshtest.override.yml

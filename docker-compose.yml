@@ -49,10 +49,15 @@ services:
       # Half precision is a GPU optimisation; leave it on locally where a GPU
       # may exist, and set it false on a CPU host.
       RETRIEVAL_FP16: ${RETRIEVAL_FP16:-true}
-      # Off by default. Set true only for a showcase deployment, where an
-      # interviewer uses the UI without signing in. Everyone then shares the
-      # demo tenant, so nothing confidential belongs in it.
-      SENTINELIQ_DEMO_MODE: ${SENTINELIQ_DEMO_MODE:-false}
+      # Off unless this is exactly true/1/yes. When on, a request with no
+      # bearer token is served as a fixed demo principal (analyst role, never admin)
+      # in the demo tenant below, so an interviewer can use the app without an
+      # account. JWT, RBAC and tenant isolation are unchanged; a request that DOES
+      # carry a token is still authenticated by it.
+      # Default is true here so `docker compose up` works for a local showcase
+      # without exporting the variable first. Set false (or override in .env) to
+      # require authentication on every request.
+      SENTINELIQ_DEMO_MODE: ${SENTINELIQ_DEMO_MODE:-true}
       SENTINELIQ_DEMO_TENANT: ${SENTINELIQ_DEMO_TENANT:-demo-tenant}
       # CrewAI ships telemetry on by default and exports spans to its own
       # collector. We do not want outbound data we never asked for, and the

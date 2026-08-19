@@ -262,3 +262,45 @@ def test_list_tenant_ids_reports_each_tenant_once(session):
     repo.add_document(session, TENANT_B, "V", "c.pdf", "sha-b1", 10, "/tmp/b1")
     session.flush()
     assert sorted(repo.list_tenant_ids(session)) == [TENANT_A, TENANT_B]
+
+
+# ----------------------------------------- schema-drift regression test
+
+
+def test_add_missing_columns_patches_old_database(engine):
+    """_add_missing_columns() adds document_type to a database created before
+    that column existed.
+
+    Simulates the drift: create the documents table without document_type
+    (as the old schema did), then call create_all() and verify the column is
+    present afterwards. Proves the startup patch works without Alembic.
+    """
+    from sqlalchemy import inspect, text
+
+    # 1. Build the old schema by hand — documents table without document_type
+    with engine.begin() as conn:
+        conn.execute(text(
+            "CREATE TABLE IF NOT EXISTS documents ("
+            "  id VARCHAR PRIMARY KEY,"
+            "  tenant_id VARCHAR NOT NULL,"
+            "  vendor_name VARCHAR NOT NULL,"
+            "  document_name VARCHAR NOT NULL,"
+            "  sha256 VARCHAR NOT NULL,"
+            "  size_bytes INTEGER NOT NULL,"
+            "  stored_path VARCHAR NOT NULL,"
+            "  created_at DATETIME DEFAULT CURRENT_TIMESTAMP"
+            ")"
+        ))
+
+    # Verify the column is absent before the patch
+    inspector = inspect(engine)
+    columns_before = {c["name"] for c in inspector.get_columns("documents")}
+    assert "document_type" not in columns_before
+
+    # 2. create_all() — this calls _add_missing_columns() internally
+    repo.create_all(engine)
+
+    # 3. Column must now exist
+    inspector = inspect(engine)
+    columns_after = {c["name"] for c in inspector.get_columns("documents")}
+    assert "document_type" in columns_after

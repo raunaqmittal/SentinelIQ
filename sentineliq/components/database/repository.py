@@ -19,7 +19,7 @@ from contextlib import contextmanager
 from datetime import datetime
 
 # 2. Third-party imports
-from sqlalchemy import create_engine, delete, select
+from sqlalchemy import create_engine, delete, inspect, select, text
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
@@ -106,8 +106,32 @@ def wait_for_database(engine, attempts: int = 30, delay: float = 1.0) -> None:
 
 
 def create_all(engine) -> None:
-    """Create every table that does not exist yet."""
+    """Create every table that does not exist yet.
+
+    `create_all` only creates missing tables; it never alters a table that
+    already exists. On a database created before `document_type` was added
+    to the model, the column would silently be missing. `_add_missing_columns`
+    patches that one known gap without pulling in a migration framework.
+    """
     Base.metadata.create_all(engine)
+    _add_missing_columns(engine)
+
+
+def _add_missing_columns(engine) -> None:
+    """Add columns that existing databases may predate.
+
+    Extend this list if a future model field hits the same create_all gap.
+    """
+    known_gaps = [("documents", "document_type", "VARCHAR")]
+    inspector = inspect(engine)
+    if "documents" not in inspector.get_table_names():
+        return
+    existing = {c["name"] for c in inspector.get_columns("documents")}
+    with engine.begin() as conn:
+        for table, column, col_type in known_gaps:
+            if column not in existing:
+                conn.execute(text(f"ALTER TABLE {table} ADD COLUMN {column} {col_type}"))
+                logger.info("added missing column %s.%s", table, column)
 
 
 def session_factory(engine) -> sessionmaker:
